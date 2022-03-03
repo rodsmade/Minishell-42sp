@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/02 21:30:57 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/02 21:47:15 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	main(void)
 {
 	write(1, "Hello World!!!", 14);
-	return (0);
+	return 0;
 }
