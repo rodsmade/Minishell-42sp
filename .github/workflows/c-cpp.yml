@@ -1,0 +1,42 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.c'
+      - '**.h'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.c'
+      - '**.h'
+
+jobs:
+  norminette:
+    runs-on: ubuntu-20.04.3
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v3.0.0
+      with:
+        # Version range or exact version of a Python version to use, using SemVer's version range syntax.
+        python-version: 3.8.10
+        # Used to specify a package manager for caching in the default directory. Supported values: pip, pipenv.
+        cache: pip
+        # The target architecture (x86, x64) of the Python interpreter.
+        architecture: x64
+        # Used to pull python distributions from actions/python-versions. Since there's a default, this is typically not supplied by the user.
+    - name: Upgrade pip
+      run: python3 -m pip install --upgrade pip setuptools
+    - name: Install norminette
+      run: python3 -m pip install norminette
+    - name: Run norminette
+      run: |
+        LOGS=$(mktemp)
+        norminette $(find -regex '.*/.*\.\(c\|h\)$' -not -path '*/test/*') | tee $LOGS
+        echo "ERRORS=$(grep -E 'Error|Warning|KO!' $LOGS | wc -l)" >> $GITHUB_ENV
+    - name: Checks norminette linter result
+      run: |
+        echo "Norminette Result"
+        [[ $ERRORS == 0 ]]
