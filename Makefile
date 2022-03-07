@@ -1,15 +1,20 @@
-NAME			= minishell
+NAME			=	minishell
 
-CC				= gcc
+CC				=	gcc
 
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror
 
-DEBUG			= -g3
+DEBUG			=	-g3
 
-PATH_SRC		= ./src/
-PATH_OBJ		= ./obj/
-PATH_LIBRARY	= ./library/
-PATH_INCLUDES	= ./includes/
+VALGRIND		=	valgrind --leak-check=full --show-leak-kinds=all \
+					--track-origins=yes -q --tool=memcheck \
+					--suppressions=readline.supp \
+					--track-fds=yes
+
+PATH_SRC		=	./src/
+PATH_OBJ		=	./obj/
+PATH_LIBRARY	=	./library/
+PATH_INCLUDES	=	./includes/
 
 FILES			=	minishell.c
 
@@ -17,7 +22,7 @@ HEADERS			=	$(PATH_INCLUDES)minishell.h
 
 OBJS			=	$(FILES:%.c=%.o)
 
-MKDIR 			= 	mkdir -p
+MKDIR 			=	mkdir -p
 RM				=	rm -rf
 
 all:				makedir $(NAME)
@@ -31,6 +36,9 @@ $(PATH_OBJ)%.o: 	$(PATH_SRC)%.c $(HEADERS)
 run:				$(NAME)
 					./$(NAME)
 
+valgrind:			$(NAME)
+					$(VALGRIND) ./$(NAME)
+
 makedir:			
 					$(MKDIR) $(PATH_OBJ)
 
@@ -42,5 +50,5 @@ fclean:				clean
 
 re:					fclean all
 
-.PHONY:				all clean fclean re
+.PHONY:				all clean fclean re run 
 
