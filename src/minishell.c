@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/08 12:35:10 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/08 12:53:49 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	repl(void)
 	return ;
 }
 
-void	insert_in_hashtable(char *current_variable)
+void	insert_in_hashtable(char *current_variable, t_env_var *(*hashtable)[TABLE_SIZE])
 {
 	//Função que vai inserir dentro da hash
 	//Criar função hash
@@ -55,7 +55,19 @@ void	init_hashtable(t_env_var *(*hashtable)[TABLE_SIZE])
 	i = -1;
 	while (++i < TABLE_SIZE)
 	{
-		*hashtable[i] = NULL;
+		(*hashtable)[i] = NULL;
+	}
+	return ;
+}
+
+void	print_hashtable(t_env_var *(*hashtable)[TABLE_SIZE])
+{
+	int	i;
+
+	i = -1;
+	while (++i < TABLE_SIZE)
+	{
+		printf(">: Position %d - %p\n", i, (*hashtable)[i]);
 	}
 	return ;
 }
@@ -67,9 +79,10 @@ void	get_env_variables(char **envp)
 
 	i = -1;
 	init_hashtable(&hashtable);
+	print_hashtable(&hashtable);
 	while (envp[++i])
 	{
-		insert_in_hashtable(envp[i]);
+		insert_in_hashtable(envp[i], &hashtable);
 	}
 	return ;
 }
@@ -77,6 +90,7 @@ void	get_env_variables(char **envp)
 int	main(int argc, char *argv[], char **envp)
 {
 	(void)argv;
+	(void)envp;
 	if (argc != 1)
 		return (1);
 	write(1, "Hello World !\n", 14);
