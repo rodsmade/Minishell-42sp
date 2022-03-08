@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 20:40:41 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/01/19 01:51:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/08 19:42:00 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_free_arr(void ***arr)
 	i = -1;
 	while ((*arr)[++i])
 	{
-		free((*arr)[i]);
+		ft_free_ptr((void *)&(*arr)[i]);
 		(*arr)[i] = NULL;
 	}
 	free(*arr);

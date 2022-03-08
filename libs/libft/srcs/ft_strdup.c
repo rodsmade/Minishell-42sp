@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 10:55:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2021/10/06 10:55:24 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/08 19:47:44 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s)
 	unsigned int	strlength;
 	char			*newstr;
 
+	if (!s)
+		return (NULL);
 	strlength = ft_strlen(s);
 	newstr = ft_calloc((strlength + 1), sizeof(const char));
 	if (newstr == NULL)
