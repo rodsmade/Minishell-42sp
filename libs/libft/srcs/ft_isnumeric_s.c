@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isnumeric_s.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/07 22:01:51 by roaraujo         ###   ########.fr       */
+/*   Created: 2022/01/20 18:49:49 by roaraujo          #+#    #+#             */
+/*   Updated: 2022/02/01 15:21:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-// --------------------------------------------	INCLUDES	--------------------
-# include <readline/readline.h>	// readline(), etc.
-# include <readline/history.h>	// add_history()
-# include <unistd.h>	// write(), close()
-# include <stdlib.h>	// free()
-# include "libft.h"
+int	ft_isnumeric_s(char *str)
+{
+	int	i;
 
-#endif
+	i = -1;
+	if (str[0] == '-')
+		i++;
+	while (str[++i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+	}
+	return (1);
+}

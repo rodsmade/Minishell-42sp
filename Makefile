@@ -1,38 +1,57 @@
-NAME			= minishell
+PATH_SRC		=	./src/
+PATH_OBJ		=	./obj/
+PATH_LIBRARY	=	./libs/
+PATH_INCLUDES	=	./includes/
 
-CC				= gcc
+NAME			=	minishell
 
-CFLAGS			= -Wall -Wextra -Werror
+CC				=	gcc $(CFLAGS)
 
-DEBUG			= -g3
+CFLAGS			=	-Wall -Wextra -Werror -I $(PATH_INCLUDES) $(DEBUG)
 
-PATH_SRC		= ./src/
-PATH_OBJ		= ./obj/
-PATH_LIBRARY	= ./library/
-PATH_INCLUDES	= ./includes/
+LIBS			=	-lreadline -L $(PATH_LIBRARY) -lft
+
+DEBUG			=	-g3
+
+VALGRIND		=	valgrind --leak-check=full \
+					--show-leak-kinds=all \
+					--track-origins=yes \
+					--quiet \
+					--tool=memcheck \
+					--suppressions=readline.supp \
+					--keep-debuginfo=yes \
+					--track-fds=yes
 
 FILES			=	minishell.c
 
-HEADERS			=	$(PATH_INCLUDES)minishell.h
+HEADERS			=	$(PATH_INCLUDES)minishell.h \
+					$(PATH_INCLUDES)libft.h
 
 OBJS			=	$(FILES:%.c=%.o)
 
-MKDIR 			= 	mkdir -p
+MKDIR 			=	mkdir -p
 RM				=	rm -rf
 
-all:				makedir $(NAME)
+all:				libft makedir $(NAME)
+
+# -> compiles libft all over
+libft:
+					cd $(PATH_LIBRARY)libft && $(MAKE)
+
+makedir:			
+					$(MKDIR) $(PATH_OBJ)
 
 $(NAME):			$(addprefix $(PATH_OBJ),$(OBJS))
-					$(CC) $(addprefix $(PATH_OBJ),$(OBJS)) -o $(NAME)
+					$(CC) $(addprefix $(PATH_OBJ),$(OBJS)) -o $(NAME) $(LIBS)
 
 $(PATH_OBJ)%.o: 	$(PATH_SRC)%.c $(HEADERS)
-					$(CC) -c -o $@ $<
+					$(CC) -c -o $@ $< $(LIBS)
 
 run:				$(NAME)
 					./$(NAME)
 
-makedir:			
-					$(MKDIR) $(PATH_OBJ)
+valgrind:			$(NAME)
+					$(VALGRIND) ./$(NAME)
 
 clean:
 					$(RM) $(addprefix $(PATH_OBJ),$(OBJS))
@@ -42,5 +61,5 @@ fclean:				clean
 
 re:					fclean all
 
-.PHONY:				all clean fclean re
+.PHONY:				all clean fclean re run 
 

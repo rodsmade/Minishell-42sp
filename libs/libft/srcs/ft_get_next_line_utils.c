@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/07 22:01:51 by roaraujo         ###   ########.fr       */
+/*   Created: 2021/09/17 18:30:10 by roaraujo          #+#    #+#             */
+/*   Updated: 2021/09/18 10:51:48 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-// --------------------------------------------	INCLUDES	--------------------
-# include <readline/readline.h>	// readline(), etc.
-# include <readline/history.h>	// add_history()
-# include <unistd.h>	// write(), close()
-# include <stdlib.h>	// free()
-# include "libft.h"
+int	contains_nl(char *string)
+/**
+ * scans a string for single line character (\n).
+ * if found, returns its position (>= 0).
+ * otherwise, returns -1.
+*/
+{
+	int	i;
 
-#endif
+	if (!string)
+		return (-1);
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (-1);
+}

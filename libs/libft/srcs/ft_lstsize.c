@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/07 22:01:51 by roaraujo         ###   ########.fr       */
+/*   Created: 2021/10/06 10:54:49 by roaraujo          #+#    #+#             */
+/*   Updated: 2021/10/06 10:54:50 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-// --------------------------------------------	INCLUDES	--------------------
-# include <readline/readline.h>	// readline(), etc.
-# include <readline/history.h>	// add_history()
-# include <unistd.h>	// write(), close()
-# include <stdlib.h>	// free()
-# include "libft.h"
+int	ft_lstsize(t_list *lst)
+{
+	int	count_items;
 
-#endif
+	if (lst == NULL)
+		return (0);
+	count_items = 1;
+	while (lst->next != NULL)
+	{
+		count_items++;
+		lst = lst->next;
+	}
+	return (count_items);
+}

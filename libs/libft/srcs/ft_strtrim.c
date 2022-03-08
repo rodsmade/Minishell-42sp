@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/07 22:01:51 by roaraujo         ###   ########.fr       */
+/*   Created: 2021/10/06 10:55:36 by roaraujo          #+#    #+#             */
+/*   Updated: 2021/10/06 10:55:37 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-// --------------------------------------------	INCLUDES	--------------------
-# include <readline/readline.h>	// readline(), etc.
-# include <readline/history.h>	// add_history()
-# include <unistd.h>	// write(), close()
-# include <stdlib.h>	// free()
-# include "libft.h"
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	size_t	i;
 
-#endif
+	if (s1 == NULL || set == NULL)
+		return (NULL);
+	while (ft_strchr(set, *s1) && *s1)
+		s1++;
+	i = ft_strlen(s1);
+	while (ft_strchr(set, s1[i - 1]) && i)
+		i--;
+	return (ft_substr(s1, 0, i));
+}
