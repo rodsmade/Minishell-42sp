@@ -6,35 +6,33 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/07 21:11:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/07 21:52:24 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	char	*line_read;
 
+	(void)argv;
 	line_read = NULL;
+	if (argc != 1)
+		return (1);
+
 	write(1, "Hello World !\n", 14);
-
-	line_read = readline("Type yr command: ");
-	add_history(line_read);
-	printf("Line read: %s\n", line_read);
-	free(line_read);
-	
-	line_read = readline("Type yr command: ");
-	add_history(line_read);
-	printf("Line read: %s\n", line_read);
-	free(line_read);
-	
-	line_read = readline("Type yr command: ");
-	add_history(line_read);
-	printf("Line read: %s\n", line_read);
-	free(line_read);
-
+	while (1)
+	{
+		if (line_read)
+			ft_free_ptr((void *)&line_read);
+		line_read = readline("Type yr command (type \'quit\' to exit): ");
+		add_history(line_read);
+		if (ft_strncmp(line_read, "quit", 5) == 0)
+			break;
+	}
+	ft_free_ptr((void *)&line_read);
 	rl_clear_history();
 	close(0);
 	close(1);
