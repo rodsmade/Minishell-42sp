@@ -22,7 +22,8 @@ VALGRIND		=	valgrind --leak-check=full \
 					--keep-debuginfo=yes \
 					--track-fds=yes
 
-FILES			=	minishell.c
+FILES			=	minishell.c \
+					utils_test.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h
