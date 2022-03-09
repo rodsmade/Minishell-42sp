@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/08 20:27:45 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/08 22:17:14 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
-
-# define	TABLE_SIZE	50
-
-typedef struct s_env_var
-{
-	char				*name;
-	char				*value;
-}				t_env_var;
 
 void	repl(void)
 {
@@ -70,28 +62,6 @@ void	free_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 	return ;
 }
 
-void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE])
-{
-	int		i;
-	t_list	*pivot;
-
-	i = -1;
-	while (++i < TABLE_SIZE)
-	{
-		pivot = (*hashtable)[i];
-		printf("%d\t: ", i);
-		while (pivot != NULL)
-		{
-			printf("{nome: %s, value: %s}", ((t_env_var *)(pivot->content))->name, ((t_env_var *)(pivot->content))->value);
-			if (pivot->next != NULL)
-				printf(",\n\t  ");
-			pivot = pivot->next;
-		}
-		printf("\n");
-	}
-	return ;
-}
-
 int		hash_string(char *str)
 {
 	int	hash;
@@ -108,25 +78,26 @@ int		hash_string(char *str)
 	return (hash);
 }
 
-t_env_var	*key_value_to_t_env_var(char **key_value)
+t_env_var	*key_value_to_t_env_var(char **key_value, int is_env_var)
 {
 	t_env_var	*element;
 
 	element = (t_env_var *)malloc(sizeof(t_env_var));
 	element->name = ft_strdup(key_value[0]);
 	element->value = ft_strdup(key_value[1]);
+	element->is_env_var = is_env_var;
 	return (element);
 }
 
-void	insert_in_hashtable(char *env_var, t_list *(*hashtable)[TABLE_SIZE])
+void	insert_in_hashtable(char *string, int is_env_var, t_list *(*hashtable)[TABLE_SIZE])
 {
 	int			index;
 	char		**key_value;
 	t_env_var	*key_value_alloc;
 	
-	key_value = ft_split(env_var, '=');
+	key_value = ft_split(string, '=');
 	index = hash_string(key_value[0]);
-	key_value_alloc = key_value_to_t_env_var(key_value);
+	key_value_alloc = key_value_to_t_env_var(key_value, is_env_var);
 	ft_lstadd_back(&((*hashtable)[index]), ft_lstnew((void *)key_value_alloc));
 	ft_free_arr((void *)&key_value);
 	return ;
@@ -141,7 +112,7 @@ void	get_env_variables(char **envp)
 	init_hashtable(&hashtable);
 	while (envp[++i])
 	{
-		insert_in_hashtable(envp[i], &hashtable);
+		insert_in_hashtable(envp[i], 1, &hashtable);
 	}
 	print_hashtable(&hashtable);
 	free_hashtable(&hashtable);
