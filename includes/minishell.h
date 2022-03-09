@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/08 22:16:14 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:13:11 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ typedef struct s_env_var
 // ----------------------------------------------	PROTOTYPES	----------------
 // utils_test.c
 void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void	parse_line(char	*line_read);
 
 #endif

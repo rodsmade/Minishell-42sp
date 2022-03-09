@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/08 22:17:14 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/09 15:05:56 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	repl(void)
 	{
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
 		add_history(line_read);
+		parse_line(line_read);
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
 		if (line_read)
@@ -114,7 +115,7 @@ void	get_env_variables(char **envp)
 	{
 		insert_in_hashtable(envp[i], 1, &hashtable);
 	}
-	print_hashtable(&hashtable);
+	// print_hashtable(&hashtable);
 	free_hashtable(&hashtable);
 	return ;
 }
