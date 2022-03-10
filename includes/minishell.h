@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/08 22:16:14 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/10 12:12:05 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
-# define	TABLE_SIZE	50
+# define TABLE_SIZE 50
 
 // ----------------------------------------------	STRUCTS		----------------
 typedef struct s_env_var
@@ -32,6 +32,17 @@ typedef struct s_env_var
 }				t_env_var;
 
 // ----------------------------------------------	PROTOTYPES	----------------
+// exit_routines.c
+void	free_env_var(void *element);
+void	free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+
+// hashtable.c
+void	insert_in_hashtable(char *string, int is_env_var
+	, t_list *(*hashtable)[TABLE_SIZE]);
+
+// init_routines.c
+void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+
 // utils_test.c
 void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
