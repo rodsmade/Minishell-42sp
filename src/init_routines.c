@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_arr.c                                      :+:      :+:    :+:   */
+/*   init_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 20:40:41 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/08 19:42:00 by adrianofaus      ###   ########.fr       */
+/*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
+/*   Updated: 2022/03/10 12:09:25 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_free_arr(void ***arr)
+void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 {
 	int	i;
 
 	i = -1;
-	while ((*arr)[++i])
+	while (++i < TABLE_SIZE)
 	{
-		ft_free_ptr((void *)&(*arr)[i]);
-		(*arr)[i] = NULL;
+		(*hashtable)[i] = NULL;
 	}
-	free(*arr);
+	return ;
 }
