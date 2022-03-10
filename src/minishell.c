@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/09 15:05:56 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/10 15:43:14 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	repl(void)
 	{
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
 		add_history(line_read);
-		parse_line(line_read);
+		lexer_line(line_read);
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
 		if (line_read)
