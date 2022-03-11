@@ -6,13 +6,11 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/11 12:29:31 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/11 13:12:25 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern t_tudao	g_tudao;
 
 int	count_redirect(char *line_read)
 {
@@ -115,34 +113,34 @@ void	tokenizer(char *line_read, char *content)
 		}
 		content[i] = '\0';
 	}
-	redirect_gen(&line_read[i], content);
+	else
+		redirect_gen(&line_read[i], content);
 }
 
 void	lexer_line(char *line_read)
 {
-	t_list	*head;
 	char	*content;
 	int		len;
 	int		i;
 
-	head = NULL;
+	g_tudao.token_list = NULL;
 	i = 0;
 	len = 0;
 	while (line_read[i])
 	{
-		while (line_read[i] && line_read[i] == ' ')
+		while (line_read[i] && (line_read[i] == ' '  || line_read[i] == '\t'))
 			i++;
 		len = token_len(&line_read[i]);
 		if (len)
 		{
 			content = (char *)malloc(sizeof(char) * (len + 1));
 			tokenizer(&line_read[i], content);
-			ft_lstadd_back(&head, ft_lstnew(content));
+			ft_lstadd_back(&g_tudao.token_list, ft_lstnew(content));
 			content = NULL;
 		}
 		i += len;
 	}
-	for (t_list	*pivot = head; pivot != NULL; pivot = pivot->next)
+	for (t_list	*pivot = g_tudao.token_list; pivot != NULL; pivot = pivot->next)
 	{
 		printf("{%s}", (char *)pivot->content);
 	}
