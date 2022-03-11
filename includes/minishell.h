@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/10 14:53:28 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:36:07 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
-# define TABLE_SIZE 50
+# define TABLE_SIZE	50
+
+// ----------------------------------------------	TYPEDEFS	----------------
+// enum e_bool {false, true};
+typedef int	t_bool;
+enum {false, true};
 
 // ----------------------------------------------	STRUCTS		----------------
 typedef struct s_env_var
@@ -31,19 +36,49 @@ typedef struct s_env_var
 	int					is_env_var;
 }				t_env_var;
 
+typedef struct s_redirections
+{
+	t_bool	has_redirect;
+	int		in;
+	int		out;
+	int		err;
+}				t_redirections;
+
+typedef struct s_tudao
+{
+	t_list			*hashtable[TABLE_SIZE];
+	t_list			*token_list;
+	char			***command_table;
+	t_redirections	redirections;
+	int				return_code;
+}				t_tudao;
+
+// ----------------------------------------------	GLOBAL VAR	----------------
+t_tudao		g_tudao;
+
 // ----------------------------------------------	PROTOTYPES	----------------
 // exit_routines.c
-void	free_env_var(void *element);
-void	free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void			free_env_var(void *element);
+void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
 // hashtable.c
-void	insert_in_hashtable(char *string, int is_env_var,
-			t_list *(*hashtable)[TABLE_SIZE]);
+void			insert_in_hashtable(char *string, int is_env_var,
+					t_list *(*hashtable)[TABLE_SIZE]);
 
 // init_routines.c
-void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+
+// lexer.c
+void			lexer_line(char	*line_read);
+
+// utils_lexer.c
+int				is_expansible(char line_read);
+int				is_redirect(char *line_read);
+int				check_char(char *line_read, int *index, int *into_word);
+void			space_iter(char *line_read, int *into_word, int *index);
+int				quote_iter(char *line_read, int *index, int *into_word);
 
 // utils_test.c
-void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
 #endif
