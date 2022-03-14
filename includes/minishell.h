@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/11 13:49:34 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/14 13:59:47 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,11 @@
 # include <readline/history.h>	// add_history()
 # include <unistd.h>	// write(), close()
 # include <stdlib.h>	// free()
+# include <stdbool.h>	// C99+ standard bool typedef
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
 # define TABLE_SIZE	50
-
-// ----------------------------------------------	TYPEDEFS	----------------
-// enum e_bool {false, true};
-typedef int	t_bool;
-enum {false, true};
 
 // ----------------------------------------------	STRUCTS		----------------
 typedef struct s_env_var
@@ -38,17 +34,25 @@ typedef struct s_env_var
 
 typedef struct s_redirections
 {
-	t_bool	has_redirect;
+	bool	has_redirect;
 	int		in;
 	int		out;
 	int		err;
 }				t_redirections;
 
+typedef struct s_cmd_table
+{
+	t_list	**main_pipeline;
+	bool	has_and_operator;
+	bool	has_or_operator;
+	t_list	**secondary_pipeline;
+}				t_cmd_table;
+
 typedef struct s_tudao
 {
 	t_list			*hashtable[TABLE_SIZE];
 	t_list			*token_list;
-	t_list			**command_table;
+	t_cmd_table		command_table;
 	t_redirections	redirections;
 	int				return_code;
 }				t_tudao;
