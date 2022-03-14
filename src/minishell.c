@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/10 11:56:33 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/14 13:38:55 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@
 void	get_env_variables(char **envp)
 {
 	int			i;
-	t_list		*hashtable[TABLE_SIZE];
 
 	i = -1;
-	init_hashtable(&hashtable);
+	// init_hashtable(&hashtable);
 	while (envp[++i])
 	{
-		insert_in_hashtable(envp[i], 1, &hashtable);
+		// insert_in_hashtable(envp[i], 1, &hashtable);
 	}
-	print_hashtable(&hashtable);
-	free_hashtable(&hashtable);
+	// print_hashtable(&hashtable);
+	// free_hashtable(&hashtable);
 	return ;
 }
 
@@ -37,9 +36,13 @@ void	repl(void)
 	while (1)
 	{
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
-		add_history(line_read);
+		// TO-DO: como tratar se o line_read for igual a NULL? ver isso dps
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
+		add_history(line_read);
+		// lexical analysis goes here
+		parse_tokens();
+		// send to execution goes here
 		if (line_read)
 			ft_free_ptr((void *)&line_read);
 	}

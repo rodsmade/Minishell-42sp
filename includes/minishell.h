@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/10 18:36:07 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/11 13:49:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_tudao
 {
 	t_list			*hashtable[TABLE_SIZE];
 	t_list			*token_list;
-	char			***command_table;
+	t_list			**command_table;
 	t_redirections	redirections;
 	int				return_code;
 }				t_tudao;
@@ -70,6 +70,9 @@ void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
 // lexer.c
 void			lexer_line(char	*line_read);
+
+// utils_lexer.c
+void			parse_tokens(void);
 
 // utils_lexer.c
 int				is_expansible(char line_read);
