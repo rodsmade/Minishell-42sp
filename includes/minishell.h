@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/14 13:59:47 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/14 14:00:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void			insert_in_hashtable(char *string, int is_env_var,
 
 // init_routines.c
 void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void			init_tudao(void);
 
 // lexer.c
 void			lexer_line(char	*line_read);
