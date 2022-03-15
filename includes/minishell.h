@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/14 22:57:50 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/15 12:54:47 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,11 @@
 # include <readline/history.h>	// add_history()
 # include <unistd.h>	// write(), close()
 # include <stdlib.h>	// free()
+# include <stdbool.h>
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
 # define TABLE_SIZE	50
-
-// ----------------------------------------------	TYPEDEFS	----------------
-typedef int	t_bool;
-enum {false, true};
 
 // ----------------------------------------------	STRUCTS		----------------
 typedef struct s_env_var
@@ -37,19 +34,25 @@ typedef struct s_env_var
 
 typedef struct s_redirections
 {
-	t_bool	has_redirect;
+	bool	has_redirect;
 	int		in;
 	int		out;
 	int		err;
 }			t_redirections;
 
+typedef struct s_cmd_table
+{
+	t_list	**main_pipeline;
+	bool	has_and_operator;
+	bool	has_or_operator;
+	t_list	**secondary_pipeline;
+}				t_cmd_table;
+
 typedef struct s_tudao
 {
 	t_list			*hashtable[TABLE_SIZE];
-	t_list			*token_list; // a lista de tokens
-	char			***command_table;	/* tabela de arrays de strings tipo:
-								command_table[1]: ["ls", "-l", "-a"]	- precisa ser array. precisa? ou converte pra array logo antes do exec?
-								command_table[2] ["grep", "x"]			- idem */
+	t_list			*token_list;
+	t_cmd_table		command_table;
 	t_redirections	redirections;
 	int				return_code;
 }				t_tudao;
@@ -68,6 +71,7 @@ void	insert_in_hashtable(char *string, int is_env_var,
 
 // init_routines.c
 void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void	init_tudao(void);
 
 // lexer.c
 void	lexer_line(char	*line_read);
@@ -77,6 +81,7 @@ void	skip_quotes(char *line_read, int *index);
 void	quoted_generate(char *line_read, int *index, char *content);
 int		count_redirect(char *line_read);
 void	redirect_gen(char *line_read, char *content);
+void	free_lexer(void);
 
 // utils_test.c
 void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
