@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 13:36:57 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:31:08 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	check_tokens_consistency(void)
 				|| is_and_or((char *) pivot->next->content))
 				print_syntax_error_exit(pivot->next);
 		}
-		else if (is_and_or((char *) pivot->next->content))
+		else if (is_and_or((char *) pivot->content))
 		{
 			if (is_pipe((char *) pivot->next->content)
 				|| is_and_or((char *) pivot->next->content))
@@ -38,6 +38,8 @@ void	check_tokens_consistency(void)
 		}
 		pivot = pivot->next;
 	}
+	// if (pivot == ">" ou "<" ou ">>" ou "<<")
+	// 	printf("bash: syntax error near unexpected token `newline'")
 }
 
 int	count_commands(void)
@@ -78,9 +80,9 @@ void	set_up_command_table(void)
 
 void	parse_tokens(void)
 {
-	mock_tokens();
+	// mock_tokens();
 	check_tokens_consistency();
 	set_up_command_table();
-	free_mock();
+	// free_mock();
 	return ;
 }
