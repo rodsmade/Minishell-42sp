@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 13:30:30 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:09:25 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ void	print_syntax_error_exit(t_list	*token)
 {
 	printf("bash: syntax error near unexpected token `%s'",
 		(char *) token->next->content);
-	exit(2);
+	// free_all no q for necessário antes de encerrar o REPL
+	// retornar o prompt, com a variável $? = 2.
+	return ;
 }
