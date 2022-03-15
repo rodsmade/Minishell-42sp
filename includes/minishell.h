@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 13:49:36 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:14:19 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ bool			is_special_token(char *token);
 bool			is_redirect(char *token);
 bool			is_pipe(char *token);
 bool			is_and_or(char *token);
+bool			is_pipe_and_or(char *token);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
