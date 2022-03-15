@@ -6,11 +6,24 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:13:48 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/14 23:02:12 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/15 13:05:55 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_lexer(void)
+{
+	t_list	*tmp;
+
+	while (g_tudao.token_list != NULL)
+	{
+		tmp = g_tudao.token_list->next;
+		ft_free_ptr((void *)&g_tudao.token_list->content);
+		ft_free_ptr((void *)&g_tudao.token_list);
+		g_tudao.token_list = tmp;
+	}
+}
 
 void	skip_quotes(char *line_read, int *index)
 {

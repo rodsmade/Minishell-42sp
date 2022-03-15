@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/10 18:35:27 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/14 22:57:50 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,10 @@ void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void	lexer_line(char	*line_read);
 
 // utils_lexer.c
-int		is_expansible(char line_read);
-int		is_redirect(char *line_read);
-int		check_char(char *line_read, int *index, int *into_word);
-void	space_iter(char *line_read, int *into_word, int *index);
-int		quote_iter(char *line_read, int *index, int *into_word);
+void	skip_quotes(char *line_read, int *index);
+void	quoted_generate(char *line_read, int *index, char *content);
+int		count_redirect(char *line_read);
+void	redirect_gen(char *line_read, char *content);
 
 // utils_test.c
 void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
