@@ -4,5 +4,16 @@ testes do parser
 $ ls > output1 > output2
 $ ls > output2 > output1
 $ ls > output1 > output2 > output3
+$ ls -l >> out1 >> out2 >> out3
+$ ls -l >> out1 > out2 >> out3
+$ ls -l < | grep x
+	bash: syntax error near unexpected token `|'
+$ ls -l || | grep x
+	bash: syntax error near unexpected token `|'
+$ ls -l | ||  grep x
+	bash: syntax error near unexpected token `||'
+$ ls -l | &&  grep x
+	bash: syntax error near unexpected token `&&'
+
 // restritamente falando, o bash apaga o conteúdo de output2 e output1 e só escreve o output no output3.
 // acho que tudo bem a gnt só ignorar os redirects em excesso e considerar só o último da esquerda pra direita?
