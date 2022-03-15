@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   teste.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/15 13:32:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 13:33:54 by roaraujo         ###   ########.fr       */
+/*   Created: 2022/03/15 13:21:37 by adrianofaus       #+#    #+#             */
+/*   Updated: 2022/03/15 13:27:41 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ int	main(int argc, char *argv[], char *envp[])
 	printf("%p\n", arr[0]);
 	if (-1 == execve(arr[0], arr, envp))
 		printf("deu ruim\n");
-	return (0);
+	return 0;
 }

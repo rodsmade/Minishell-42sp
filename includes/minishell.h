@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
 /*   Updated: 2022/03/15 13:35:55 by roaraujo         ###   ########.fr       */
@@ -78,13 +78,20 @@ void			init_tudao(void);
 // lexer.c
 void			lexer_line(char	*line_read);
 
-// parser.c
-void			parse_tokens(void);
+// utils_lexer.c
+void	skip_quotes(char *line_read, int *index);
+void	quoted_generate(char *line_read, int *index, char *content);
+int		count_redirect(char *line_read);
+void	redirect_gen(char *line_read, char *content);
+void	free_lexer(void);
 
 // utils_lexer_mock.c
 void			print_list_so_far(void);
 void			mock_tokens(void);
 void			free_mock(void);
+
+// parser.c
+void			parse_tokens(void);
 
 // utils_parser.c
 bool			is_special_token(char *token);

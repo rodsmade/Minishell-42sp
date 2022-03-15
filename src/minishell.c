@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
 /*   Updated: 2022/03/15 13:40:22 by roaraujo         ###   ########.fr       */
@@ -18,13 +18,12 @@ void	get_env_variables(char **envp)
 	int			i;
 
 	i = -1;
-	init_hashtable(&hashtable);
+	init_hashtable(&g_tudao.hashtable);
 	while (envp[++i])
 	{
-		insert_in_hashtable(envp[i], 1, &hashtable);
+		insert_in_hashtable(envp[i], 1, &g_tudao.hashtable);
 	}
-	print_hashtable(&hashtable);
-	free_hashtable(&hashtable);
+	free_hashtable(&g_tudao.hashtable);
 	return ;
 }
 
@@ -40,9 +39,13 @@ void	repl(void)
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
 		add_history(line_read);
+		lexer_line(line_read);
 		parse_tokens();
 		if (line_read)
+		{
 			ft_free_ptr((void *)&line_read);
+			free_lexer();
+		}
 	}
 	ft_free_ptr((void *)&line_read);
 	rl_clear_history();
