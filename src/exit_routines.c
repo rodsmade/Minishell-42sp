@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 16:09:25 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:57:33 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ void	free_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 }
 
 void	print_syntax_error_exit(t_list	*token)
+/**
+ * TODO: 
+ * 	- free_all no q for necessário antes de encerrar o REPL
+ * 	- retornar o prompt principal (repl), e setar a variável $? = 2.
+ */
 {
 	printf("bash: syntax error near unexpected token `%s'",
 		(char *) token->next->content);
-	// free_all no q for necessário antes de encerrar o REPL
-	// retornar o prompt, com a variável $? = 2.
 	return ;
 }
