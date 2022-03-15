@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 12:50:19 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/15 13:40:22 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	repl(void)
 {
 	char	*line_read;
 
+	init_tudao();
 	line_read = NULL;
 	while (1)
 	{
@@ -39,6 +40,7 @@ void	repl(void)
 			break ;
 		add_history(line_read);
 		lexer_line(line_read);
+		parse_tokens();
 		if (line_read)
 		{
 			ft_free_ptr((void *)&line_read);

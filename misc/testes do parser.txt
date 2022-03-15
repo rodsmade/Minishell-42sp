@@ -1,0 +1,42 @@
+testes do parser
+
+# redirection
+$ ls > output1 > output2
+$ ls > output2 > output1
+$ ls > output1 > output2 > output3
+$ ls -l >> out1 >> out2 >> out3
+$ ls -l >> out1 > out2 >> out3
+// CONCLUSÃO: restritamente falando, o bash apaga o conteúdo de output2 e output1 e só escreve o output no output3.
+
+# repetição de tokens especiais um seguido do outro
+$ ls -l < | grep x
+	bash: syntax error near unexpected token `|'
+$ ls -l || | grep x
+	bash: syntax error near unexpected token `|'
+$ ls -l | ||  grep x
+	bash: syntax error near unexpected token `||'
+$ ls -l | &&  grep x
+	bash: syntax error near unexpected token `&&'
+$ ls |
+	> ^C		(abre um newline, fica esperando "terminar" o input. em loop enquanto for \n)
+$ ls >
+	bash: syntax error near unexpected token `newline'
+$ ls <
+	bash: syntax error near unexpected token `newline'
+$ ls >>
+	bash: syntax error near unexpected token `newline'
+$ ls <<
+	bash: syntax error near unexpected token `newline'
+
+# quando o input termina em |, || ou &&
+$ echo a > output || ls -l |  ls && ls -l > output2 |
+> ls |
+> ls &&
+> ls ||
+> ls | ||
+	bash: syntax error near unexpected token `||'
+// OBS: retornando erro de sintaxe ou estando tudo certo, o que adiciona no history no final é:
+$ echo a > output || ls -l |  ls && ls -l > output2 | ls | ls && ls || ls | ||
+// CONCLUSÃO: dentro do repl precisa existir outro repl (que recebe um input e passa esse input pelo lexer e pelo parser)
+// 				enquanto a lista de tokens terminar em |, || ou &&. No momento em que uma inconsistência é encontrada,
+//				esse repl interno se quebra (break) e o minishell retorna erro, e o repl de fora vai pra próxima iteração

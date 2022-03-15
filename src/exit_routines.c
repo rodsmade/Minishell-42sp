@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/10 12:08:40 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:30:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,11 @@ void	free_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 	while (++i < TABLE_SIZE)
 		ft_lstclear(&(*hashtable)[i], free_env_var);
 	return ;
+}
+
+void	print_syntax_error_exit(t_list	*token)
+{
+	printf("bash: syntax error near unexpected token `%s'",
+		(char *) token->next->content);
+	exit(2);
 }

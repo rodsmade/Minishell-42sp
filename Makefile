@@ -26,6 +26,9 @@ FILES			=	minishell.c \
 					exit_routines.c \
 					hashtable.c \
 					init_routines.c \
+					parser.c \
+					utils_lexer_mock.c \
+					utils_parser.c \
 					lexer.c \
 					utils_lexer.c \
 					utils_test.c
