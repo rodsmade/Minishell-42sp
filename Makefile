@@ -27,6 +27,8 @@ FILES			=	minishell.c \
 					hashtable.c \
 					init_routines.c \
 					parser.c \
+					utils_lexer_mock.c \
+					utils_parser.c \
 					utils_test.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \

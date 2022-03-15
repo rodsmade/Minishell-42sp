@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/14 14:00:34 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:35:55 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ typedef struct s_env_var
 	int					is_env_var;
 }				t_env_var;
 
-typedef struct s_redirections
+typedef struct s_command
 {
 	bool	has_redirect;
-	int		in;
-	int		out;
+	t_list	*input;
+	t_list	*output;
+	bool	is_heredoc;
+	bool	is_concat;
 	int		err;
-}				t_redirections;
+}				t_command;
 
 typedef struct s_cmd_table
 {
@@ -53,7 +55,6 @@ typedef struct s_tudao
 	t_list			*hashtable[TABLE_SIZE];
 	t_list			*token_list;
 	t_cmd_table		command_table;
-	t_redirections	redirections;
 	int				return_code;
 }				t_tudao;
 
@@ -64,6 +65,7 @@ t_tudao		g_tudao;
 // exit_routines.c
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void			print_syntax_error_exit(t_list	*token);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,
@@ -76,15 +78,19 @@ void			init_tudao(void);
 // lexer.c
 void			lexer_line(char	*line_read);
 
-// utils_lexer.c
+// parser.c
 void			parse_tokens(void);
 
-// utils_lexer.c
-int				is_expansible(char line_read);
-int				is_redirect(char *line_read);
-int				check_char(char *line_read, int *index, int *into_word);
-void			space_iter(char *line_read, int *into_word, int *index);
-int				quote_iter(char *line_read, int *index, int *into_word);
+// utils_lexer_mock.c
+void			print_list_so_far(void);
+void			mock_tokens(void);
+void			free_mock(void);
+
+// utils_parser.c
+bool			is_special_token(char *token);
+bool			is_redirect(char *token);
+bool			is_pipe(char *token);
+bool			is_and_or(char *token);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
