@@ -23,10 +23,6 @@
 // ----------------------------------------------	DEFINES		----------------
 # define TABLE_SIZE	50
 
-// ----------------------------------------------	TYPEDEFS	----------------
-typedef int	t_bool;
-enum {false, true};
-
 // ----------------------------------------------	STRUCTS		----------------
 typedef struct s_env_var
 {
@@ -46,10 +42,8 @@ typedef struct s_redirections
 typedef struct s_tudao
 {
 	t_list			*hashtable[TABLE_SIZE];
-	t_list			*token_list; // a lista de tokens
-	char			***command_table;	/* tabela de arrays de strings tipo:
-								command_table[1]: ["ls", "-l", "-a"]	- precisa ser array. precisa? ou converte pra array logo antes do exec?
-								command_table[2] ["grep", "x"]			- idem */
+	t_list			*token_list;
+	char			***command_table;
 	t_redirections	redirections;
 	int				return_code;
 }				t_tudao;
