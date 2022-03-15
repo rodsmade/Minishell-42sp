@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 22:15:02 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/08 22:15:26 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:28:41 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 		printf("%d\t: ", i);
 		while (pivot != NULL)
 		{
-			printf("{nome: %s, value: %s}", ((t_env_var *)(pivot->content))->name, ((t_env_var *)(pivot->content))->value);
+			printf("{nome: %s, value: %s}", \
+			((t_env_var *)(pivot->content))->name, \
+			((t_env_var *)(pivot->content))->value);
 			if (pivot->next != NULL)
 				printf(",\n\t  ");
 			pivot = pivot->next;
