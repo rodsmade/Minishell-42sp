@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 16:14:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:40:39 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <unistd.h>	// write(), close()
 # include <stdlib.h>	// free()
 # include <stdbool.h>	// C99+ standard bool typedef
+# include <fcntl.h>		// open function
+# include <dirent.h>	// opendir, closedir, readir functions
+# include <sys/stat.h>  // stat, fstat, lstat
+# include <sys/types.h>	// stat, fstat, lstat
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
@@ -102,5 +106,8 @@ bool			is_pipe_and_or(char *token);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+
+//built-in pwd
+void	builtin_pwd(void);
 
 #endif
