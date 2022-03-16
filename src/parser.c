@@ -6,13 +6,23 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 13:36:57 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:58:12 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	check_tokens_consistency(void)
+/**
+ * TODO:
+ * 		- refatorar a função (muitas linhas);
+ * 		- rever se dá pra deixar o while com pivot só e se pivot->next 
+ * 		- se não der, considerar o caso em que o último elemento é um redirect
+ * 			sozinho (< > << >>), ex:
+ * 	// if (pivot == ">" ou "<" ou ">>" ou "<<")
+ * 	// 	printf("bash: syntax error near unexpected token `newline'")
+ * 														  ^~~~~~~~~~~ chumbar
+ */
 {
 	t_list	*pivot;
 
@@ -25,7 +35,7 @@ void	check_tokens_consistency(void)
 				|| is_and_or((char *) pivot->next->content))
 				print_syntax_error_exit(pivot->next);
 		}
-		else if (is_and_or((char *) pivot->next->content))
+		else if (is_and_or((char *) pivot->content))
 		{
 			if (is_pipe((char *) pivot->next->content)
 				|| is_and_or((char *) pivot->next->content))
@@ -78,9 +88,7 @@ void	set_up_command_table(void)
 
 void	parse_tokens(void)
 {
-	mock_tokens();
 	check_tokens_consistency();
 	set_up_command_table();
-	free_mock();
 	return ;
 }
