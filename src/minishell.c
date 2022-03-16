@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 13:40:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 22:16:45 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,23 @@ void	get_env_variables(char **envp)
 	return ;
 }
 
+void	assemble_line(char **line_read)
+{
+	char	*aux_str;
+	char	*temp;
+
+	aux_str = readline("> ");
+	temp = aux_str;
+	aux_str = ft_strjoin(" ", aux_str);
+	free(temp);
+	temp = (*line_read);
+	(*line_read) = ft_strjoin((*line_read), aux_str);
+	lexer_line(aux_str);
+	parse_tokens();
+	free(aux_str);
+	free(temp);
+}
+
 void	repl(void)
 {
 	char	*line_read;
@@ -38,9 +55,11 @@ void	repl(void)
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
-		add_history(line_read);
 		lexer_line(line_read);
 		parse_tokens();
+		while (is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
+			assemble_line(&line_read);
+		add_history(line_read);
 		if (line_read)
 		{
 			ft_free_ptr((void *)&line_read);
