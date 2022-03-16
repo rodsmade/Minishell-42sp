@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/14 13:58:55 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/15 22:17:09 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 
 void	init_tudao(void)
 {
+	g_tudao.token_list = NULL;
 	g_tudao.command_table.has_and_operator = false;
 	g_tudao.command_table.has_or_operator = false;
 	return ;
