@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 16:14:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:21:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_tudao
 	t_list			*token_list;
 	t_cmd_table		command_table;
 	int				return_code;
+	bool			syntax_error;
 }				t_tudao;
 
 // ----------------------------------------------	GLOBAL VAR	----------------
@@ -65,7 +66,7 @@ t_tudao		g_tudao;
 // exit_routines.c
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
-void			print_syntax_error_exit(t_list	*token);
+void			print_syntax_error_exit(char *token);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,

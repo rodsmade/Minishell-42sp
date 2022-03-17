@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 16:58:12 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:24:20 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,46 +27,23 @@ void	check_tokens_consistency(void)
 	t_list	*pivot;
 
 	pivot = g_tudao.token_list;
-	while (pivot && pivot->next)
+	while (pivot && pivot->next && !g_tudao.syntax_error)
 	{
-		if (is_pipe((char *) pivot->content))
-		{
-			if (is_pipe((char *) pivot->next->content)
-				|| is_and_or((char *) pivot->next->content))
-				print_syntax_error_exit(pivot->next);
-		}
-		else if (is_and_or((char *) pivot->content))
-		{
-			if (is_pipe((char *) pivot->next->content)
-				|| is_and_or((char *) pivot->next->content))
-				print_syntax_error_exit(pivot->next);
-		}
-		else if (is_redirect((char *) pivot->content))
-		{
-			if (is_special_token((char *) pivot->next->content))
-				print_syntax_error_exit(pivot->next);
-		}
+		if (is_pipe((char *) pivot->content)
+			&& (is_pipe_and_or((char *) pivot->next->content)))
+			print_syntax_error_exit((char *) pivot->next->content);
+		else if (is_and_or((char *) pivot->content)
+			&& (is_pipe_and_or((char *) pivot->next->content)))
+			print_syntax_error_exit((char *) pivot->next->content);
+		else if (is_redirect((char *) pivot->content)
+			&& (is_special_token((char *) pivot->next->content)))
+			print_syntax_error_exit((char *) pivot->next->content);
 		pivot = pivot->next;
 	}
-}
-
-int	count_commands(void)
-{
-	int		cmd_count;
-	t_list	*pivot;
-
-	cmd_count = 1;
-	pivot = g_tudao.token_list;
-	while (pivot)
-	{
-		if (ft_strncmp((char *) pivot->content, "||", 3) == 0
-			|| ft_strncmp((char *) pivot->content, "&&", 3) == 0)
-			break ;
-		if (ft_strncmp((char *) pivot->content, "|", 2) == 0)
-			cmd_count++;
-		pivot = pivot->next;
-	}
-	return (cmd_count);
+	if (!g_tudao.syntax_error
+		&& is_redirect((char *) pivot->content) && !pivot->next)
+		print_syntax_error_exit("newline");
+	return ;
 }
 
 // TODO: implementar lógica de adicionar comando na lista de pipeline
@@ -79,16 +56,13 @@ int	count_commands(void)
 // }
 void	set_up_command_table(void)
 {
-	int	cmd_count;
-
-	cmd_count = count_commands();
-	printf("commands identified: %d\n", cmd_count);
 	return ;
 }
 
 void	parse_tokens(void)
 {
 	check_tokens_consistency();
-	set_up_command_table();
+	if (!g_tudao.syntax_error)
+		set_up_command_table();
 	return ;
 }
