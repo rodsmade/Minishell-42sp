@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/17 18:24:24 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:49:10 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	repl(void)
 			break ;
 		lexer_line(line_read);
 		parse_tokens();
-		while (is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content)
-			&& !g_tudao.syntax_error)
+		while (g_tudao.token_list && !g_tudao.syntax_error
+			&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
 			assemble_line(&line_read);
 		add_history(line_read);
 		if (line_read)
