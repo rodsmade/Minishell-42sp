@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/17 18:21:45 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:30:17 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ typedef struct s_env_var
 
 typedef struct s_command
 {
-	bool	has_redirect;
-	t_list	*input;
-	t_list	*output;
-	bool	is_heredoc;
-	bool	is_concat;
-	int		err;
+	t_list	*cmds_with_flags;
+	t_list	*inputs;
+	t_list	*outputs;
+	t_list	*heredocs;
+	t_list	*o_concats;
+	t_list	*err;
 }				t_command;
 
 typedef struct s_cmd_table
