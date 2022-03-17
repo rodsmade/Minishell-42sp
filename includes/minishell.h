@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/17 18:30:17 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:23:59 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ typedef struct s_command
 
 typedef struct s_cmd_table
 {
-	t_list	**main_pipeline;
-	bool	has_and_operator;
-	bool	has_or_operator;
-	t_list	**secondary_pipeline;
+	t_list	*main_pipeline;
+	t_list	*secondary_pipeline;
 }				t_cmd_table;
 
 typedef struct s_tudao
@@ -100,6 +98,12 @@ bool			is_redirect(char *token);
 bool			is_pipe(char *token);
 bool			is_and_or(char *token);
 bool			is_pipe_and_or(char *token);
+
+// utils_parser_2.c
+bool			is_input(t_list *token);
+bool			is_output(t_list *token);
+bool			is_heredoc(t_list *token);
+bool			is_o_concat(t_list *token);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);

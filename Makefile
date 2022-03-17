@@ -29,6 +29,7 @@ FILES			=	minishell.c \
 					parser.c \
 					utils_lexer_mock.c \
 					utils_parser.c \
+					utils_parser_2.c \
 					lexer.c \
 					utils_lexer.c \
 					utils_test.c
