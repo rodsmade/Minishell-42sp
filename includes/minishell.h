@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 16:14:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:47:30 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void			print_syntax_error_exit(t_list	*token);
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,
 					t_list *(*hashtable)[TABLE_SIZE]);
+int				hash_string(char *str);
 
 // init_routines.c
 void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
@@ -102,5 +103,8 @@ bool			is_pipe_and_or(char *token);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+
+// built-in-cd
+void	builtin_cd(char *path);
 
 #endif
