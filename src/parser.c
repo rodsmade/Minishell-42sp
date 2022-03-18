@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/17 21:56:41 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/17 22:16:00 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,9 +175,10 @@ void	set_up_main_pipeline(void)
 				// tmp = ((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next;
 				// while (((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags)
 				// {
-					// free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags);
+					free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->content);
+					free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags);
+					free(g_tudao.command_table.main_pipeline);
 					// free(((t_command *)g_tudao.command_table.main_pipeline));
-					// free(g_tudao.command_table.main_pipeline);
 					// ((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags = tmp;
 				// 	if (((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next)
 				// 		tmp = ((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next;
@@ -189,7 +190,7 @@ void	set_up_main_pipeline(void)
 void	set_up_command_table(void)
 {
 	set_up_main_pipeline();
-	print_redirects();
+	// print_redirects();
 	// print_commands();
 	// free_commands();
 	return ;
