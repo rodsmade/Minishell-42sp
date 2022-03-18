@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/18 12:17:08 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/18 13:49:07 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,49 @@ void	print_commands_and_redirects(void)
 
 void	free_main_pipeline(void)
 {
-	free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->content);
-	free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags);
+	t_list	*tmp;
+
+/*---------------------- DA FREE EM TODAS AS LISTAS DENTRO DA T_COMMAND  --------------------*/
+	while (((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags)
+	{
+		tmp = ((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags->next;
+		free(((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags);
+		((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags = tmp;
+	}
+	while (((t_command *)g_tudao.command_table.main_pipeline->content)->inputs)
+	{
+		tmp = ((t_command *)g_tudao.command_table.main_pipeline->content)->inputs->next;
+		free(((t_command *)g_tudao.command_table.main_pipeline->content)->inputs);
+		((t_command *)g_tudao.command_table.main_pipeline->content)->inputs = tmp;
+	}
+	while (((t_command *)g_tudao.command_table.main_pipeline->content)->outputs)
+	{
+		tmp = ((t_command *)g_tudao.command_table.main_pipeline->content)->outputs->next;
+		free(((t_command *)g_tudao.command_table.main_pipeline->content)->outputs);
+		((t_command *)g_tudao.command_table.main_pipeline->content)->outputs = tmp;
+	}
+	while (((t_command *)g_tudao.command_table.main_pipeline->content)->heredocs)
+	{
+		tmp = ((t_command *)g_tudao.command_table.main_pipeline->content)->heredocs->next;
+		free(((t_command *)g_tudao.command_table.main_pipeline->content)->heredocs);
+		((t_command *)g_tudao.command_table.main_pipeline->content)->heredocs = tmp;
+	}
+	while (((t_command *)g_tudao.command_table.main_pipeline->content)->o_concats)
+	{
+		tmp = ((t_command *)g_tudao.command_table.main_pipeline->content)->o_concats->next;
+		free(((t_command *)g_tudao.command_table.main_pipeline->content)->o_concats);
+		((t_command *)g_tudao.command_table.main_pipeline->content)->o_concats = tmp;
+	}
+	while (((t_command *)g_tudao.command_table.main_pipeline->content)->err)
+	{
+		tmp = ((t_command *)g_tudao.command_table.main_pipeline->content)->err->next;
+		free(((t_command *)g_tudao.command_table.main_pipeline->content)->err);
+		((t_command *)g_tudao.command_table.main_pipeline->content)->err = tmp;
+	}
+/*------------------------------------------------------------------------------------------*/
+	// free(((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags->next);
+	// free(((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags);
+	free((t_command *)g_tudao.command_table.main_pipeline->content);
 	free(g_tudao.command_table.main_pipeline);
 }
 
@@ -173,7 +214,7 @@ void	set_up_command_table(void)
 {
 	set_up_main_pipeline();
 	print_commands_and_redirects();
-	// free_main_pipeline();
+	free_main_pipeline();
 	return ;
 }
 
