@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/18 11:57:30 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/18 12:17:08 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	capture_command(t_command	*cmd, t_list **pivot)
 {
 	void	*next_token;
 
-	next_token = (*pivot)->next->content;
+	if ((*pivot)->next)
+		next_token = (*pivot)->next->content;
 	while ((*pivot) && !is_pipe_and_or((*pivot)->content))
 	{
 		if (is_redirect((char *) (*pivot)->content))
@@ -143,21 +144,9 @@ void	print_commands_and_redirects(void)
 
 void	free_main_pipeline(void)
 {
-	t_list		*tmp;
-
-	while (g_tudao.command_table.main_pipeline)
-	{
-		tmp = ((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next;
-		while (((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags)
-		{
-			free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->content);
-			free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags);
-			free(g_tudao.command_table.main_pipeline);
-			((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags = tmp;
-			if (((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next)
-				tmp = ((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next;
-		}
-	}
+	free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->content);
+	free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags);
+	free(g_tudao.command_table.main_pipeline);
 }
 
 void	set_up_main_pipeline(void)
