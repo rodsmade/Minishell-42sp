@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/18 13:49:07 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/18 18:05:27 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	capture_command(t_command	*cmd, t_list **pivot)
 {
 	void	*next_token;
 
-	if ((*pivot)->next)
-		next_token = (*pivot)->next->content;
 	while ((*pivot) && !is_pipe_and_or((*pivot)->content))
 	{
+		if ((*pivot)->next)
+			next_token = (*pivot)->next->content;
 		if (is_redirect((char *) (*pivot)->content))
 		{
 			if (is_input((*pivot)))
