@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/17 19:44:29 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:56:41 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,15 @@ void	print_redirects(void)
 	i = -1;
 	while (pivot_cmd)
 	{
-		printf("cmd[%i]'s redirects:\n", ++i);
+		printf("cmd[%i]'s:\n", ++i);
+		pivot_redirect = ((t_command *) pivot_cmd->content)->cmds_with_flags;
+		printf("\tcmd's with flags: ");
+		while (pivot_redirect)
+		{
+			printf("(%s), ", (char *) pivot_redirect->content);
+			pivot_redirect = pivot_redirect->next;			
+		}
+		printf("\n");
 		pivot_redirect = ((t_command *) pivot_cmd->content)->inputs;
 		printf("\tinputs: ");
 		while (pivot_redirect)
@@ -125,15 +133,29 @@ void	print_redirects(void)
 	return ;
 }
 
-void	print_single_command_full()
+void	capture_commands(t_command	*cmd)
 {
+	t_list	*pivot;
 
+	pivot = g_tudao.token_list;
+	while (pivot && !is_pipe_and_or(pivot->content))
+	{
+		if (is_redirect((char *) pivot->content))
+			pivot = pivot->next->next;
+		else
+		{
+			ft_lstadd_back(&cmd->cmds_with_flags, ft_lstnew(pivot->content));
+			pivot = pivot->next;
+		}
+	}
+	return ;
 }
 
 void	set_up_main_pipeline(void)
 {
 	t_command	*command;
 	// t_list		*pivot;
+	// t_list		*tmp;
 
 	// pivot = g_tudao.token_list;
 	// while (pivot && !is_and_or(pivot->content))
@@ -144,9 +166,22 @@ void	set_up_main_pipeline(void)
 				printf("[ERROR] deu ruim o malloc ajustar isso aqui depois\n");
 			init_command(command);
 			capture_redirects(command);
+			capture_commands(command);
 			ft_lstadd_back(&g_tudao.command_table.main_pipeline,
 				ft_lstnew((void *) command));
-			// capture_commands(command);
+			// ft_lstclear(&g_tudao.command_table.main_pipeline, free_cmds);
+			// while (g_tudao.command_table.main_pipeline)
+			// {
+				// tmp = ((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next;
+				// while (((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags)
+				// {
+					// free(((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags);
+					// free(((t_command *)g_tudao.command_table.main_pipeline));
+					// free(g_tudao.command_table.main_pipeline);
+					// ((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags = tmp;
+				// 	if (((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next)
+				// 		tmp = ((t_command *)g_tudao.command_table.main_pipeline)->cmds_with_flags->next;
+				// }
 	// 	}
 	// }
 }
