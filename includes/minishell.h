@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/16 16:40:39 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/21 17:16:26 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,8 @@ void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
 //built-in pwd
 void	builtin_pwd(void);
+
+//built-in echo
+void	builtin_echo(char *str);
 
 #endif

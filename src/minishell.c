@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/16 13:46:23 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/21 17:17:08 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void	repl(void)
 		// 	ft_free_ptr((void *)&line_read);
 		// 	free_lexer();
 		// }
-		if (!ft_strncmp(line_read, "pwd", 4))
-			builtin_pwd();
+		// if (!ft_strncmp(line_read, "pwd", 4))
+		// 	builtin_pwd();
+		builtin_echo(line_read);
 	}
 	ft_free_ptr((void *)&line_read);
 	rl_clear_history();
