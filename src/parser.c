@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/18 18:24:09 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/21 21:34:50 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	free_t_command_list(t_list *lst)
 	while (lst)
 	{
 		tmp = lst->next;
-		free(lst);
+		ft_free_ptr((void *)&lst);
 		lst = tmp;
 	}
 }
@@ -165,15 +165,31 @@ void	free_t_command(t_command *cmd)
 	return ;
 }
 
+void	free_table_node(t_list *lst)
+{
+	t_list	*tmp;
+
+	while (lst)
+	{
+		free_t_command((t_command *)lst->content);
+		tmp = lst->next;
+		ft_free_ptr((void *)&(lst->content));
+		ft_free_ptr((void *)&(lst));
+		lst = tmp;
+	}
+}
+
 void	free_main_pipeline(void)
 {
 /*---------------------- DA FREE EM TODAS AS LISTAS DENTRO DA T_COMMAND  --------------------*/
-	free_t_command((t_command *)g_tudao.command_table.main_pipeline->content);
+	// free_t_command_content((t_command *)g_tudao.command_table.main_pipeline->content);
 /*------------------------------------------------------------------------------------------*/
 	// free(((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags->next);
 	// free(((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags);
-	free((t_command *)g_tudao.command_table.main_pipeline->content);
-	free(g_tudao.command_table.main_pipeline);
+	// free((t_command *)g_tudao.command_table.main_pipeline->content);
+	free_table_node(g_tudao.command_table.main_pipeline);
+	// free((t_command *)g_tudao.command_table.main_pipeline->next);
+	// free(g_tudao.command_table.main_pipeline);
 }
 
 void	set_up_main_pipeline(void)
