@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 16:14:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/22 12:27:18 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,18 @@ typedef struct s_env_var
 
 typedef struct s_command
 {
-	bool	has_redirect;
-	t_list	*input;
-	t_list	*output;
-	bool	is_heredoc;
-	bool	is_concat;
-	int		err;
+	t_list	*cmds_with_flags;
+	t_list	*inputs;
+	t_list	*outputs;
+	t_list	*heredocs;
+	t_list	*o_concats;
+	t_list	*err;
 }				t_command;
 
 typedef struct s_cmd_table
 {
-	t_list	**main_pipeline;
-	bool	has_and_operator;
-	bool	has_or_operator;
-	t_list	**secondary_pipeline;
+	t_list	*main_pipeline;
+	t_list	*secondary_pipeline;
 }				t_cmd_table;
 
 typedef struct s_tudao
@@ -56,6 +54,7 @@ typedef struct s_tudao
 	t_list			*token_list;
 	t_cmd_table		command_table;
 	int				return_code;
+	bool			syntax_error;
 }				t_tudao;
 
 // ----------------------------------------------	GLOBAL VAR	----------------
@@ -65,7 +64,13 @@ t_tudao		g_tudao;
 // exit_routines.c
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
-void			print_syntax_error_exit(t_list	*token);
+void			free_main_pipeline(void);
+void			print_syntax_error_exit(char *token);
+
+// exit_routines.c
+void			free_t_command_list(t_list *lst);
+void			free_t_command(t_command *cmd);
+void			free_main_pipeline(void);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,
@@ -74,6 +79,7 @@ void			insert_in_hashtable(char *string, int is_env_var,
 // init_routines.c
 void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			init_tudao(void);
+void			init_command(t_command *command);
 
 // lexer.c
 void			lexer_line(char	*line_read);
@@ -100,7 +106,14 @@ bool			is_pipe(char *token);
 bool			is_and_or(char *token);
 bool			is_pipe_and_or(char *token);
 
+// utils_parser_2.c
+bool			is_input(t_list *token);
+bool			is_output(t_list *token);
+bool			is_heredoc(t_list *token);
+bool			is_o_concat(t_list *token);
+
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void			print_commands_and_redirects(void);
 
 #endif

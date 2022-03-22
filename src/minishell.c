@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 22:16:45 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/22 11:44:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,18 @@ void	repl(void)
 {
 	char	*line_read;
 
-	init_tudao();
 	line_read = NULL;
 	while (1)
 	{
+		init_tudao();
+		g_tudao.syntax_error = false;
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
 		lexer_line(line_read);
 		parse_tokens();
-		while (is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
+		while (g_tudao.token_list && !g_tudao.syntax_error
+			&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
 			assemble_line(&line_read);
 		add_history(line_read);
 		if (line_read)

@@ -24,11 +24,13 @@ VALGRIND		=	valgrind --leak-check=full \
 
 FILES			=	minishell.c \
 					exit_routines.c \
+					exit_routines_2.c \
 					hashtable.c \
 					init_routines.c \
 					parser.c \
 					utils_lexer_mock.c \
 					utils_parser.c \
+					utils_parser_2.c \
 					lexer.c \
 					utils_lexer.c \
 					utils_test.c
