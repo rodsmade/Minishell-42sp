@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/17 18:49:10 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:44:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	repl(void)
 {
 	char	*line_read;
 
-	init_tudao();
 	line_read = NULL;
 	while (1)
 	{
+		init_tudao();
 		g_tudao.syntax_error = false;
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
 		if (ft_strncmp(line_read, "quit", 5) == 0)

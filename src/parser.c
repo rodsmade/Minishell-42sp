@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/21 21:34:50 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/22 11:51:28 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,10 +165,12 @@ void	free_t_command(t_command *cmd)
 	return ;
 }
 
-void	free_table_node(t_list *lst)
+void	free_main_pipeline(void)
 {
+	t_list	*lst;
 	t_list	*tmp;
 
+	lst = g_tudao.command_table.main_pipeline;
 	while (lst)
 	{
 		free_t_command((t_command *)lst->content);
@@ -177,19 +179,6 @@ void	free_table_node(t_list *lst)
 		ft_free_ptr((void *)&(lst));
 		lst = tmp;
 	}
-}
-
-void	free_main_pipeline(void)
-{
-/*---------------------- DA FREE EM TODAS AS LISTAS DENTRO DA T_COMMAND  --------------------*/
-	// free_t_command_content((t_command *)g_tudao.command_table.main_pipeline->content);
-/*------------------------------------------------------------------------------------------*/
-	// free(((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags->next);
-	// free(((t_command *)g_tudao.command_table.main_pipeline->content)->cmds_with_flags);
-	// free((t_command *)g_tudao.command_table.main_pipeline->content);
-	free_table_node(g_tudao.command_table.main_pipeline);
-	// free((t_command *)g_tudao.command_table.main_pipeline->next);
-	// free(g_tudao.command_table.main_pipeline);
 }
 
 void	set_up_main_pipeline(void)
