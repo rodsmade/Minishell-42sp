@@ -24,6 +24,7 @@ VALGRIND		=	valgrind --leak-check=full \
 
 FILES			=	minishell.c \
 					exit_routines.c \
+					exit_routines_2.c \
 					hashtable.c \
 					init_routines.c \
 					parser.c \

@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/17 19:23:59 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/22 12:27:18 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,13 @@ t_tudao		g_tudao;
 // exit_routines.c
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void			free_main_pipeline(void);
 void			print_syntax_error_exit(char *token);
+
+// exit_routines.c
+void			free_t_command_list(t_list *lst);
+void			free_t_command(t_command *cmd);
+void			free_main_pipeline(void);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,
@@ -73,6 +79,7 @@ void			insert_in_hashtable(char *string, int is_env_var,
 // init_routines.c
 void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			init_tudao(void);
+void			init_command(t_command *command);
 
 // lexer.c
 void			lexer_line(char	*line_read);
@@ -107,5 +114,6 @@ bool			is_o_concat(t_list *token);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+void			print_commands_and_redirects(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/22 11:51:28 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/22 12:26:55 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,6 @@ void	check_tokens_consistency(void)
 	return ;
 }
 
-void	init_command(t_command *command)
-{
-	command->cmds_with_flags = NULL;
-	command->inputs = NULL;
-	command->outputs = NULL;
-	command->heredocs = NULL;
-	command->o_concats = NULL;
-	command->err = NULL;
-	return ;
-}
-
 void	capture_command(t_command	*cmd, t_list **pivot)
 {
 	void	*next_token;
@@ -65,7 +54,7 @@ void	capture_command(t_command	*cmd, t_list **pivot)
 	{
 		if ((*pivot)->next)
 			next_token = (*pivot)->next->content;
-		if (is_redirect((char *) (*pivot)->content))
+		if (is_redirect((char *)(*pivot)->content))
 		{
 			if (is_input((*pivot)))
 				ft_lstadd_back(&cmd->inputs, ft_lstnew(next_token));
@@ -84,101 +73,6 @@ void	capture_command(t_command	*cmd, t_list **pivot)
 		}
 	}
 	return ;
-}
-
-void	print_commands_and_redirects(void)
-{
-	t_list	*pivot_cmd;
-	t_list	*pivot_redirect;
-	int		i;
-
-	pivot_cmd = g_tudao.command_table.main_pipeline;
-	i = -1;
-	while (pivot_cmd)
-	{
-		printf("cmd[%i]'s:\n", ++i);
-		pivot_redirect = ((t_command *) pivot_cmd->content)->cmds_with_flags;
-		printf("\tcmd's with flags: ");
-		while (pivot_redirect)
-		{
-			printf("(%s), ", (char *) pivot_redirect->content);
-			pivot_redirect = pivot_redirect->next;			
-		}
-		printf("\n");
-		pivot_redirect = ((t_command *) pivot_cmd->content)->inputs;
-		printf("\tinputs: ");
-		while (pivot_redirect)
-		{
-			printf("(%s), ", (char *) pivot_redirect->content);
-			pivot_redirect = pivot_redirect->next;
-		}
-		printf("\n");
-		pivot_redirect = ((t_command *) pivot_cmd->content)->outputs;
-		printf("\toutputs: ");
-		while (pivot_redirect)
-		{
-			printf("(%s), ", (char *) pivot_redirect->content);
-			pivot_redirect = pivot_redirect->next;
-		}
-		printf("\n");
-		pivot_redirect = ((t_command *) pivot_cmd->content)->heredocs;
-		printf("\theredocs: ");
-		while (pivot_redirect)
-		{
-			printf("(%s), ", (char *) pivot_redirect->content);
-			pivot_redirect = pivot_redirect->next;
-		}
-		printf("\n");
-		pivot_redirect = ((t_command *) pivot_cmd->content)->o_concats;
-		printf("\to_concats: ");
-		while (pivot_redirect)
-		{
-			printf("(%s), ", (char *) pivot_redirect->content);
-			pivot_redirect = pivot_redirect->next;
-		}
-		printf("\n");
-		pivot_cmd = pivot_cmd->next;
-	}
-	return ;
-}
-
-void	free_t_command_list(t_list *lst)
-{
-	t_list	*tmp;
-
-	while (lst)
-	{
-		tmp = lst->next;
-		ft_free_ptr((void *)&lst);
-		lst = tmp;
-	}
-}
-
-void	free_t_command(t_command *cmd)
-{
-	free_t_command_list(cmd->cmds_with_flags);
-	free_t_command_list(cmd->inputs);
-	free_t_command_list(cmd->outputs);
-	free_t_command_list(cmd->heredocs);
-	free_t_command_list(cmd->o_concats);
-	free_t_command_list(cmd->err);
-	return ;
-}
-
-void	free_main_pipeline(void)
-{
-	t_list	*lst;
-	t_list	*tmp;
-
-	lst = g_tudao.command_table.main_pipeline;
-	while (lst)
-	{
-		free_t_command((t_command *)lst->content);
-		tmp = lst->next;
-		ft_free_ptr((void *)&(lst->content));
-		ft_free_ptr((void *)&(lst));
-		lst = tmp;
-	}
 }
 
 void	set_up_main_pipeline(void)

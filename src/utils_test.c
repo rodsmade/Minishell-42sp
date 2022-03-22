@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 22:15:02 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/10 11:51:53 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/22 12:15:51 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,42 @@ void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 			pivot = pivot->next;
 		}
 		printf("\n");
+	}
+	return ;
+}
+
+static void	print_command_list(char *str, t_list *lst)
+{
+	t_list	*pivot;
+
+	pivot = lst;
+	printf("\t%s: ", str);
+	while (pivot)
+	{
+		printf("(%s), ", (char *) pivot->content);
+		pivot = pivot->next;
+	}
+	printf("\n");
+}
+
+void	print_commands_and_redirects(void)
+{
+	t_list		*pivot_cmd;
+	t_command	*cmd;
+	int			i;
+
+	pivot_cmd = g_tudao.command_table.main_pipeline;
+	i = -1;
+	while (pivot_cmd)
+	{
+		cmd = (t_command *) pivot_cmd->content;
+		printf("cmd[%i]'s:\n", ++i);
+		print_command_list("cmd's with flags", (cmd->cmds_with_flags));
+		print_command_list("inputs", (cmd->inputs));
+		print_command_list("outputs", (cmd->outputs));
+		print_command_list("heredocs", (cmd->heredocs));
+		print_command_list("o_concats", (cmd->o_concats));
+		pivot_cmd = pivot_cmd->next;
 	}
 	return ;
 }

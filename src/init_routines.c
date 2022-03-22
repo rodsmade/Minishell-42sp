@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/17 19:24:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/22 12:27:03 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,16 @@ void	init_tudao(void)
 	g_tudao.token_list = NULL;
 	g_tudao.command_table.main_pipeline = NULL;
 	g_tudao.command_table.secondary_pipeline = NULL;
+	return ;
+}
+
+void	init_command(t_command *command)
+{
+	command->cmds_with_flags = NULL;
+	command->inputs = NULL;
+	command->outputs = NULL;
+	command->heredocs = NULL;
+	command->o_concats = NULL;
+	command->err = NULL;
 	return ;
 }
