@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/16 18:47:30 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/22 20:25:07 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_tudao
 }				t_tudao;
 
 // ----------------------------------------------	GLOBAL VAR	----------------
-t_tudao		g_tudao;
+extern t_tudao		g_tudao;
 
 // ----------------------------------------------	PROTOTYPES	----------------
 // exit_routines.c
@@ -105,6 +105,10 @@ bool			is_pipe_and_or(char *token);
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
 // built-in-cd
-void	builtin_cd(char *path);
+void			builtin_cd(char *path);
+
+//utils hashtable
+void			update_hashtable(char *key, char *new_value);
+char			*read_hashtable(t_list *head, char *key);
 
 #endif

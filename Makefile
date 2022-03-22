@@ -32,7 +32,8 @@ FILES			=	minishell.c \
 					lexer.c \
 					utils_lexer.c \
 					utils_test.c \
-					cd.c
+					cd.c \
+					utils_hashtable.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h

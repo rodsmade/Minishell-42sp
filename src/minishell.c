@@ -6,12 +6,14 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/16 21:25:36 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/22 20:27:36 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
+
+t_tudao	g_tudao;
 
 void	get_env_variables(char **envp)
 {
@@ -54,10 +56,10 @@ void	repl(void)
 			break ;
 		lexer_line(line_read);
 		parse_tokens();
-		while (is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
-			assemble_line(&line_read);
+		// while (is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
+		// 	assemble_line(&line_read);
 		add_history(line_read);
-		builtin_cd(line_read);	
+		builtin_cd(line_read);
 		if (line_read)
 		{
 			ft_free_ptr((void *)&line_read);
@@ -78,7 +80,6 @@ int	main(int argc, char *argv[], char **envp)
 		return (1);
 	write(1, "Hello World !\n", 14);
 	get_env_variables(envp);
-	// print_hashtable(&g_tudao.hashtable);
 	repl();
 	close(0);
 	close(1);
