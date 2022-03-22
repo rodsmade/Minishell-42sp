@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:15:44 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/22 11:29:17 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/22 12:03:04 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	builtin_echo(t_list *lst)
 {
 	t_list	*pivot;
 	int		option;
-	
+
 	pivot = lst;
 	option = 0;
 	while (pivot != NULL)
@@ -56,23 +56,3 @@ void	builtin_echo(t_list *lst)
 	if (!option)
 		write(1, "\n", 1);
 }
-
-// void	builtin_echo(char *lst) Teste with string
-// {
-// 	int		option;
-	
-// 	option = 0;
-// 	if (!ft_strncmp(&lst[5], "-n", 2))
-// 		option = 1;
-// 	if (option)
-// 	{
-// 		process_str(&lst[8]);
-// 		// printf("%s", &lst[8]);
-// 	}
-// 	else
-// 	{
-// 		process_str(&lst[5]);
-// 		write(1, "\n", 1);
-// 		// printf("%s\n", &lst[5]);
-// 	}
-// }

@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/21 17:17:08 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/22 12:01:53 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,16 @@ void	repl(void)
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
-		// lexer_line(line_read);
-		// parse_tokens();
-		// while (is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
-		// 	assemble_line(&line_read);
-		// add_history(line_read);
-		// if (line_read)
-		// {
-		// 	ft_free_ptr((void *)&line_read);
-		// 	free_lexer();
-		// }
-		// if (!ft_strncmp(line_read, "pwd", 4))
-		// 	builtin_pwd();
-		builtin_echo(line_read);
+		lexer_line(line_read);
+		parse_tokens();
+		while (is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
+			assemble_line(&line_read);
+		add_history(line_read);
+		if (line_read)
+		{
+			ft_free_ptr((void *)&line_read);
+			free_lexer();
+		}
 	}
 	ft_free_ptr((void *)&line_read);
 	rl_clear_history();

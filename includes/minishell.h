@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/21 17:16:26 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/22 12:03:27 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,7 @@ bool			is_pipe_and_or(char *token);
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
-//built-in pwd
-void	builtin_pwd(void);
-
 //built-in echo
-void	builtin_echo(char *str);
+void			builtin_echo(t_list *lst);
 
 #endif
