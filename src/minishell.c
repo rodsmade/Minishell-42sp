@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 14:23:11 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 19:26:15 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ void	repl(void)
 		while (g_tudao.token_list && !g_tudao.syntax_error
 			&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
 			assemble_line(&line_read);
+		if (!g_tudao.syntax_error)
+			execute_pipelines();
 		add_history(line_read);
+		free_main_pipeline();
 		if (line_read)
 		{
 			ft_free_ptr((void *)&line_read);

@@ -23,6 +23,7 @@ VALGRIND		=	valgrind --leak-check=full \
 					--track-fds=yes
 
 FILES			=	minishell.c \
+					executor.c \
 					exit_routines.c \
 					exit_routines_2.c \
 					hashtable.c \
