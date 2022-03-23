@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 20:38:08 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 22:29:48 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,32 +46,48 @@ void	assemble_line(char **line_read)
 	free(temp);
 }
 
+char	*display_cmd_prompt(void)
+{
+	char	*line_read;
+	char	*curr_path;
+	char	*prompt;
+
+	curr_path = getcwd(NULL, 0);
+	prompt = ft_strjoin(curr_path, " $ ");
+	line_read = readline(prompt);
+	if (ft_strncmp(line_read, "quit", 5) == 0)
+	{
+		g_tudao.repl_ok = false;
+		ft_free_ptr((void *)&prompt);
+		ft_free_ptr((void *)&curr_path);
+		return (line_read);
+	}
+	lexer_line(line_read);
+	parse_tokens();
+	while (g_tudao.token_list && !g_tudao.syntax_error
+		&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
+		assemble_line(&line_read);
+	ft_free_ptr((void *)&curr_path);
+	ft_free_ptr((void *)&prompt);
+	return (line_read);
+}
+
 void	repl(void)
 {
 	char	*line_read;
 
 	line_read = NULL;
-	while (1)
+	g_tudao.repl_ok = true;
+	while (g_tudao.repl_ok)
 	{
 		init_tudao();
-		g_tudao.syntax_error = false;
-		line_read = readline("Type yr command (type \'quit\' to exit): ");
-		if (ft_strncmp(line_read, "quit", 5) == 0)
-			break ;
-		lexer_line(line_read);
-		parse_tokens();
-		while (g_tudao.token_list && !g_tudao.syntax_error
-			&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
-			assemble_line(&line_read);
-		if (!g_tudao.syntax_error)
+		line_read = display_cmd_prompt();
+		if (line_read && !g_tudao.syntax_error)
 			execute_pipelines();
 		add_history(line_read);
+		free_lexer();
 		free_main_pipeline();
-		if (line_read)
-		{
-			ft_free_ptr((void *)&line_read);
-			free_lexer();
-		}
+		ft_free_ptr((void *)&line_read);
 	}
 	ft_free_ptr((void *)&line_read);
 	rl_clear_history();
