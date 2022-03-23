@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 20:42:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 20:44:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	is_built_in(char *str)
 void	execute_built_in(char *str)
 {
 	if (ft_strncmp(str, "pwd", 4) == 0)
-		printf("pwd detected!\n");
+		builtin_pwd();
 	if (ft_strncmp(str, "cd", 3) == 0)
 		printf("cd detected!\n");
 	if (ft_strncmp(str, "echo", 5) == 0)
