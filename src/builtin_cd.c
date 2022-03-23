@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/23 23:39:13 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 23:49:22 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ void	builtin_cd(t_list *cmd_lst)
 	char	*path;
 
 	path = (char *) cmd_lst->next->content;
-	// if (cmd_lst->content != NULL)
-	// {
-	// 	ft_putendl_fd("bash: cd: too many arguments\n", 1);
-	// 	return ;
-	// }
+	if (cmd_lst->content != NULL)
+	{
+		ft_putendl_fd("bash: cd: too many arguments", 1);
+		// TODO: set return code to 1;
+		return ;
+	}
 	if (path == NULL || !ft_strncmp(path, "~", 2) || !ft_strncmp(path, "", 1))
 		go_to_pattern("HOME");
 	else if (!ft_strncmp(path, "-", 2))
