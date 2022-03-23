@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 21:29:32 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 22:40:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <unistd.h>	// write(), close()
 # include <stdlib.h>	// free()
 # include <stdbool.h>	// C99+ standard bool typedef
+# include <fcntl.h>		// open function
+# include <dirent.h>	// opendir, closedir, readir functions
+# include <sys/stat.h>  // stat, fstat, lstat
+# include <sys/types.h>	// stat, fstat, lstat
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
@@ -123,5 +127,8 @@ void			print_commands_and_redirects(void);
 
 // built-in-pwd
 void			builtin_pwd(void);
+
+//built-in echo
+void			builtin_echo(t_list *lst);
 
 #endif

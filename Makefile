@@ -35,7 +35,8 @@ FILES			=	minishell.c \
 					lexer.c \
 					utils_lexer.c \
 					utils_test.c \
-					builtin_pwd.c
+					builtin_pwd.c \
+					builtin_echo.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h
