@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 22:40:53 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 23:25:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void	get_env_variables(char **envp)
 	i = -1;
 	init_hashtable(&g_tudao.hashtable);
 	while (envp[++i])
-	{
 		insert_in_hashtable(envp[i], 1, &g_tudao.hashtable);
-	}
-	free_hashtable(&g_tudao.hashtable);
 	return ;
 }
 
@@ -89,6 +86,7 @@ void	repl(void)
 		free_main_pipeline();
 		ft_free_ptr((void *)&line_read);
 	}
+	free_hashtable(&g_tudao.hashtable);
 	ft_free_ptr((void *)&line_read);
 	rl_clear_history();
 	return ;

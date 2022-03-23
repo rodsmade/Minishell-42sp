@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 22:40:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 23:24:51 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void			close_fds(void);
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,
 					t_list *(*hashtable)[TABLE_SIZE]);
+int				hash_string(char *str);
 
 // init_routines.c
 void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
@@ -130,5 +131,12 @@ void			builtin_pwd(void);
 
 //built-in echo
 void			builtin_echo(t_list *lst);
+
+// built-in-cd
+void			builtin_cd(char *path);
+
+//utils hashtable
+void			update_hashtable(char *key, char *new_value);
+char			*read_hashtable(t_list *head, char *key);
 
 #endif

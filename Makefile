@@ -36,7 +36,9 @@ FILES			=	minishell.c \
 					utils_lexer.c \
 					utils_test.c \
 					builtin_pwd.c \
-					builtin_echo.c
+					builtin_echo.c \
+					builtin_cd.c \
+					utils_hashtable.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h
