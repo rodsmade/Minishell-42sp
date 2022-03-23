@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 13:14:29 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/23 19:05:15 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	get_env_variables(char **envp)
 	{
 		insert_in_hashtable(envp[i], true, &g_tudao.hashtable);
 	}
-	// free_hashtable(&g_tudao.hashtable);
 	return ;
 }
 
@@ -56,11 +55,6 @@ void	repl(void)
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
-		lexer_line(line_read);
-		parse_tokens();
-		// while (g_tudao.token_list && !g_tudao.syntax_error
-		// 	&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
-		// 	assemble_line(&line_read);
 		builtin_env();
 		add_history(line_read);
 		if (line_read)
@@ -69,6 +63,7 @@ void	repl(void)
 			free_lexer();
 		}
 	}
+	free_hashtable(&g_tudao.hashtable);
 	ft_free_ptr((void *)&line_read);
 	rl_clear_history();
 	return ;
