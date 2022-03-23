@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/22 12:27:18 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 01:36:35 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ typedef struct s_tudao
 t_tudao		g_tudao;
 
 // ----------------------------------------------	PROTOTYPES	----------------
+// executor.c
+void			execute_pipelines(void);
+
 // exit_routines.c
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
@@ -71,6 +74,7 @@ void			print_syntax_error_exit(char *token);
 void			free_t_command_list(t_list *lst);
 void			free_t_command(t_command *cmd);
 void			free_main_pipeline(void);
+void			close_fds(void);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,

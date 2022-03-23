@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/22 11:44:31 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 01:36:08 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	main(int argc, char *argv[], char **envp)
 	write(1, "Hello World !\n", 14);
 	get_env_variables(envp);
 	repl();
-	close(0);
-	close(1);
-	close(2);
+	close_fds();
 	return (0);
 }

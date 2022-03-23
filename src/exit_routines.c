@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/22 12:19:45 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 01:34:46 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,13 @@ void	print_syntax_error_exit(char *token)
 {
 	g_tudao.syntax_error = true;
 	printf("bash: syntax error near unexpected token `%s'\n", token);
+	return ;
+}
+
+void	close_fds(void)
+{
+	close(0);
+	close(1);
+	close(2);
 	return ;
 }
