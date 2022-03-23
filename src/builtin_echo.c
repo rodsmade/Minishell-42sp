@@ -6,13 +6,13 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:15:44 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/23 23:16:28 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 23:18:44 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process_str(char *str)
+void	print_arg(char *str)
 {
 	int		index;
 	char	quote_type;
@@ -20,7 +20,7 @@ void	process_str(char *str)
 	index = 0;
 	while (str[index])
 	{
-		if (str[index] == 39 || str[index] == 34)
+		if (str[index] == '\'' || str[index] == '\"')
 		{
 			quote_type = str[index];
 			index++;
@@ -51,7 +51,7 @@ void	builtin_echo(t_list *lst)
 		if (!ft_strncmp((char *)pivot->content, "-n", 3))
 			option = 1;
 		else
-			process_str((char *)pivot->content);
+			print_arg((char *)pivot->content);
 		pivot = pivot->next;
 	}
 	if (!option)
