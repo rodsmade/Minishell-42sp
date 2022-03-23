@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 22:50:52 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 23:34:55 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	execute_built_in(t_command *command)
 	if (ft_strncmp(built_in_str, "pwd", 4) == 0)
 		builtin_pwd();
 	if (ft_strncmp(built_in_str, "cd", 3) == 0)
-		printf("cd detected!\n");
+		builtin_cd(cmd_lst);
 	if (ft_strncmp(built_in_str, "echo", 5) == 0)
 		builtin_echo(cmd_lst);
 	if (ft_strncmp(built_in_str, "env", 4) == 0)

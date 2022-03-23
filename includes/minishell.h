@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 23:24:51 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/23 23:38:18 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void			builtin_pwd(void);
 void			builtin_echo(t_list *lst);
 
 // built-in-cd
-void			builtin_cd(char *path);
+void			builtin_cd(t_list *path);
 
 //utils hashtable
 void			update_hashtable(char *key, char *new_value);

@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/22 20:28:22 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/23 23:39:13 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_pwd(void)
-{
-	char	*buffer;
-	char	*curr_path;
+// void	builtin_pwd(void)
+// {
+// 	char	*buffer;
+// 	char	*curr_path;
 
-	buffer = NULL;
-	curr_path = getcwd(buffer, 0);
-	if (!curr_path)
-		printf("error pwd\n");
-	else
-		printf("%s\n", curr_path);
-	free(curr_path);
-}
+// 	buffer = NULL;
+// 	curr_path = getcwd(buffer, 0);
+// 	if (!curr_path)
+// 		printf("error pwd\n");
+// 	else
+// 		printf("%s\n", curr_path);
+// 	free(curr_path);
+// }
 
 char	*get_old_pwd(void)
 {
@@ -74,8 +74,16 @@ void	go_to_pattern(char *key)
 	go_to_path(path);
 }
 
-void	builtin_cd(char *path)
+void	builtin_cd(t_list *cmd_lst)
 {
+	char	*path;
+
+	path = (char *) cmd_lst->next->content;
+	// if (cmd_lst->content != NULL)
+	// {
+	// 	ft_putendl_fd("bash: cd: too many arguments\n", 1);
+	// 	return ;
+	// }
 	if (path == NULL || !ft_strncmp(path, "~", 2) || !ft_strncmp(path, "", 1))
 		go_to_pattern("HOME");
 	else if (!ft_strncmp(path, "-", 2))
