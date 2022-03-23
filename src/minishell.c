@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/22 20:27:36 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/23 12:42:05 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	repl(void)
 			break ;
 		lexer_line(line_read);
 		parse_tokens();
-		// while (is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
-		// 	assemble_line(&line_read);
 		add_history(line_read);
 		builtin_cd(line_read);
 		if (line_read)
