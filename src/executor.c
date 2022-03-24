@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/24 00:50:24 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:47:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	execute_pipelines(void)
 	while (pivot_pipeline)
 	{
 		if (has_only_var_assignments(pivot_pipeline))
-			assign_var();
+			assign_vars(cmd);
 		else if (is_built_in(cmd->cmds_with_flags->content))
 			execute_built_in(cmd);
 		pivot_pipeline = pivot_pipeline->next;
