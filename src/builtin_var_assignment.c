@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 00:34:57 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/24 19:57:33 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/24 20:03:32 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	assign_vars(t_command *command)
 {
 	t_list	*pivot;
 
-	pivot = command;
+	pivot = command->cmds_with_flags;
 	while (pivot)
 	{
 		printf("this is a variable assignment\n");

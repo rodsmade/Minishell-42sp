@@ -24,6 +24,7 @@ VALGRIND		=	valgrind --leak-check=full \
 
 FILES			=	builtin_cd.c \
 					builtin_echo.c \
+					builtin_env.c \
 					builtin_pwd.c \
 					builtin_var_assignment.c \
 					executor.c \
