@@ -45,6 +45,9 @@ minishell
 *.idb
 *.pdb
 
+# Valgrind output
+vgcore*
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
