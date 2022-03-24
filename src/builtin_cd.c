@@ -6,25 +6,11 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/24 00:32:33 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/24 00:45:09 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	builtin_pwd(void)
-// {
-// 	char	*buffer;
-// 	char	*curr_path;
-
-// 	buffer = NULL;
-// 	curr_path = getcwd(buffer, 0);
-// 	if (!curr_path)
-// 		printf("error pwd\n");
-// 	else
-// 		printf("%s\n", curr_path);
-// 	free(curr_path);
-// }
 
 char	*get_old_pwd(void)
 {
@@ -75,6 +61,9 @@ void	go_to_pattern(char *key)
 }
 
 void	builtin_cd(t_list *cmd_lst)
+/**
+ * TODO: set return code to 1 when theres too many args;
+ */
 {
 	char	*path;
 
@@ -83,7 +72,6 @@ void	builtin_cd(t_list *cmd_lst)
 	if (cmd_lst->next && cmd_lst->next->next != NULL)
 	{
 		ft_putendl_fd("bash: cd: too many arguments", 1);
-		// TODO: set return code to 1;;
 		return ;
 	}
 	else if (cmd_lst->next == NULL

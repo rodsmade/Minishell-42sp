@@ -6,49 +6,16 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 23:34:55 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/24 00:50:24 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_var_assignment(char *str)
-{
-	int	equal_sign;
-
-	equal_sign = 0;
-	if (!str)
-		return (false);
-	while (*str)
-	{
-		if (*str == '=')
-			equal_sign++;
-		str++;
-	}
-	if (equal_sign != 1)
-		return (false);
-	else
-		return (true);
-}
-
-bool	has_only_var_assignments(t_list *pipeline)
-{
-	t_list	*pivot;
-
-	pivot = ((t_command *)pipeline->content)->cmds_with_flags;
-	while (pivot)
-	{
-		if (!is_var_assignment(pivot->content))
-			return (false);
-		pivot = pivot->next;
-	}
-	return (true);
-}
-
 bool	is_built_in(char *str)
 {
 	if ((ft_strncmp(str, "pwd", 4) == 0)
-		|| (ft_strncmp(str, "cd", 3) == 0) 
+		|| (ft_strncmp(str, "cd", 3) == 0)
 		|| (ft_strncmp(str, "echo", 5) == 0)
 		|| (ft_strncmp(str, "env", 4) == 0)
 		|| (ft_strncmp(str, "exit", 5) == 0)
@@ -85,29 +52,32 @@ void	execute_built_in(t_command *command)
 	return ;
 }
 
-void	assign_var(void)
-{
-	printf("this is a variable assignment\n");
-	return ;
-}
-
 void	execute_pipelines(void)
+/**
+ * TODO: Intended complete structure:
+ * 		handle_redirections(pivot_cmd);
+ * 		if (has_only_var_assignments(pivot_cmd))
+ * 			assign_var();
+ * 		else if (is_built_in(((t_command *)pivot_cmd->content)->cmds_with_flags->content))
+ * 			execute_built_in((t_command *)pivot_cmd->content);
+ * 		else if (has_absolute_path())
+ * 			exec_absolute_path();
+ * 		else
+ * 			exec_env_path();
+ */
 {
-	t_list	*pivot_cmd;
+	t_list		*pivot_pipeline;
+	t_command	*cmd;
 
-	pivot_cmd = g_tudao.command_table.main_pipeline;
-	while (pivot_cmd)
+	pivot_pipeline = g_tudao.command_table.main_pipeline;
+	cmd = (t_command *) pivot_pipeline->content;
+	while (pivot_pipeline)
 	{
-		// handle_redirections(pivot_cmd);
-		if (has_only_var_assignments(pivot_cmd))
+		if (has_only_var_assignments(pivot_pipeline))
 			assign_var();
-		else if (is_built_in(((t_command *)pivot_cmd->content)->cmds_with_flags->content))
-			execute_built_in((t_command *)pivot_cmd->content);
-		// else if (has_absolute_path())
-		// 	exec_absolute_path();
-		// else
-		// 	exec_env_path();
-		pivot_cmd = pivot_cmd->next;
+		else if (is_built_in(cmd->cmds_with_flags->content))
+			execute_built_in(cmd);
+		pivot_pipeline = pivot_pipeline->next;
 	}
 	return ;
 }

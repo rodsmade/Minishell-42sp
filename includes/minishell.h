@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 23:38:18 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/24 00:53:07 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,19 @@ typedef struct s_tudao
 extern t_tudao		g_tudao;
 
 // ----------------------------------------------	PROTOTYPES	----------------
+// builtin_cd.c
+void			builtin_cd(t_list *path);
+
+// builtin_echo.c
+void			builtin_echo(t_list *lst);
+
+// builtin_pwd.c
+void			builtin_pwd(void);
+
+// builtin_pwd.c
+void			assign_var(void);
+bool			has_only_var_assignments(t_list *pipeline);
+
 // executor.c
 void			execute_pipelines(void);
 
@@ -125,15 +138,6 @@ bool			is_o_concat(t_list *token);
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_commands_and_redirects(void);
-
-// built-in-pwd
-void			builtin_pwd(void);
-
-//built-in echo
-void			builtin_echo(t_list *lst);
-
-// built-in-cd
-void			builtin_cd(t_list *path);
 
 //utils hashtable
 void			update_hashtable(char *key, char *new_value);
