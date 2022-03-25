@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/22 11:44:31 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/25 00:08:06 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ void	repl(void)
 		line_read = readline("Type yr command (type \'quit\' to exit): ");
 		if (ft_strncmp(line_read, "quit", 5) == 0)
 			break ;
-		lexer_line(line_read);
-		parse_tokens();
-		while (g_tudao.token_list && !g_tudao.syntax_error
-			&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
-			assemble_line(&line_read);
+		// lexer_line(line_read);
+		// parse_tokens();
+		// while (g_tudao.token_list && !g_tudao.syntax_error
+		// 	&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
+		// 	assemble_line(&line_read);
+		builtin_export(line_read);
 		add_history(line_read);
 		if (line_read)
 		{
