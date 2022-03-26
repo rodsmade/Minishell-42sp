@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/24 20:06:12 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:56:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_built_in(t_command *command)
 	if (ft_strncmp(built_in_str, "export", 7) == 0)
 		printf("export detected!\n");
 	if (ft_strncmp(built_in_str, "unset", 6) == 0)
-		printf("unset detected!\n");
+		builtin_unset(cmd_lst);
 	if (ft_strncmp(built_in_str, "clear", 6) == 0)
 		printf("clear detected!\n");
 	return ;

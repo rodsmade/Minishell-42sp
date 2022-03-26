@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/24 20:02:05 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:23:13 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void			builtin_env(void);
 // builtin_pwd.c
 void			builtin_pwd(void);
 
+// builtin_pwd.c
+void			builtin_unset(t_list *cmd_with_args);
+
 // builtin_var_assignment.c
 void			assign_vars(t_command *command);
 bool			has_only_var_assignments(t_list *pipeline);
@@ -142,8 +145,9 @@ bool			is_o_concat(t_list *token);
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_commands_and_redirects(void);
 
-//utils hashtable
+//utils_hashtable.c
 void			update_hashtable(char *key, char *new_value);
 char			*read_hashtable(t_list *head, char *key);
+t_list			*find_node_in_hashtable(char *var_name);
 
 #endif
