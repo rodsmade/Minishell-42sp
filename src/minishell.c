@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/25 00:08:06 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/03/26 21:57:14 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	get_env_variables(char **envp)
 	{
 		insert_in_hashtable(envp[i], 1, &g_tudao.hashtable);
 	}
-	free_hashtable(&g_tudao.hashtable);
 	return ;
 }
 
@@ -70,6 +69,7 @@ void	repl(void)
 		}
 	}
 	ft_free_ptr((void *)&line_read);
+	free_hashtable(&g_tudao.hashtable);
 	rl_clear_history();
 	return ;
 }

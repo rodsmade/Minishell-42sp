@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/03/26 01:23:28 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:14:21 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ void	generate_key(char *line_read, char *key, int *mid_point)
 			j++;
 		}
 	}
-	if (line_read[i + 1])
-		*mid_point = i + 1;
+	*mid_point = i;
 	key[j] = '\0';
 }
 
@@ -130,7 +129,6 @@ void	generate_value(char *line_read, char *value)
 				value[j] = line_read[i];
 				i++;
 				j++;
-				printf("%c\n", value[j]);
 			}
 		}
 		else
@@ -144,35 +142,66 @@ void	generate_value(char *line_read, char *value)
 }
 
 //Corrigir quando o igual é digitado, mas não tenho valor, eu devo alocar nada como valor, mas a variável  precisa estar lá
-char	*generate_pair(char *line_read)
+int	generate_pair(char *line_read, char **pair)
 {
 	char	*key;
 	char	*value;
-	// char	*pair;
-	// char	*aux;
+	char	*aux;
 	int		mid_point;
 	
 	mid_point = 0;
 	key = (char *)malloc(sizeof(char) * (key_len(line_read) + 1));
-	if (!key)
-		return (NULL);
 	generate_key(line_read, key, &mid_point);
-	if (!value_len(&line_read[mid_point]))
-		return (key);
-	printf(">: value_len %d\n", value_len(&line_read[mid_point]));
-	value = (char *)malloc(sizeof(char) * (value_len(&line_read[mid_point] + 1)));
-	if (!value)
+	if (line_read[mid_point] == '=')
 	{
-		ft_free_ptr((void *)&key);
-		return (NULL);
+		if (line_read[mid_point + 1])
+		{
+			value = (char *)malloc(sizeof(char) * (value_len(&line_read[mid_point + 1]) + 1));
+			generate_value(&line_read[mid_point + 1], value);
+			aux = ft_strjoin(key, "=");
+			*pair = ft_strjoin(aux, value);
+			ft_free_ptr((void *)&aux);
+			ft_free_ptr((void *)&key);
+			ft_free_ptr((void *)&value);
+		}
+		else
+		{
+			aux = ft_strjoin(key, "=");
+			*pair = ft_strjoin(aux, "");
+			ft_free_ptr((void *)&aux);
+			ft_free_ptr((void *)&key);			
+		}
+		return (1);
 	}
-	generate_value(&line_read[mid_point], value);
-	// aux = ft_strjoin(key, "=");
-	// pair = ft_strjoin(aux, value);
-	// ft_free_ptr((void *)&aux);
-	// ft_free_ptr((void *)&key);
-	ft_free_ptr((void *)&value);
-	return (key);
+	else
+	{
+		*pair = key;
+		return (0);
+	}
+}
+
+void	print_exported_vars(void)
+{
+	int		i;
+	t_list	*aux;
+
+	i = -1;
+	while (++i < TABLE_SIZE)
+	{
+		aux = g_tudao.hashtable[i];
+		while (aux != NULL)
+		{
+			ft_putstr_fd("declare -x ", 1);
+			ft_putstr_fd(((t_env_var *)(aux->content))->name, \
+			STDOUT_FILENO);
+			write(STDOUT_FILENO, "=", 1);
+			if (((t_env_var *)(aux->content))->value)
+				ft_putstr_fd(((t_env_var *)(aux->content))->value, \
+				STDOUT_FILENO);
+			write(STDOUT_FILENO, "\n", 1);
+			aux = aux->next;
+		}
+	}	
 }
 
 // void	builtin_export(t_list *lst)
@@ -180,16 +209,24 @@ void	builtin_export(char *line_read)
 {
 	// t_list	*tmp;
 	char		*pair;
-
+	int			status;
+	
+	// if (lst == NULL)
+	// {
+		// print_exported_vars();
+		// return ;
+	// }
 	// tmp = lst;
 	// while (tmp != NULL)
 	// {
 		// if ((is_valid_key((char *)lst->content)) == true)
 		if ((is_valid_key(line_read)) == true)
 		{
-			pair = generate_pair(line_read);
-			//insert in hashtable
-			printf(">: pair %s\n", pair);
+			status = generate_pair(line_read, &pair);
+			if (status)
+				insert_in_hashtable(pair, 1, &g_tudao.hashtable);
+			else if (!status)
+				insert_in_hashtable(pair, -1, &g_tudao.hashtable);
 			ft_free_ptr((void *)&pair);
 		}
 		else
