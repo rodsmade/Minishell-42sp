@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 15:29:10 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 21:50:57 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ void			free_t_command_list(t_list *lst);
 void			free_t_command(t_command *cmd);
 void			free_main_pipeline(void);
 void			close_fds(void);
+
+// expansor.c
+void	expand_tokens(void);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,

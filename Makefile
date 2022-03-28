@@ -32,6 +32,7 @@ FILES			=	builtin_cd.c \
 					executor.c \
 					exit_routines_2.c \
 					exit_routines.c \
+					expansor.c \
 					hashtable.c \
 					init_routines.c \
 					lexer.c \
