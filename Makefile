@@ -43,7 +43,8 @@ FILES			=	builtin_cd.c \
 					utils_parser_2.c \
 					utils_parser.c \
 					utils_test.c \
-					builtin-export.c
+					builtin-export.c \
+					utils_export.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h
