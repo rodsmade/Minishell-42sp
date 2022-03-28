@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 17:14:39 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 19:58:15 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_append_char(char *str, char c)
 	char	*new_str;
 	int		str_size;
 	int		i;
-	
+
 	i = -1;
 	if (str)
 		str_size = ft_strlen(str);
@@ -36,25 +36,24 @@ void	expand_dollar_sign(t_list *token)
 {
 	char	*token_content;
 	char	*expanded_content;
+	char	*env_var_value;
+	char	*tmp;
 	int		i;
-	char	*var;
 
 	expanded_content = NULL;
-	token_content = (char *) token->content; //token_content = helloadhjadh$USER
+	token_content = (char *) token->content;
 	i = -1;
 	while (token_content[++i] && token_content[i] != '$')
 		expanded_content = ft_append_char(expanded_content, token_content[i]);
-	var = read_hashtable(g_tudao.hashtable[hash_string(&token_content[i + 1])], &token_content[i + 1]);
-	// while (token_content[++i] && token_content[i] != '$')
-	// {
-	// 	// se tiver aspas simples: não expande
-	// 	if (token_content[i] == '\'')
-	// 	// se tiver aspas duplas: expande
-	// 	if (token_content[i] == '\"')
-	// 	// se não tiver nem uma nem outra: o $ é o "divisor" do token, o q vier depois considera o nome da env_var
-	// }
+	env_var_value = read_hashtable(g_tudao.hashtable[\
+		hash_string(&token_content[i + 1])], &token_content[i + 1]);
+	tmp = expanded_content;
+	expanded_content = ft_strjoin(tmp, env_var_value);
+	ft_free_ptr((void *)&tmp);
+	ft_free_ptr((void *)&token->content);
+	token->content = expanded_content;
 	printf("expanded content: %s\n", expanded_content);
-	ft_free_ptr((void *)&expanded_content);
+	printf("token content: %s\n", (char *)token->content);
 	return ;
 }
 
