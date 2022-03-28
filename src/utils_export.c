@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 12:12:26 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/28 12:19:18 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 14:46:24 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,32 @@ void	print_exported_vars(void)
 			aux = aux->next;
 		}
 	}	
+}
+
+void	concat_and_free(char **pair, int num_str, ...)
+{
+	va_list	args;
+	int		count;
+	char	*aux;
+	char	*tmp;
+
+	count = -1;
+	va_start(args, num_str);
+	while (++count < num_str)
+	{
+		if (*pair == NULL)
+		{
+			tmp = va_arg(args, char *);
+			*pair = ft_strdup(tmp);
+			ft_free_ptr((void *)&tmp);
+		}
+		else
+		{
+			aux = *pair;
+			tmp = va_arg(args, char *);
+			*pair = ft_strjoin(aux, tmp);
+			ft_free_ptr((void *)&aux);
+			ft_free_ptr((void *)&tmp);
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/03/28 13:15:05 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 15:13:59 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,6 @@ void	generate_key(char *line_read, char *key, int *mid_point)
 	key[j] = '\0';
 }
 
-void	iterate_quoted_value(char *line_read, int *i, char *value, int *j)
-{
-	char	qtype;
-
-	qtype = line_read[(*i)];
-	*i = *i + 1;
-	while (line_read[*i] != qtype && line_read[(*i)] && line_read[(*i)] != '=')
-	{
-		value[(*j)] = line_read[(*i)];
-		*i = *i + 1;
-		*j = *j + 1;
-	}
-}
-
 void	generate_value(char *line_read, char *value)
 {
 	int		i;
@@ -59,7 +45,7 @@ void	generate_value(char *line_read, char *value)
 	{
 		if (line_read[i] == '\'' || line_read[i] == '\"')
 		{
-			iterate_quoted_value(line_read, &i, value, &j);
+			iter_quoted_value(line_read, &i, value, &j);
 		}
 		else
 		{
@@ -75,7 +61,6 @@ int	generate_pair(char *line_read, char **pair)
 {
 	char	*key;
 	char	*value;
-	char	*aux;
 	int		mid_point;
 
 	mid_point = 0;
@@ -85,21 +70,13 @@ int	generate_pair(char *line_read, char **pair)
 	{
 		if (line_read[mid_point + 1])
 		{
-			value = (char *)malloc(sizeof(char) * (value_len(&line_read[mid_point + 1]) + 1));
+			value = (char *)malloc(sizeof(char) * \
+			(value_len(&line_read[mid_point + 1]) + 1));
 			generate_value(&line_read[mid_point + 1], value);
-			aux = ft_strjoin(key, "=");
-			*pair = ft_strjoin(aux, value);
-			ft_free_ptr((void *)&aux);
-			ft_free_ptr((void *)&key);
-			ft_free_ptr((void *)&value);
+			concat_and_free(pair, 3, key, ft_strdup("="), value);
 		}
 		else
-		{
-			aux = ft_strjoin(key, "=");
-			*pair = ft_strjoin(aux, "");
-			ft_free_ptr((void *)&aux);
-			ft_free_ptr((void *)&key);			
-		}
+			concat_and_free(pair, 3, key, ft_strdup("="), ft_strdup(""));
 		return (1);
 	}
 	else
@@ -116,15 +93,16 @@ void	iterate_lst_to_export(t_list *lst)
 	int		status;
 
 	tmp = lst->next;
+	pair = NULL;
 	while (tmp != NULL)
 	{
 		if ((is_valid_key((char *)tmp->content)) == true)
 		{
 			status = generate_pair((char *)tmp->content, &pair);
 			if (status)
-				insert_in_hashtable(pair, 1, &g_tudao.hashtable);
+				insert_or_update_hashtable(pair, 1, &g_tudao.hashtable);
 			else if (!status)
-				insert_in_hashtable(pair, -1, &g_tudao.hashtable);
+				insert_or_update_hashtable(pair, -1, &g_tudao.hashtable);
 			ft_free_ptr((void *)&pair);
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/24 00:45:09 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 15:26:17 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	go_to_path(char	*path)
 		printf("cd: no such file or directory: %s\n", new_pwd);
 	else
 	{
-		update_hashtable("OLDPWD", old_pwd);
-		update_hashtable("PWD", new_pwd);
+		update_hashtable("OLDPWD", old_pwd, true);
+		update_hashtable("PWD", new_pwd, true);
 	}
 	ft_free_ptr((void *)&old_pwd);
 	ft_free_ptr((void *)&new_pwd);

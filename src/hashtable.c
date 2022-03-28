@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:56:49 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/22 19:19:31 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 15:23:52 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,24 @@ void	insert_in_hashtable(char *string, int is_env_var
 	ft_lstadd_back(&((*hashtable)[index]), ft_lstnew((void *)key_value_alloc));
 	ft_free_arr((void *)&key_value);
 	return ;
+}
+
+void	insert_or_update_hashtable(char *string, int is_env_var
+	, t_list *(*hashtable)[TABLE_SIZE])
+{
+	int			index;
+	char		**key_value;
+	t_env_var	*key_value_alloc;
+
+	key_value = ft_split(string, '=');
+	if (find_node_in_hashtable(key_value[0]) == NULL)
+	{
+		index = hash_string(key_value[0]);
+		key_value_alloc = key_value_to_t_env_var(key_value, is_env_var);
+		ft_lstadd_back(&((*hashtable)[index]), \
+		ft_lstnew((void *)key_value_alloc));
+	}
+	else
+		update_hashtable(key_value[0], key_value[1], is_env_var);
+	ft_free_arr((void *)&key_value);
 }
