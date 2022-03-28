@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 15:25:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 15:29:10 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void			builtin_cd(t_list *path);
 
 // builtin_echo.c
 void			builtin_echo(t_list *lst);
+
+// builtin_exit.c
+void			builtin_exit(void);
 
 // builtin_env.c
 void			builtin_env(void);
