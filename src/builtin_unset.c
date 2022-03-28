@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:15:11 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/26 01:21:51 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 20:18:28 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,25 @@ void	ft_lst_free_node(t_list *node)
 	return ;
 }
 
-void	find_node_and_delete(t_list *pivot, t_list *node_to_delete,
+void	find_node_and_delete(t_list *hashtable_pvt, t_list *node_to_delete,
 	char *var_name)
 {
-	if (pivot == node_to_delete)
+	if (hashtable_pvt == node_to_delete)
 	{
 		g_tudao.hashtable[hash_string(var_name)] = \
 				g_tudao.hashtable[hash_string(var_name)]->next;
 		ft_lst_free_node(node_to_delete);
 		return ;
 	}
-	while (pivot)
+	while (hashtable_pvt)
 	{
-		if (pivot->next == node_to_delete)
+		if (hashtable_pvt->next == node_to_delete)
 		{
-			pivot->next = node_to_delete->next;
+			hashtable_pvt->next = node_to_delete->next;
 			ft_lst_free_node(node_to_delete);
 			return ;
 		}
-		pivot = pivot->next;
+		hashtable_pvt = hashtable_pvt->next;
 	}
 }
 
@@ -53,11 +53,16 @@ void	builtin_unset(t_list *cmd_with_args)
 
 	if (!cmd_with_args->next)
 		return ;
-	var_name = (char *) cmd_with_args->next->content;
-	node_to_delete = find_node_in_hashtable(var_name);
-	if (!node_to_delete)
-		return ;
-	pivot = g_tudao.hashtable[hash_string(var_name)];
-	find_node_and_delete(pivot, node_to_delete, var_name);
+	pivot = cmd_with_args->next;
+	while (pivot)
+	{
+		var_name = (char *) pivot->content;
+		printf("var name to unset: %s\n", var_name);
+		node_to_delete = find_node_in_hashtable(var_name);
+		if (node_to_delete)
+			find_node_and_delete(g_tudao.hashtable[hash_string(var_name)],
+				node_to_delete, var_name);
+		pivot = pivot->next;
+	}
 	return ;
 }
