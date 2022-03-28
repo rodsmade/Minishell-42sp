@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/24 20:00:55 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:52:49 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	repl(void)
 	}
 	free_hashtable(&g_tudao.hashtable);
 	ft_free_ptr((void *)&line_read);
+	free_hashtable(&g_tudao.hashtable);
 	rl_clear_history();
 	return ;
 }

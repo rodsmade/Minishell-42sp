@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/25 15:23:13 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:54:27 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,8 @@ void			print_commands_and_redirects(void);
 void			update_hashtable(char *key, char *new_value);
 char			*read_hashtable(t_list *head, char *key);
 t_list			*find_node_in_hashtable(char *var_name);
+
+//builtin_export.c
+void			builtin_export(char *line_read);
 
 #endif
