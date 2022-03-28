@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 21:50:57 by coder            ###   ########.fr       */
+/*   Updated: 2022/03/28 17:17:14 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <dirent.h>	// opendir, closedir, readir functions
 # include <sys/stat.h>  // stat, fstat, lstat
 # include <sys/types.h>	// stat, fstat, lstat
+# include <stdarg.h> // variadic function (concat and free)
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
@@ -110,6 +111,8 @@ void	expand_tokens(void);
 void			insert_in_hashtable(char *string, int is_env_var,
 					t_list *(*hashtable)[TABLE_SIZE]);
 int				hash_string(char *str);
+void			insert_or_update_hashtable(char *string, int is_env_var,
+					t_list *(*hashtable)[TABLE_SIZE]);
 
 // init_routines.c
 void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
@@ -152,11 +155,21 @@ void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_commands_and_redirects(void);
 
 //utils_hashtable.c
-void			update_hashtable(char *key, char *new_value);
+void			update_hashtable(char *key, char *new_value, int new_env_var);
 char			*read_hashtable(t_list *head, char *key);
 t_list			*find_node_in_hashtable(char *var_name);
 
 //builtin_export.c
-void			builtin_export(char *line_read);
+void			builtin_export(t_list *lst);
+
+//utils_export.c
+int				value_len(char *line_read);
+int				is_valid_key(char *key_value);
+int				key_len(char *key_value);
+void			print_exported_vars(void);
+void			concat_and_free(char **pair, int num_str, ...);
+
+//utils_export_2.c
+void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
 
 #endif

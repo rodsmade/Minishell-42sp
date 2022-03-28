@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_hashtable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 20:14:20 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/25 23:38:23 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 15:20:21 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_hashtable(char *key, char *new_value)
+void	update_hashtable(char *key, char *new_value, int new_env_var)
 {
 	int		index;
 	int		len;
@@ -30,6 +30,8 @@ void	update_hashtable(char *key, char *new_value)
 			g_tudao.hashtable[index]->content)->value));
 			((t_env_var *) \
 			g_tudao.hashtable[index]->content)->value = ft_strdup(new_value);
+			((t_env_var *) \
+			g_tudao.hashtable[index]->content)->is_env_var = new_env_var;
 			break ;
 		}
 		g_tudao.hashtable[index] = g_tudao.hashtable[index]->next;
