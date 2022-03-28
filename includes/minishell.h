@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 14:54:27 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 15:25:22 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_tudao
 	t_cmd_table		command_table;
 	int				return_code;
 	bool			syntax_error;
-	bool			repl_ok;
+	bool			exit;
 }				t_tudao;
 
 // ----------------------------------------------	GLOBAL VAR	----------------

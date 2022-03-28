@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 14:52:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 15:25:15 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*display_cmd_prompt(void)
 	line_read = readline(prompt);
 	if (ft_strncmp(line_read, "quit", 5) == 0)
 	{
-		g_tudao.repl_ok = false;
+		g_tudao.exit = true;
 		ft_free_ptr((void *)&prompt);
 		ft_free_ptr((void *)&curr_path);
 		return (line_read);
@@ -74,12 +74,12 @@ void	repl(void)
 	char	*line_read;
 
 	line_read = NULL;
-	g_tudao.repl_ok = true;
-	while (g_tudao.repl_ok)
+	g_tudao.exit = false;
+	while (!g_tudao.exit)
 	{
 		init_tudao();
 		line_read = display_cmd_prompt();
-		if (line_read && !g_tudao.syntax_error && g_tudao.repl_ok)
+		if (line_read && !g_tudao.syntax_error && !g_tudao.exit)
 			execute_pipelines();
 		add_history(line_read);
 		free_lexer();
