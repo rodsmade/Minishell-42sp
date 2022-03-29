@@ -22,18 +22,32 @@ VALGRIND		=	valgrind --leak-check=full \
 					--keep-debuginfo=yes \
 					--track-fds=yes
 
-FILES			=	minishell.c \
-					exit_routines.c \
+FILES			=	builtin_cd.c \
+					builtin_echo.c \
+					builtin_exit.c \
+					builtin_env.c \
+					builtin_pwd.c \
+					builtin_unset.c \
+					builtin_var_assignment.c \
+					executor.c \
 					exit_routines_2.c \
+					exit_routines.c \
+					expansor.c \
 					hashtable.c \
 					init_routines.c \
-					parser.c \
-					utils_lexer_mock.c \
-					utils_parser.c \
-					utils_parser_2.c \
 					lexer.c \
+					minishell.c \
+					parser.c \
+					utils_expansor.c \
+					utils_hashtable.c \
+					utils_lexer_mock.c \
 					utils_lexer.c \
-					utils_test.c
+					utils_parser_2.c \
+					utils_parser.c \
+					utils_test.c \
+					builtin_export.c \
+					utils_export.c \
+					utils_export_2.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h

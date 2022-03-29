@@ -1,0 +1,20 @@
+$ echo hello$USER
+hellocoder
+$ echo hello$USERwhat
+hello
+$ echo hello$USERWHAT
+hello
+$ echo hello$USERwhat
+hello
+$ echo hello"$USER"what
+hellocoderwhat
+$ echo hello'$USER'what
+hello$USERwhat
+$ echo hello"adhjadh$USER"what
+helloadhjadhcoderwhat
+$ echo hello"adhjadh$USERajsdjsadh"what
+helloadhjadhwhat
+// Conclusão: existem 3 cenários possíveis: o token tem ', ou ", ou nenhuma das duas.
+// no caso em q não tem nada, tudo o que vem depois de $ eh considerado o nome da var.
+// no caso de ', ele ñ expande nada
+// no caso de ", ele expande a partir do $ que nem no primeiro caso.

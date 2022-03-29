@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/22 12:27:18 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/29 21:00:46 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # include <unistd.h>	// write(), close()
 # include <stdlib.h>	// free()
 # include <stdbool.h>	// C99+ standard bool typedef
+# include <fcntl.h>		// open function
+# include <dirent.h>	// opendir, closedir, readir functions
+# include <sys/stat.h>  // stat, fstat, lstat
+# include <sys/types.h>	// stat, fstat, lstat
+# include <stdarg.h> // variadic function (concat and free)
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
@@ -27,7 +32,7 @@
 // ----------------------------------------------	STRUCTS		----------------
 typedef struct s_env_var
 {
-	char				*name;
+	char				*key;
 	char				*value;
 	int					is_env_var;
 }				t_env_var;
@@ -55,25 +60,61 @@ typedef struct s_tudao
 	t_cmd_table		command_table;
 	int				return_code;
 	bool			syntax_error;
+	bool			exit;
 }				t_tudao;
 
 // ----------------------------------------------	GLOBAL VAR	----------------
-t_tudao		g_tudao;
+extern t_tudao		g_tudao;
 
 // ----------------------------------------------	PROTOTYPES	----------------
+// builtin_cd.c
+void			builtin_cd(t_list *path);
+
+// builtin_echo.c
+void			builtin_echo(t_list *lst);
+
+// builtin_env.c
+void			builtin_env(void);
+
+// builtin_exit.c
+void			builtin_exit(void);
+
+//builtin_export.c
+void			builtin_export(t_list *lst);
+
+// builtin_pwd.c
+void			builtin_pwd(void);
+
+// builtin_unset.c
+void			builtin_unset(t_list *cmd_with_args);
+
+// builtin_var_assignment.c
+void			assign_vars(t_command *command);
+bool			has_only_var_assignments(t_list *pipeline);
+
+// executor.c
+void			execute_pipelines(void);
+
 // exit_routines.c
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			free_main_pipeline(void);
 void			print_syntax_error_exit(char *token);
 
-// exit_routines.c
+// exit_routines_2.c
 void			free_t_command_list(t_list *lst);
 void			free_t_command(t_command *cmd);
 void			free_main_pipeline(void);
+void			close_fds(void);
+
+// expansor.c
+void			expand_tokens(void);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,
+					t_list *(*hashtable)[TABLE_SIZE]);
+int				hash_string(char *str);
+void			insert_or_update_hashtable(char *string, int is_env_var,
 					t_list *(*hashtable)[TABLE_SIZE]);
 
 // init_routines.c
@@ -83,6 +124,15 @@ void			init_command(t_command *command);
 
 // lexer.c
 void			lexer_line(char	*line_read);
+
+// parser.c
+void			parse_tokens(void);
+
+// utils_expansor.c
+void			remove_null_nodes_from_token_list(void);
+char			*ft_append_char(char *str, char c);
+int				is_valid_key_char(char c);
+void			expand_wildcards(void);
 
 // utils_lexer.c
 void			skip_quotes(char *line_read, int *index);
@@ -95,9 +145,6 @@ void			free_lexer(void);
 void			print_list_so_far(void);
 void			mock_tokens(void);
 void			free_mock(void);
-
-// parser.c
-void			parse_tokens(void);
 
 // utils_parser.c
 bool			is_special_token(char *token);
@@ -115,5 +162,20 @@ bool			is_o_concat(t_list *token);
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_commands_and_redirects(void);
+
+//utils_hashtable.c
+void			update_hashtable(char *key, char *new_value, int new_env_var);
+char			*read_hashtable(t_list *head, char *key);
+t_list			*find_node_in_hashtable(char *var_name);
+
+//utils_export.c
+int				value_len(char *line_read);
+int				check_key(char *key_value);
+int				key_len(char *key_value);
+void			print_exported_vars(void);
+void			concat_and_free(char **pair, int num_str, ...);
+
+//utils_export_2.c
+void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
 
 #endif

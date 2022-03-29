@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 13:25:17 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 13:30:08 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/29 21:34:36 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_list_so_far(void)
 	printf("token list mockada: ");
 	while (pivot)
 	{
-		printf("%s, ", (char *) pivot->content);
+		printf("(%p) %s, ", pivot, (char *) pivot->content);
 		pivot = pivot->next;
 	}
 	printf("FIM. \n");
