@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 17:33:15 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/29 20:41:54 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	assemble_line(char **line_read)
 	(*line_read) = ft_strjoin((*line_read), aux_str);
 	lexer_line(aux_str);
 	expand_tokens();
+	remove_null_nodes_from_token_list();
 	parse_tokens();
 	free(aux_str);
 	free(temp);
@@ -62,6 +63,7 @@ char	*display_cmd_prompt(void)
 	}
 	lexer_line(line_read);
 	expand_tokens();
+	remove_null_nodes_from_token_list();
 	parse_tokens();
 	while (g_tudao.token_list && !g_tudao.syntax_error
 		&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
@@ -81,7 +83,8 @@ void	repl(void)
 	{
 		init_tudao();
 		line_read = display_cmd_prompt();
-		if (line_read && !g_tudao.syntax_error && !g_tudao.exit)
+		if (line_read && g_tudao.token_list && g_tudao.token_list->content
+			&& !g_tudao.syntax_error && !g_tudao.exit)
 			execute_pipelines();
 		add_history(line_read);
 		free_lexer();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 15:08:58 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/29 15:14:10 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/29 21:29:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,45 @@ int	is_valid_key_char(char c)
 
 void	expand_wildcards(void)
 {
+	return ;
+}
+
+void	ft_lst_remove_node(t_list *lst_head, t_list *node_to_delete)
+{
+	t_list	*pivot;
+
+	pivot = lst_head;
+	while (pivot)
+	{
+		if (pivot->next == node_to_delete)
+		{
+			pivot->next = node_to_delete->next;
+			ft_free_ptr((void *)&node_to_delete->content);
+			free(node_to_delete);
+		}
+		else
+			pivot = pivot->next;
+	}
+	return ;
+}
+
+void	remove_null_nodes_from_token_list(void)
+{
+	t_list	*pivot;
+	t_list	*tmp;
+
+	pivot = g_tudao.token_list;
+    printf("%p\n", pivot);
+	while (pivot)
+	{
+		if (pivot->content == NULL)
+		{
+			tmp = pivot->next;
+			ft_lst_remove_node(g_tudao.token_list, pivot);
+			pivot = tmp;
+		}
+		else
+			pivot = pivot->next;
+	}
 	return ;
 }

@@ -38,6 +38,7 @@ FILES			=	builtin_cd.c \
 					lexer.c \
 					minishell.c \
 					parser.c \
+					utils_expansor.c \
 					utils_hashtable.c \
 					utils_lexer_mock.c \
 					utils_lexer.c \
@@ -46,8 +47,7 @@ FILES			=	builtin_cd.c \
 					utils_test.c \
 					builtin_export.c \
 					utils_export.c \
-					utils_export_2.c \
-					utils_expansor.c
+					utils_export_2.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h
