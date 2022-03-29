@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/29 20:59:14 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/29 21:55:56 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,5 @@ void	expand_tokens(void)
 		expand_wildcards();
 		pivot = pivot->next;
 	}
+	remove_null_nodes_from_token_list();
 }
