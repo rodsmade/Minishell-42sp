@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 17:33:15 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/29 18:29:17 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	repl(void)
 	{
 		init_tudao();
 		line_read = display_cmd_prompt();
-		if (line_read && !g_tudao.syntax_error && !g_tudao.exit)
+		if (line_read && g_tudao.token_list && g_tudao.token_list->content
+			&& !g_tudao.syntax_error && !g_tudao.exit)
 			execute_pipelines();
 		add_history(line_read);
 		free_lexer();
