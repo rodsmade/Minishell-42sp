@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 21:46:09 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/29 15:14:21 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,10 @@ void			concat_and_free(char **pair, int num_str, ...);
 
 //utils_export_2.c
 void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
+
+//utils_expansor.c
+char			*ft_append_char(char *str, char c);
+int				is_valid_key_char(char c);
+void			expand_wildcards(void);
 
 #endif
