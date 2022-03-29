@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 12:12:26 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/28 21:45:47 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/29 12:43:50 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_key(char *key_value)
 	flag = 0;
 	while (key_value[i] != '=' && key_value[i])
 	{
-		if (ft_isalpha(key_value[i]))
+		if (ft_isalpha(key_value[i]) || key_value[i] == '_')
 			flag = 1;
 		if (ft_isdigit(key_value[i]) && !flag)
 			return (false);
@@ -80,7 +80,7 @@ int	check_key(char *key_value)
 			quote_type = key_value[i];
 		else if (key_value[i] == quote_type)
 			quote_type = 0;
-		else if (!ft_isalnum(key_value[i]))
+		else if (!ft_isalnum(key_value[i]) && key_value[i] != '_')
 			return (false);
 		i++;
 	}
