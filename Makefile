@@ -38,6 +38,7 @@ FILES			=	builtin_cd.c \
 					lexer.c \
 					minishell.c \
 					parser.c \
+					utils_expansor.c \
 					utils_hashtable.c \
 					utils_lexer_mock.c \
 					utils_lexer.c \

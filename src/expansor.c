@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/29 12:30:04 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/29 20:53:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ void	expand_dollar_sign(t_list *token)
 	}
 	ft_free_ptr((void *)&token->content);
 	token->content = expanded_content;
-	printf("expanded content: %s\n", expanded_content);
-	printf("token content: %s\n", (char *)token->content);
 }
 
 void	expand_wildcards(void)

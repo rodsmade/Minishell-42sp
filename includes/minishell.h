@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 21:46:09 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/29 20:26:19 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,19 @@ void			builtin_cd(t_list *path);
 // builtin_echo.c
 void			builtin_echo(t_list *lst);
 
+// builtin_env.c
+void			builtin_env(void);
+
 // builtin_exit.c
 void			builtin_exit(void);
 
-// builtin_env.c
-void			builtin_env(void);
+//builtin_export.c
+void			builtin_export(t_list *lst);
 
 // builtin_pwd.c
 void			builtin_pwd(void);
 
-// builtin_pwd.c
+// builtin_unset.c
 void			builtin_unset(t_list *cmd_with_args);
 
 // builtin_var_assignment.c
@@ -98,7 +101,7 @@ void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			free_main_pipeline(void);
 void			print_syntax_error_exit(char *token);
 
-// exit_routines.c
+// exit_routines_2.c
 void			free_t_command_list(t_list *lst);
 void			free_t_command(t_command *cmd);
 void			free_main_pipeline(void);
@@ -122,6 +125,12 @@ void			init_command(t_command *command);
 // lexer.c
 void			lexer_line(char	*line_read);
 
+// parser.c
+void			parse_tokens(void);
+
+// utils_expansor.c
+void			remove_null_nodes_from_token_list(void);
+
 // utils_lexer.c
 void			skip_quotes(char *line_read, int *index);
 void			quoted_generate(char *line_read, int *index, char *content);
@@ -133,9 +142,6 @@ void			free_lexer(void);
 void			print_list_so_far(void);
 void			mock_tokens(void);
 void			free_mock(void);
-
-// parser.c
-void			parse_tokens(void);
 
 // utils_parser.c
 bool			is_special_token(char *token);
@@ -158,9 +164,6 @@ void			print_commands_and_redirects(void);
 void			update_hashtable(char *key, char *new_value, int new_env_var);
 char			*read_hashtable(t_list *head, char *key);
 t_list			*find_node_in_hashtable(char *var_name);
-
-//builtin_export.c
-void			builtin_export(t_list *lst);
 
 //utils_export.c
 int				value_len(char *line_read);
