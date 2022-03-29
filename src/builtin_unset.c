@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:15:11 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 20:18:28 by coder            ###   ########.fr       */
+/*   Updated: 2022/03/28 21:04:57 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lst_free_node(t_list *node)
 {
-	ft_free_ptr((void *)&((t_env_var *) node->content)->name);
+	ft_free_ptr((void *)&((t_env_var *) node->content)->key);
 	ft_free_ptr((void *)&((t_env_var *) node->content)->value);
 	ft_free_ptr(&node->content);
 	ft_free_ptr(&node->content);
@@ -57,7 +57,7 @@ void	builtin_unset(t_list *cmd_with_args)
 	while (pivot)
 	{
 		var_name = (char *) pivot->content;
-		printf("var name to unset: %s\n", var_name);
+		printf("var key to unset: %s\n", var_name);
 		node_to_delete = find_node_in_hashtable(var_name);
 		if (node_to_delete)
 			find_node_and_delete(g_tudao.hashtable[hash_string(var_name)],

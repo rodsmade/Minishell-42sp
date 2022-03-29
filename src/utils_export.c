@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 12:12:26 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/28 14:46:24 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 21:05:24 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	print_exported_vars(void)
 		while (aux != NULL)
 		{
 			ft_putstr_fd("declare -x ", 1);
-			ft_putstr_fd(((t_env_var *)(aux->content))->name, \
+			ft_putstr_fd(((t_env_var *)(aux->content))->key, \
 			STDOUT_FILENO);
 			write(STDOUT_FILENO, "=", 1);
 			if (((t_env_var *)(aux->content))->value)

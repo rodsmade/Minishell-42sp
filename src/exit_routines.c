@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 20:42:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/28 21:05:12 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_env_var(void *element)
 {
-	ft_free_ptr((void *)&(((t_env_var *) element)->name));
+	ft_free_ptr((void *)&(((t_env_var *) element)->key));
 	ft_free_ptr((void *)&(((t_env_var *) element)->value));
 	ft_free_ptr((void *)&element);
 	return ;

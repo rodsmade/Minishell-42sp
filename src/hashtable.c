@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:56:49 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 15:23:52 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 21:05:19 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_env_var	*key_value_to_t_env_var(char **key_value, int is_env_var)
 	t_env_var	*element;
 
 	element = (t_env_var *)malloc(sizeof(t_env_var));
-	element->name = ft_strdup(key_value[0]);
+	element->key = ft_strdup(key_value[0]);
 	if (!ft_strncmp(key_value[0], "OLDPWD", 7))
 		element->value = NULL;
 	else

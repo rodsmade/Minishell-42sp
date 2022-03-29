@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 22:15:02 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/15 13:28:41 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 21:03:39 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 		while (pivot != NULL)
 		{
 			printf("{nome: %s, value: %s}", \
-			((t_env_var *)(pivot->content))->name, \
+			((t_env_var *)(pivot->content))->key, \
 			((t_env_var *)(pivot->content))->value);
 			if (pivot->next != NULL)
 				printf(",\n\t  ");

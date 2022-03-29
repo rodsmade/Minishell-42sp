@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 17:41:00 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 21:03:20 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 // ----------------------------------------------	STRUCTS		----------------
 typedef struct s_env_var
 {
-	char				*name;
+	char				*key;
 	char				*value;
 	int					is_env_var;
 }				t_env_var;

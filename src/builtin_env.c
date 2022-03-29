@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:53:54 by afaustin          #+#    #+#             */
-/*   Updated: 2022/03/23 19:04:21 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/03/28 21:03:54 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	builtin_env(void)
 		{
 			if (((t_env_var *)(aux->content))->is_env_var == true)
 			{
-				ft_putstr_fd(((t_env_var *)(aux->content))->name, \
+				ft_putstr_fd(((t_env_var *)(aux->content))->key, \
 				STDOUT_FILENO);
 				write(STDOUT_FILENO, "=", 1);
 				if (((t_env_var *)(aux->content))->value)

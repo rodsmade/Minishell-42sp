@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 20:14:20 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/28 15:20:21 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/03/28 21:06:34 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	update_hashtable(char *key, char *new_value, int new_env_var)
 	while (g_tudao.hashtable[index] != NULL)
 	{
 		if (ft_strncmp(((t_env_var *) \
-		g_tudao.hashtable[index]->content)->name, key, len) == 0)
+		g_tudao.hashtable[index]->content)->key, key, len) == 0)
 		{
 			ft_free_ptr((void *)&(((t_env_var *) \
 			g_tudao.hashtable[index]->content)->value));
@@ -48,7 +48,7 @@ char	*read_hashtable(t_list *head, char *key)
 	pivot = head;
 	while (pivot != NULL)
 	{
-		if (ft_strncmp(((t_env_var *)pivot->content)->name, key, len) == 0)
+		if (ft_strncmp(((t_env_var *)pivot->content)->key, key, len) == 0)
 			return (((t_env_var *)pivot->content)->value);
 		pivot = pivot->next;
 	}
@@ -63,7 +63,7 @@ t_list	*find_node_in_hashtable(char *var_name)
 	pivot = g_tudao.hashtable[hash_string(var_name)];
 	while (pivot)
 	{
-		pivot_var_name = (char *)((t_env_var *) pivot->content)->name;
+		pivot_var_name = (char *)((t_env_var *) pivot->content)->key;
 		if (ft_strncmp(pivot_var_name, var_name, ft_strlen(var_name) + 1) == 0)
 			return (pivot);
 		pivot = pivot->next;
