@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 00:39:00 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:15:20 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,37 @@ bool	is_built_in(char *str)
 	return (false);
 }
 
+char	**assemble_cmd_array(t_command *command)
+{
+	char	**cmd_arr;
+	t_list	*pivot;
+	int		lst_len;
+	int		i;
+	
+	lst_len = ft_lstsize(command->cmds_with_flags);
+	cmd_arr = (char **)malloc((lst_len + 1) * sizeof(char *));
+	pivot = command->cmds_with_flags;
+	i = 0;
+	while (pivot)
+	{
+		cmd_arr[i] = (char *)pivot->content;
+		i++;
+		pivot = pivot->next;
+	}
+	cmd_arr[i] = NULL;
+	return (cmd_arr);
+}
+
 void	send_to_execve(t_command *command)
 {
 	char	**cmd_arr;
 
-	assemble_cmd_array(command);
-	execve(cmd_arr[0], cmd_arr, hashtable_to_array());
+	cmd_arr = assemble_cmd_array(command);
+	for (int i = 0; i < 4; i++)
+	{
+		printf("(%s)\n", cmd_arr[i]);
+	}
+	// execve(cmd_arr[0], cmd_arr, hashtable_to_array());
 }
 
 void	execute_built_in(t_command *command)
