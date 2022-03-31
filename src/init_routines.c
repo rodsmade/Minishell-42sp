@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 15:24:27 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:22:28 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 
 void	init_tudao(void)
 {
+	g_tudao.prompt_input = NULL;
 	g_tudao.token_list = NULL;
 	g_tudao.command_table.main_pipeline = NULL;
 	g_tudao.command_table.secondary_pipeline = NULL;

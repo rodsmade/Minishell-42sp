@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/29 21:00:46 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:39:07 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@
 // ---------------------------------------------	INCLUDES	----------------
 # include <readline/readline.h>	// readline(), etc.
 # include <readline/history.h>	// add_history()
-# include <unistd.h>	// write(), close()
-# include <stdlib.h>	// free()
-# include <stdbool.h>	// C99+ standard bool typedef
-# include <fcntl.h>		// open function
-# include <dirent.h>	// opendir, closedir, readir functions
-# include <sys/stat.h>  // stat, fstat, lstat
-# include <sys/types.h>	// stat, fstat, lstat
-# include <stdarg.h> // variadic function (concat and free)
+# include <unistd.h>			// write(), close(), access(), fork(), pipe()
+# include <stdlib.h>			// free()
+# include <stdbool.h>			// C99+ standard <bool> typedef
+# include <fcntl.h>				// open()
+# include <dirent.h>			// opendir(), closedir(), readdir()
+# include <sys/stat.h>			// stat(), fstat(), lstat()
+# include <sys/types.h>			// stat(), fstat(), lstat()
+# include <stdarg.h>			// variadic functions concat() and free()
+# include <sys/types.h>			// <pid_t> typedef
+# include <sys/wait.h>			// wait()
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
@@ -55,6 +57,7 @@ typedef struct s_cmd_table
 
 typedef struct s_tudao
 {
+	char			*prompt_input;
 	t_list			*hashtable[TABLE_SIZE];
 	t_list			*token_list;
 	t_cmd_table		command_table;
@@ -100,6 +103,7 @@ void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			free_main_pipeline(void);
 void			print_syntax_error_exit(char *token);
+void			free_g_tudao(void);
 
 // exit_routines_2.c
 void			free_t_command_list(t_list *lst);
