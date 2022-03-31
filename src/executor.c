@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/31 01:38:43 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:20:57 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,12 @@ void	execute_pipelines(void)
 		// else if (is_built_in(cmd->cmds_with_flags->content))
 		// 	execute_built_in(cmd);
 		// pivot_pipeline = pivot_pipeline->next;
-		if (total_pipelines == 1)
+		if (counter == total_pipelines)
 			connect_the_dots(cmd, true);
 		else if (total_pipelines > 1)
 		{
-			if (counter == total_pipelines)
-				connect_the_dots(cmd, true);
-			else
 				connect_the_dots(cmd, false);
+				counter++;
 		}
 	}
 	return ;
