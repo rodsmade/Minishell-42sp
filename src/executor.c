@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 00:35:28 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 00:39:00 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	send_to_execve(t_command *command)
 {
 	char	**cmd_arr;
 
-	assemble_cmd_array();
+	assemble_cmd_array(command);
 	execve(cmd_arr[0], cmd_arr, hashtable_to_array());
 }
 
