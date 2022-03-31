@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/29 21:58:35 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:33:01 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ void	execute_built_in(t_command *command)
 		builtin_unset(cmd_lst);
 	if (ft_strncmp(built_in_str, "clear", 6) == 0)
 		printf("clear detected!\n");
+	free_g_tudao();
+	exit(1);
+	return ;
+}
+
+void	execute_command(t_command *cmd)
+{
+	if (is_built_in(cmd->cmds_with_flags->content))
+		execute_built_in(cmd);
 	return ;
 }
 
@@ -68,16 +77,23 @@ void	execute_pipelines(void)
  */
 {
 	t_list		*pivot_pipeline;
-	t_command	*cmd;
+	pid_t		pid;
+	int			wstatus;
 
 	pivot_pipeline = g_tudao.command_table.main_pipeline;
-	cmd = (t_command *) pivot_pipeline->content;
 	while (pivot_pipeline)
 	{
-		if (has_only_var_assignments(pivot_pipeline))
-			assign_vars(cmd);
-		else if (is_built_in(cmd->cmds_with_flags->content))
-			execute_built_in(cmd);
+		printf("entrou no loop\n");
+		pid = fork();
+		if (pid == -1)
+			ft_putendl_fd("error while forking", 1);
+		if (pid == 0)
+		{
+			printf("entrou no processo filho\n");
+			execute_command((t_command *) pivot_pipeline->content);
+		}
+		else
+			waitpid(pid, &wstatus, 0);
 		pivot_pipeline = pivot_pipeline->next;
 	}
 	return ;
