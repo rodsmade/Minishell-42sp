@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/29 21:58:35 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/31 01:38:43 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,43 @@ void	execute_built_in(t_command *command)
 		printf("clear detected!\n");
 	return ;
 }
+/*
+Caso is_last_cmd seja verdadeiro eu altero o
+stdoutput para o outfile ou caso não tenha outfile eu altero para o terminal
+caso seja falso eu altero para o fd[0] do pipe criado
+*/
+// void	connect_the_dots(t_command *cmd, int is_last_cmd)
+// {
+// 	int		fd[2];
+// 	pid_t	pid;
+
+// 	if (pipe(fd) == 1)
+// 		ft_putstr_fd("Pipe", 2);
+// 	pid = fork();
+// 	if (pid == -1)
+// 		ft_putstr_fd("Fork", 2);
+// 	if (pid == 0)
+// 	{
+// 		if (cmd->outputs->content == NULL)
+// 			dup2(fd[1], STDOUT_FILENO);
+// 		else if (cmd->outputs->content != NULL)
+// 		{
+// 			open()
+// 		}
+// 		close(fd[0]);
+// 		close(fd[1]);
+// 		if (is_built_in(cmd->cmds_with_flags->content))
+// 		{
+// 			execute_built_in(cmd);
+// 			//Retornar o código de exit de acordo com a exec do built-in
+// 			exit(EXIT_SUCCESS);
+// 		}
+// 	}
+// 	dup2(fd[0], STDIN_FILENO);
+// 	close(fd[0]);
+// 	close(fd[1]);
+// 	waitpid(pid, NULL, 0);
+// }
 
 void	execute_pipelines(void)
 /**
@@ -69,16 +106,29 @@ void	execute_pipelines(void)
 {
 	t_list		*pivot_pipeline;
 	t_command	*cmd;
+	int			total_pipelines;
+	int			counter;
 
 	pivot_pipeline = g_tudao.command_table.main_pipeline;
 	cmd = (t_command *) pivot_pipeline->content;
+	total_pipelines = ft_lstsize(pivot_pipeline);
+	counter = 1;
 	while (pivot_pipeline)
 	{
-		if (has_only_var_assignments(pivot_pipeline))
-			assign_vars(cmd);
-		else if (is_built_in(cmd->cmds_with_flags->content))
-			execute_built_in(cmd);
-		pivot_pipeline = pivot_pipeline->next;
+		// if (has_only_var_assignments(pivot_pipeline))
+		// 	assign_vars(cmd);
+		// else if (is_built_in(cmd->cmds_with_flags->content))
+		// 	execute_built_in(cmd);
+		// pivot_pipeline = pivot_pipeline->next;
+		if (total_pipelines == 1)
+			connect_the_dots(cmd, true);
+		else if (total_pipelines > 1)
+		{
+			if (counter == total_pipelines)
+				connect_the_dots(cmd, true);
+			else
+				connect_the_dots(cmd, false);
+		}
 	}
 	return ;
 }
