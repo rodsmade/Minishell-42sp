@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/31 20:33:01 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:42:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,43 @@ void	execute_command(t_command *cmd)
 		execute_built_in(cmd);
 	return ;
 }
+/*
+Caso is_last_cmd seja verdadeiro eu altero o
+stdoutput para o outfile ou caso não tenha outfile eu altero para o terminal
+caso seja falso eu altero para o fd[0] do pipe criado
+*/
+// void	connect_the_dots(t_command *cmd, int is_last_cmd)
+// {
+// 	int		fd[2];
+// 	pid_t	pid;
+
+// 	if (pipe(fd) == 1)
+// 		ft_putstr_fd("Pipe", 2);
+// 	pid = fork();
+// 	if (pid == -1)
+// 		ft_putstr_fd("Fork", 2);
+// 	if (pid == 0)
+// 	{
+// 		if (cmd->outputs->content == NULL)
+// 			dup2(fd[1], STDOUT_FILENO);
+// 		else if (cmd->outputs->content != NULL)
+// 		{
+// 			open()
+// 		}
+// 		close(fd[0]);
+// 		close(fd[1]);
+// 		if (is_built_in(cmd->cmds_with_flags->content))
+// 		{
+// 			execute_built_in(cmd);
+// 			//Retornar o código de exit de acordo com a exec do built-in
+// 			exit(EXIT_SUCCESS);
+// 		}
+// 	}
+// 	dup2(fd[0], STDIN_FILENO);
+// 	close(fd[0]);
+// 	close(fd[1]);
+// 	waitpid(pid, NULL, 0);
+// }
 
 void	execute_pipelines(void)
 /**
@@ -83,13 +120,11 @@ void	execute_pipelines(void)
 	pivot_pipeline = g_tudao.command_table.main_pipeline;
 	while (pivot_pipeline)
 	{
-		printf("entrou no loop\n");
 		pid = fork();
 		if (pid == -1)
 			ft_putendl_fd("error while forking", 1);
 		if (pid == 0)
 		{
-			printf("entrou no processo filho\n");
 			execute_command((t_command *) pivot_pipeline->content);
 		}
 		else
