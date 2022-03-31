@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/31 20:39:07 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 00:11:17 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void			assign_vars(t_command *command);
 bool			has_only_var_assignments(t_list *pipeline);
 
 // executor.c
-void			execute_pipelines(void);
+void			execute_main_pipeline(void);
 
 // exit_routines.c
 void			free_env_var(void *element);

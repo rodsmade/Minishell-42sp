@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/31 20:37:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 00:11:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	repl(void)
 		if (g_tudao.prompt_input && g_tudao.token_list
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
 			&& !g_tudao.exit)
-			execute_pipelines();
+			execute_main_pipeline();
 		add_history(g_tudao.prompt_input);
 		free_lexer();
 		free_main_pipeline();
