@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 22:36:20 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 19:57:13 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,56 @@ char	**hashtable_to_array(void)
 	return (NULL);
 }
 
+char	*ft_strjoin_3(char *str1, char *str2, char *str3)
+{
+	char	*new_str;
+	char	*tmp;
+	
+	new_str = ft_strjoin(str1, str2);
+	new_str = tmp;
+	new_str = ft_strjoin(tmp, str3);
+	ft_free_ptr((void *)&tmp);
+	
+	return (new_str);
+}
+
 char	*find_cmd_path(char *command_str)
 {
 	char	*cmd_path;
+	char	*all_paths;
+	char	**splited_paths;
+	int		i;
 
 	cmd_path = NULL;
+	i = -1;
+	if (!ft_strncmp(command_str, "~", 2) || !ft_strncmp(command_str, "/", 2) || \
+	!ft_strncmp(command_str, "./", 3) || !ft_strncmp(command_str, "../", 4))
+	{
+		if (access(command_str, F_OK) == 0)
+			return (command_str);
+		else
+		{
+			ft_putendl_fd("command not found", 2);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		all_paths = read_hashtable(g_tudao.hashtable[hash_string("PATH")], "PATH");
+		splited_paths = ft_split(all_paths, ':');
+		while (splited_paths[++i])
+		{
+			cmd_path = ft_strjoin_3(splited_paths[i], "/", command_str);
+			// concat_and_free(&cmd_path, 3, splited_paths[i], "/", command_str);
+			if (access(cmd_path, F_OK) == 0)
+			{
+				printf("Deu bom!\n");
+				return (cmd_path);
+			}
+			else
+				ft_free_ptr((void *)cmd_path);
+		}
+	}
 	return (cmd_path);
 }
 
