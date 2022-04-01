@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/04 19:44:22 by roaraujo          #+#    #+#              #
-#    Updated: 2022/03/07 21:27:35 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/01 19:40:36 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,15 +41,16 @@ SRC_FILES =	ft_atoi.c \
 			ft_isnumeric_s.c \
 			ft_isprint.c \
 			ft_itoa.c \
-			ft_lstadd_back.c \
-			ft_lstadd_front.c \
-			ft_lstclear.c \
-			ft_lstdelone.c \
-			ft_lstiter.c \
-			ft_lstlast.c \
-			ft_lstnew.c \
-			ft_lstsize.c \
-			ft_lstmap.c \
+			ft_lst_add_back.c \
+			ft_lst_add_front.c \
+			ft_lst_clear.c \
+			ft_lst_del_one.c \
+			ft_lst_iter.c \
+			ft_lst_last.c \
+			ft_lst_new.c \
+			ft_lst_remove_node.c \
+			ft_lst_size.c \
+			ft_lst_map.c \
 			ft_memccpy.c \
 			ft_memchr.c \
 			ft_memcmp.c \
