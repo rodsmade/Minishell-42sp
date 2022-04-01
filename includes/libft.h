@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 19:11:12 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/01/20 18:52:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 20:23:17 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,16 @@ int			ft_isdigit(int c);
 int			ft_isnumeric_s(char *str);
 int			ft_isprint(int c);
 char		*ft_itoa(int n);
-void		ft_lstadd_back(t_list **lst, t_list *new);
-void		ft_lstadd_front(t_list **lst, t_list *new);
-void		ft_lstclear(t_list **lst, void (*del)(void *));
-void		ft_lstdelone(t_list *lst, void (*del)(void *));
-void		ft_lstiter(t_list *lst, void (*f)(void *));
-t_list		*ft_lstlast(t_list *lst);
-t_list		*ft_lstnew(void *content);
-int			ft_lstsize(t_list *lst);
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+void		ft_lst_add_back(t_list **lst, t_list *new);
+void		ft_lst_add_front(t_list **lst, t_list *new);
+void		ft_lst_clear(t_list **lst, void (*del)(void *));
+void		ft_lst_delone(t_list *lst, void (*del)(void *));
+void		ft_lst_iter(t_list *lst, void (*f)(void *));
+t_list		*ft_lst_last(t_list *lst);
+t_list		*ft_lst_new(void *content);
+void		ft_lst_remove_node(t_list **lst_head, t_list *node_to_delete);
+int			ft_lst_size(t_list *lst);
+t_list		*ft_lst_map(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void		*ft_memccpy(void *dest, const void *src, int c, size_t n);
 void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
