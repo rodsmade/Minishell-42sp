@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 02:32:06 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 21:58:12 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,13 @@ char	**assemble_cmd_array(t_command *command)
 	t_list	*pivot;
 	int		lst_len;
 	int		i;
-	
-	lst_len = ft_lstsize(command->cmds_with_flags);
+
+	// pro PRIMEIRO ARGUMENTO:
+	// if (começa com ./     ../      /)
+	// 	só add no array
+	// else
+	// 	joga pra procurar na hashtable.
+	lst_len = ft_lst_size(command->cmds_with_flags);
 	cmd_arr = (char **)malloc((lst_len + 1) * sizeof(char *));
 	pivot = command->cmds_with_flags;
 	i = 0;
@@ -138,15 +143,20 @@ void	execute_built_in(t_command *command)
 		builtin_export(cmd_lst);
 	if (ft_strncmp(built_in_str, "unset", 6) == 0)
 		builtin_unset(cmd_lst);
-	free_g_tudao();
-	exit(1);
 	return ;
 }
 
 void	execute_command(t_command *cmd)
 {
+	// if (is_var_assignment(cmd->cmds_with_flags->content))
+	// 	assign_vars(cmd);
 	if (is_built_in(cmd->cmds_with_flags->content))
+	{
 		execute_built_in(cmd);
+		free_g_tudao();
+		exit(1);
+	}
+	// else if (has_absolute_path(cmd))
 	else
 		send_to_execve(cmd);
 	return ;
