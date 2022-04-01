@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/31 20:15:20 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/01 02:20:21 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,73 @@ char	**assemble_cmd_array(t_command *command)
 	return (cmd_arr);
 }
 
+char	*env_var_to_string(t_env_var *env_var)
+{
+	char	*env_var_str;
+	char	*temp;
+
+	temp = ft_strjoin((char *) env_var->key, "=");
+	if (env_var->value)
+		env_var_str = ft_strjoin(temp, (char *) env_var->value);
+	ft_free_ptr((void *)&temp);
+	return (env_var_str);
+}
+
+int	count_env_vars(void)
+{
+	int		count;
+	int		i;
+	t_list	*pivot;
+
+	i = -1;
+	count = 0;
+	while (++i < TABLE_SIZE)
+	{
+		pivot = g_tudao.hashtable[i];
+		while (pivot)
+		{
+			count++;
+			pivot = pivot->next;
+		}
+	}
+	return (count);
+}
+
+char	**hashtable_to_array(void)
+{
+	int		env_vars_count;
+	int		i;
+	int		j;
+	t_list	*pivot;
+	char	**hashtable_arr;
+
+	env_vars_count = count_env_vars();
+	hashtable_arr = (char **) malloc((env_vars_count + 1) * sizeof(char *));
+	hashtable_arr[env_vars_count] = NULL;
+	i = -1;
+	j = -1;
+	while (++i < TABLE_SIZE)
+	{
+		pivot = g_tudao.hashtable[i];
+		while (pivot)
+		{
+			hashtable_arr[++j] = env_var_to_string((t_env_var *) pivot->content);
+			pivot = pivot->next;
+		}
+	}
+	return (NULL);
+}
+
 void	send_to_execve(t_command *command)
 {
 	char	**cmd_arr;
+	char	**hashtable_arr;
 
 	cmd_arr = assemble_cmd_array(command);
-	for (int i = 0; i < 4; i++)
-	{
-		printf("(%s)\n", cmd_arr[i]);
-	}
+	hashtable_arr = hashtable_to_array();
+	(void) hashtable_arr;
+	(void) cmd_arr;
+
 	// execve(cmd_arr[0], cmd_arr, hashtable_to_array());
 }
 
@@ -81,8 +139,6 @@ void	execute_built_in(t_command *command)
 		builtin_export(cmd_lst);
 	if (ft_strncmp(built_in_str, "unset", 6) == 0)
 		builtin_unset(cmd_lst);
-	if (ft_strncmp(built_in_str, "clear", 6) == 0)
-		printf("clear detected!\n");
 	free_g_tudao();
 	exit(1);
 	return ;
