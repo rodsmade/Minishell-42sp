@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 21:58:12 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 22:36:20 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ char	**assemble_cmd_array(t_command *command)
 	int		lst_len;
 	int		i;
 
-	// pro PRIMEIRO ARGUMENTO:
-	// if (começa com ./     ../      /)
-	// 	só add no array
-	// else
-	// 	joga pra procurar na hashtable.
 	lst_len = ft_lst_size(command->cmds_with_flags);
 	cmd_arr = (char **)malloc((lst_len + 1) * sizeof(char *));
 	pivot = command->cmds_with_flags;
@@ -110,16 +105,26 @@ char	**hashtable_to_array(void)
 	return (NULL);
 }
 
+char	*find_cmd_path(char *command_str)
+{
+	char	*cmd_path;
+
+	cmd_path = NULL;
+	return (cmd_path);
+}
+
 void	send_to_execve(t_command *command)
 {
 	char	**cmd_arr;
+	char	*cmd_path;
 	char	**hashtable_arr;
 
 	cmd_arr = assemble_cmd_array(command);
 	hashtable_arr = hashtable_to_array();
+	cmd_path = find_cmd_path(cmd_arr[0]);
 	printf("arg 1: %s\n", cmd_arr[0]);
-	if (execve(cmd_arr[0], cmd_arr, hashtable_arr) == -1)
-		printf("deu ruim\n");
+	if (execve(cmd_path, cmd_arr, hashtable_arr) == -1)
+		printf("deu ruim, libera memória ae\n");
 }
 
 void	execute_built_in(t_command *command)
@@ -156,7 +161,6 @@ void	execute_command(t_command *cmd)
 		free_g_tudao();
 		exit(1);
 	}
-	// else if (has_absolute_path(cmd))
 	else
 		send_to_execve(cmd);
 	return ;
