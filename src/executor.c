@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 02:20:21 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 02:32:06 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,9 @@ void	send_to_execve(t_command *command)
 
 	cmd_arr = assemble_cmd_array(command);
 	hashtable_arr = hashtable_to_array();
-	(void) hashtable_arr;
-	(void) cmd_arr;
-
-	// execve(cmd_arr[0], cmd_arr, hashtable_to_array());
+	printf("arg 1: %s\n", cmd_arr[0]);
+	if (execve(cmd_arr[0], cmd_arr, hashtable_arr) == -1)
+		printf("deu ruim\n");
 }
 
 void	execute_built_in(t_command *command)
