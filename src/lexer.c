@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/15 22:17:01 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/01 21:42:19 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	lexer_line(char *line_read)
 		{
 			content = (char *)malloc(sizeof(char) * (len + 1));
 			tokenizer(&line_read[i], content);
-			ft_lstadd_back(&g_tudao.token_list, ft_lstnew(content));
+			ft_lst_add_back(&g_tudao.token_list, ft_lst_new(content));
 			content = NULL;
 		}
 		i += len;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:56:49 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 21:05:19 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/01 21:42:19 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	insert_in_hashtable(char *string, int is_env_var
 	key_value = ft_split(string, '=');
 	index = hash_string(key_value[0]);
 	key_value_alloc = key_value_to_t_env_var(key_value, is_env_var);
-	ft_lstadd_back(&((*hashtable)[index]), ft_lstnew((void *)key_value_alloc));
+	ft_lst_add_back(&((*hashtable)[index]), ft_lst_new((void *)key_value_alloc));
 	ft_free_arr((void *)&key_value);
 	return ;
 }
@@ -69,8 +69,8 @@ void	insert_or_update_hashtable(char *string, int is_env_var
 	{
 		index = hash_string(key_value[0]);
 		key_value_alloc = key_value_to_t_env_var(key_value, is_env_var);
-		ft_lstadd_back(&((*hashtable)[index]), \
-		ft_lstnew((void *)key_value_alloc));
+		ft_lst_add_back(&((*hashtable)[index]), \
+		ft_lst_new((void *)key_value_alloc));
 	}
 	else
 		update_hashtable(key_value[0], key_value[1], is_env_var);

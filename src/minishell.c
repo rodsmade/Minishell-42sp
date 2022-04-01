@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 00:11:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 21:42:57 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	display_cmd_prompt(void)
 	expand_tokens();
 	parse_tokens();
 	while (g_tudao.token_list && !g_tudao.syntax_error
-		&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
+		&& is_pipe_and_or((char *) ft_lst_last(g_tudao.token_list)->content))
 		assemble_line(&g_tudao.prompt_input);
 	ft_free_ptr((void *)&curr_path);
 	ft_free_ptr((void *)&prompt);

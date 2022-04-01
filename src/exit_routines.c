@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/31 20:36:28 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 21:39:42 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 
 	i = -1;
 	while (++i < TABLE_SIZE)
-		ft_lstclear(&(*hashtable)[i], free_env_var);
+		ft_lst_clear(&(*hashtable)[i], free_env_var);
 	return ;
 }
 
