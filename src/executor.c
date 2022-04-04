@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/04 12:39:43 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/04 14:25:49 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ char	*find_cmd_path(char *command_str)
 			return (command_str);
 		else
 		{
-			printf("Teste1\n");
 			ft_putendl_fd("command not found", 2);
 			exit(EXIT_FAILURE);
 		}
@@ -207,6 +206,31 @@ void	execute_command(t_command *cmd)
 	return ;
 }
 
+void	adjust_input_output(t_list *next_pipeline, t_command *cmd, int *pipe)
+{
+	int	input;
+	int	output;
+	
+	if (cmd->inputs)
+	{
+		input = open(cmd->inputs, O_RDONLY);
+		dup2(input, STDIN_FILENO);
+		close(STDIN_FILENO);
+	}
+	//verificar a parte de concatenar
+	if (cmd->outputs)
+	{
+		output = open(cmd->outputs, O_CREAT, O_WRONLY, O_TRUNC, 0777);
+		dup2(output, STDOUT_FILENO);
+		close(STDOUT_FILENO);
+	}
+	else if (next_pipeline && !cmd->outputs)
+	{
+		dup2(pipe[1], STDOUT_FILENO);
+		close(STDOUT_FILENO);
+	}
+}
+
 void	execute_main_pipeline(void)
 /**
  * TODO: Intended complete structure:
@@ -225,25 +249,43 @@ void	execute_main_pipeline(void)
 	int			pid;
 	int			wstatus;
 	t_command	*cmd;
+	int			counter;
+	int			fd[2];
 
 	cmd_pivot = g_tudao.command_table.main_pipeline;
 	cmd = (t_command *) cmd_pivot->content;
+	counter = 0;
 	if (!cmd_pivot->next && is_built_in((char *)cmd->cmds_with_flags->content))
 		execute_built_in(cmd);
 	else
 	{
 		while (cmd_pivot)
 		{
+			if (pipe(fd) == -1)
+				ft_putendl_fd("Pipe error\n", 2);
 			pid = fork();
 			if (pid == -1)
-				ft_putendl_fd("Error while forking", 1);
+				ft_putendl_fd("Error while forking", 2);
 			else if (pid == 0)
+			{
+				//Adicionada a função para redirecionar inputs e outputs
+				adjust_input_output(cmd_pivot->next, cmd, fd);
 				execute_command(cmd);
+			}
 			else
+			{
+				//Esta parte cuida para ver se preciso ler de um pipe ou do STDIN normal
+				if (cmd_pivot->next)
+				{
+					dup2(fd[0], STDIN_FILENO);
+					close(STDIN_FILENO);
+				}
 				waitpid(pid, &wstatus, 0);
+			}
 			cmd_pivot = cmd_pivot->next;
 			if (cmd_pivot)
 				cmd = (t_command *) cmd_pivot->content;
+			counter++;
 		}
 	}
 }
