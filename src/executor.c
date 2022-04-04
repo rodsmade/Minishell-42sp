@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/04 14:25:49 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/04 21:19:36 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ void	send_to_execve(t_command *command)
 	cmd_arr = assemble_cmd_array(command);
 	hashtable_arr = hashtable_to_array();
 	cmd_path = find_cmd_path(cmd_arr[0]);
-	printf("arg 1: %s\n", cmd_arr[0]);
 	if (execve(cmd_path, cmd_arr, hashtable_arr) == -1)
 		printf("deu ruim, libera memória ae\n");
 }
@@ -206,28 +205,36 @@ void	execute_command(t_command *cmd)
 	return ;
 }
 
-void	adjust_input_output(t_list *next_pipeline, t_command *cmd, int *pipe)
+void	capture_redrections(t_list *next_pipeline, t_command *cmd, int *pipe)
 {
 	int	input;
 	int	output;
 	
 	if (cmd->inputs)
 	{
-		input = open(cmd->inputs, O_RDONLY);
-		dup2(input, STDIN_FILENO);
-		close(STDIN_FILENO);
+		printf("access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
+		printf("access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
+		input = open((char *) cmd->inputs->content, O_RDONLY);
+		if (input == -1)
+			printf("deu ruim no open\n");
+		if (dup2(input, STDIN_FILENO) == -1)
+			ft_putendl_fd("Error duplicating input file descriptor", 2);
+		close(input);
 	}
 	//verificar a parte de concatenar
 	if (cmd->outputs)
 	{
-		output = open(cmd->outputs, O_CREAT, O_WRONLY, O_TRUNC, 0777);
+		output = open((char *) cmd->outputs->content,
+			O_CREAT | O_WRONLY | O_TRUNC,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		dup2(output, STDOUT_FILENO);
-		close(STDOUT_FILENO);
+		// close(output);
 	}
-	else if (next_pipeline && !cmd->outputs)
+	else if (next_pipeline)
 	{
+		printf("entrou no else\n");
 		dup2(pipe[1], STDOUT_FILENO);
-		close(STDOUT_FILENO);
+		// close(STDOUT_FILENO);
 	}
 }
 
@@ -262,14 +269,14 @@ void	execute_main_pipeline(void)
 		while (cmd_pivot)
 		{
 			if (pipe(fd) == -1)
-				ft_putendl_fd("Pipe error\n", 2);
+				ft_putendl_fd("Error while creating pipe", 2);
 			pid = fork();
 			if (pid == -1)
 				ft_putendl_fd("Error while forking", 2);
 			else if (pid == 0)
 			{
 				//Adicionada a função para redirecionar inputs e outputs
-				adjust_input_output(cmd_pivot->next, cmd, fd);
+				capture_redrections(cmd_pivot->next, cmd, fd);
 				execute_command(cmd);
 			}
 			else
