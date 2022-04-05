@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/04 11:42:30 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/05 13:36:31 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	close_fds(void)
 	close(0);
 	close(1);
 	close(2);
+	close(3);
 	return ;
 }
 

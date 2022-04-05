@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 12:29:30 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/05 13:30:51 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,11 @@ void	capture_redirections(t_list *next_pipeline, t_command *cmd, int *pipe)
 		// printf("resultado da dup2: %i\n", dup2(pipe[1], STDOUT_FILENO));
 		dprintf(2, "pipe[0] %d // pipe[1] %d\n", pipe[0], pipe[1]);
 		if (dup2(pipe[1], STDOUT_FILENO) == -1)
+		{
 			dprintf(2, "deu ruim na dup2\n");
+			// close(pipe[0]);
+			close(pipe[1]);
+		}
 		dprintf(2, "----- depois do dup2 -----\n");
 		dprintf(2, "STDOUT_FILENO: %i\n", STDOUT_FILENO);
 		dprintf(2, "pipe[0] %d // pipe[1] %d\n", pipe[0], pipe[1]);
@@ -313,13 +317,14 @@ void	execute_main_pipeline(void)
 			}
 			else
 			{
-				waitpid(pid, &wstatus, 0);
 				//Esta parte cuida para ver se preciso ler de um pipe ou do STDIN normal
 				if (cmd_pivot->next)
 				{
 					dup2(fd[0], STDIN_FILENO);
-					close(fd[0]);
+					// close(fd[0]);
+					close(fd[1]);
 				}
+				waitpid(pid, &wstatus, 0);
 			}
 			cmd_pivot = cmd_pivot->next;
 			if (cmd_pivot)
@@ -327,4 +332,7 @@ void	execute_main_pipeline(void)
 			counter++;
 		}
 	}
+	close(fd[0]);
+	close(fd[1]);
+	dprintf(2, "########## ENCERRA PIPELINE ##########\n");
 }
