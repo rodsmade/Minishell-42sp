@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 01:07:24 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/05 20:39:02 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,21 @@ void	execute_built_in(t_command *command)
 	return ;
 }
 
-void	execute_command(t_command *cmd)
+void	close_and_free_pipes(int **pipes, int total_pipes)
+{
+	int	i;
+
+	i = -1;
+	while (++i < total_pipes)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		free(pipes[i]);
+	}
+	free(pipes);
+}
+
+void	execute_command(t_command *cmd, int **pipes, int total_pipes)
 {
 	// if (is_var_assignment(cmd->cmds_with_flags->content))
 	// 	assign_vars(cmd);
@@ -209,6 +223,7 @@ void	execute_command(t_command *cmd)
 	{
 		execute_built_in(cmd);
 		free_g_tudao();
+		close_and_free_pipes(pipes, total_pipes);
 		exit(1);
 	}
 	else
@@ -317,20 +332,6 @@ void	capture_redirections(int **pipe, int counter, t_command *cmd)
 	capture_inputs(cmd);
 }
 
-void	close_and_free_pipes(int **pipes, int total_pipes)
-{
-	int	i;
-
-	i = -1;
-	while (++i < total_pipes)
-	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
-		free(pipes[i]);
-	}
-	free(pipes);
-}
-
 int	**make_pipes(int total_pipes)
 {
 	int		i;
@@ -397,7 +398,7 @@ void	execute_main_pipeline(void)
 			else if (pid == 0)
 			{
 				capture_redirections(pipes, counter, cmd);
-				execute_command(cmd);
+				execute_command(cmd, pipes, total_pipes);
 			}
 			else
 			{
