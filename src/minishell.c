@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 15:23:38 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/05 18:36:03 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	display_cmd_prompt(void)
 	curr_path = getcwd(NULL, 0);
 	prompt = ft_strjoin(curr_path, " $ ");
 	g_tudao.prompt_input = readline(prompt);
-	dprintf(2, ">: prompt_input %s\n", g_tudao.prompt_input);
 	if (ft_strncmp(g_tudao.prompt_input, "quit", 5) == 0)
 	{
 		g_tudao.exit = true;

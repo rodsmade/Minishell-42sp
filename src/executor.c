@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 18:32:18 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/05 18:56:12 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,34 +271,55 @@ void	execute_command(t_command *cmd)
 
 void	capture_redirections(int total_pipes, int **pipe, int counter)
 {
-	if (counter != (total_pipes - 1) && total_pipes > 1)
+	if (counter != total_pipes && total_pipes)
 	{
 		if (counter)
 			dup2(pipe[counter - 1][0], STDIN_FILENO);
 		dup2(pipe[counter][1], STDOUT_FILENO);
 	}
-	else if (counter == (total_pipes - 1) && total_pipes > 1)
+	else if (counter == total_pipes && total_pipes)
 	{
 		if (counter)
 			dup2(pipe[counter -1][0], STDIN_FILENO);
 	}
 }
 
-int	**make_pipes(t_list *cmd, int total_pipes)
+void	close_and_free_pipes(int **pipes, int total_pipes)
+{
+	int	i;
+
+	i = -1;
+	while (++i < total_pipes)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		free(pipes[i]);
+	}
+	free(pipes);
+}
+
+int	**make_pipes(int total_pipes)
 {
 	int		i;
 	int	**pipes;
-	t_list	*tmp;
 
 	pipes = (int **)malloc(total_pipes * sizeof(int *));
+	if (!pipes)
+	{
+		ft_putendl_fd("Malloc error", 2);
+		exit(EXIT_FAILURE);
+	}
 	i = 0;
-	tmp = cmd;
-	while (tmp)
+	while (i < total_pipes)
 	{
 		pipes[i] = (int *)malloc(2 * sizeof(int));
+		if (!pipes[i])
+		{
+			ft_putendl_fd("Malloc error", 2);
+			exit(EXIT_FAILURE);
+		}
 		pipe(pipes[i]);
 		i++;
-		tmp = tmp->next;
 	}
 	return (pipes);
 }
@@ -332,8 +353,8 @@ void	execute_main_pipeline(void)
 		execute_built_in(cmd);
 	else
 	{
-		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline);
-		pipes = make_pipes(g_tudao.command_table.main_pipeline, total_pipes);
+		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
+		pipes = make_pipes(total_pipes);
 		while (cmd_pivot)
 		{
 			dprintf(2, "\n\n# COMMAND TO PROCESS: %s\n", (char *) ((t_command *) cmd_pivot->content)->cmds_with_flags->content);
@@ -348,7 +369,8 @@ void	execute_main_pipeline(void)
 			else
 			{
 				waitpid(pid, &wstatus, 0);
-				close(pipes[counter][1]);
+				if (counter != total_pipes)
+					close(pipes[counter][1]);
 			}
 			cmd_pivot = cmd_pivot->next;
 			if (cmd_pivot)
@@ -356,5 +378,6 @@ void	execute_main_pipeline(void)
 			counter++;
 		}
 	}
-	dprintf(2, "########## ENCERRA PIPELINE ##########\n");
+	close_and_free_pipes(pipes, total_pipes);
+	dprintf(2, "\n########## ENCERRA PIPELINE ##########\n\n");
 }
