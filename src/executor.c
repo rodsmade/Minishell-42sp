@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 18:56:12 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 01:07:24 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,8 +269,40 @@ void	execute_command(t_command *cmd)
 // 	}
 // }
 
-void	capture_redirections(int total_pipes, int **pipe, int counter)
+void	capture_inputs(t_command *cmd)
 {
+	t_list	*pivot;
+	char	*err_msg;
+
+	pivot = cmd->inputs;
+	while (pivot)
+	{
+		if (access((char *) pivot->content, F_OK) == -1)
+		{
+			err_msg = ft_strjoin_3("bash: ", (char *) pivot->content,
+				": No such file or directory");
+			ft_putendl_fd(err_msg, 2);
+			ft_free_ptr((void *)&err_msg);
+		}
+		if (access((char *) cmd->inputs->content, R_OK) == -1)
+		{
+			err_msg = ft_strjoin_3("bash: ", (char *) pivot->content,
+				": Permission denied");
+			ft_putendl_fd(err_msg, 2);
+			ft_free_ptr((void *)&err_msg);
+		}
+		if (!pivot->next)
+			dup2(open((char *) pivot->content, O_RDONLY), STDIN_FILENO);
+		pivot = pivot->next;
+	}
+	return ;
+}
+
+void	capture_redirections(int **pipe, int counter, t_command *cmd)
+{
+	int	total_pipes;
+
+	total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
 	if (counter != total_pipes && total_pipes)
 	{
 		if (counter)
@@ -282,6 +314,7 @@ void	capture_redirections(int total_pipes, int **pipe, int counter)
 		if (counter)
 			dup2(pipe[counter -1][0], STDIN_FILENO);
 	}
+	capture_inputs(cmd);
 }
 
 void	close_and_free_pipes(int **pipes, int total_pipes)
@@ -363,7 +396,7 @@ void	execute_main_pipeline(void)
 				ft_putendl_fd("Error while forking", 2);
 			else if (pid == 0)
 			{
-				capture_redirections(total_pipes, pipes, counter);
+				capture_redirections(pipes, counter, cmd);
 				execute_command(cmd);
 			}
 			else
@@ -377,7 +410,7 @@ void	execute_main_pipeline(void)
 				cmd = (t_command *) cmd_pivot->content;
 			counter++;
 		}
+		close_and_free_pipes(pipes, total_pipes);
 	}
-	close_and_free_pipes(pipes, total_pipes);
 	dprintf(2, "\n########## ENCERRA PIPELINE ##########\n\n");
 }
