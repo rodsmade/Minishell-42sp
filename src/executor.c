@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/04 21:19:36 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/05 01:59:24 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	*find_cmd_path(char *command_str)
 			return (command_str);
 		else
 		{
-			ft_putendl_fd("command not found", 2);
+			ft_putendl_fd("bash: command not found", 2);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -149,7 +149,7 @@ char	*find_cmd_path(char *command_str)
 				ft_free_ptr((void *)&cmd_path);
 		}
 	}
-	ft_putendl_fd("command not found", 2);
+	ft_putendl_fd("bash: command not found", 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -159,9 +159,20 @@ void	send_to_execve(t_command *command)
 	char	*cmd_path;
 	char	**hashtable_arr;
 
+	printf("entrou na send_to_exec, ");
+	printf("comando: %s\n", (char *) command->cmds_with_flags->content);
 	cmd_arr = assemble_cmd_array(command);
 	hashtable_arr = hashtable_to_array();
 	cmd_path = find_cmd_path(cmd_arr[0]);
+	printf("sending to exec: execve(%s, { ", cmd_path);
+	int i=-1;
+	while (cmd_arr[++i])
+	{
+		printf("%s", cmd_arr[i]);
+		if (cmd_arr[i + 1])
+			printf(", ");
+	}
+	printf(" }, envp);\n");
 	if (execve(cmd_path, cmd_arr, hashtable_arr) == -1)
 		printf("deu ruim, libera memória ae\n");
 }
@@ -201,22 +212,26 @@ void	execute_command(t_command *cmd)
 		exit(1);
 	}
 	else
+	{
+		printf("entrou aqui, comando: %s\n", (char *) cmd->cmds_with_flags->content);
 		send_to_execve(cmd);
+	}
 	return ;
 }
 
-void	capture_redrections(t_list *next_pipeline, t_command *cmd, int *pipe)
+void	capture_redirections(t_list *next_pipeline, t_command *cmd, int *pipe)
 {
 	int	input;
 	int	output;
-	
+
+	printf("entrou na capture\n");
 	if (cmd->inputs)
 	{
 		printf("access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
 		printf("access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
 		input = open((char *) cmd->inputs->content, O_RDONLY);
 		if (input == -1)
-			printf("deu ruim no open\n");
+			ft_putendl_fd("Error opening input file", 2);
 		if (dup2(input, STDIN_FILENO) == -1)
 			ft_putendl_fd("Error duplicating input file descriptor", 2);
 		close(input);
@@ -224,16 +239,25 @@ void	capture_redrections(t_list *next_pipeline, t_command *cmd, int *pipe)
 	//verificar a parte de concatenar
 	if (cmd->outputs)
 	{
+		printf("access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
+		printf("access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
 		output = open((char *) cmd->outputs->content,
 			O_CREAT | O_WRONLY | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		dup2(output, STDOUT_FILENO);
+		if (output == -1)
+			ft_putendl_fd("Error opening output file", 2);
+		if (dup2(output, STDOUT_FILENO) == -1)
+			ft_putendl_fd("Error duplicating output file descriptor", 2);
 		// close(output);
 	}
 	else if (next_pipeline)
 	{
 		printf("entrou no else\n");
-		dup2(pipe[1], STDOUT_FILENO);
+		printf("pipe[1]: %i\n", pipe[1]);
+		printf("STDOUT_FILENO: %i\n", STDOUT_FILENO);
+		// printf("resultado da dup2: %i\n", dup2(pipe[1], STDOUT_FILENO));
+		if (dup2(pipe[1], STDOUT_FILENO) == -1)
+			printf("deu ruim na dup2\n");
 		// close(STDOUT_FILENO);
 	}
 }
@@ -268,6 +292,7 @@ void	execute_main_pipeline(void)
 	{
 		while (cmd_pivot)
 		{
+			printf("command to execute: %s\n", (char *) ((t_command *) cmd_pivot->content)->cmds_with_flags->content);
 			if (pipe(fd) == -1)
 				ft_putendl_fd("Error while creating pipe", 2);
 			pid = fork();
@@ -276,18 +301,20 @@ void	execute_main_pipeline(void)
 			else if (pid == 0)
 			{
 				//Adicionada a função para redirecionar inputs e outputs
-				capture_redrections(cmd_pivot->next, cmd, fd);
+				printf("antes da capture\n");
+				capture_redirections(cmd_pivot->next, cmd, fd);
+				printf("depois da capture\n");
 				execute_command(cmd);
 			}
 			else
 			{
+				waitpid(pid, &wstatus, 0);
 				//Esta parte cuida para ver se preciso ler de um pipe ou do STDIN normal
 				if (cmd_pivot->next)
 				{
 					dup2(fd[0], STDIN_FILENO);
-					close(STDIN_FILENO);
+					close(fd[0]);
 				}
-				waitpid(pid, &wstatus, 0);
 			}
 			cmd_pivot = cmd_pivot->next;
 			if (cmd_pivot)
