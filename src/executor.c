@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 01:59:24 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/05 12:29:30 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,12 @@ void	send_to_execve(t_command *command)
 	char	*cmd_path;
 	char	**hashtable_arr;
 
-	printf("entrou na send_to_exec, ");
-	printf("comando: %s\n", (char *) command->cmds_with_flags->content);
+	dprintf(2, "entrou na send_to_exec, ");
+	dprintf(2, "comando: %s\n", (char *) command->cmds_with_flags->content);
 	cmd_arr = assemble_cmd_array(command);
 	hashtable_arr = hashtable_to_array();
 	cmd_path = find_cmd_path(cmd_arr[0]);
-	printf("sending to exec: execve(%s, { ", cmd_path);
+	dprintf(2, "sending to exec: execve(%s, { ", cmd_path);
 	int i=-1;
 	while (cmd_arr[++i])
 	{
@@ -172,9 +172,9 @@ void	send_to_execve(t_command *command)
 		if (cmd_arr[i + 1])
 			printf(", ");
 	}
-	printf(" }, envp);\n");
+	dprintf(2, " }, envp);\n");
 	if (execve(cmd_path, cmd_arr, hashtable_arr) == -1)
-		printf("deu ruim, libera memória ae\n");
+		dprintf(2, "deu ruim, libera memória ae\n");
 }
 
 void	execute_built_in(t_command *command)
@@ -213,7 +213,7 @@ void	execute_command(t_command *cmd)
 	}
 	else
 	{
-		printf("entrou aqui, comando: %s\n", (char *) cmd->cmds_with_flags->content);
+		dprintf(2, "executar comando: %s\n", (char *) cmd->cmds_with_flags->content);
 		send_to_execve(cmd);
 	}
 	return ;
@@ -224,11 +224,11 @@ void	capture_redirections(t_list *next_pipeline, t_command *cmd, int *pipe)
 	int	input;
 	int	output;
 
-	printf("entrou na capture\n");
+	dprintf(2, "----- entrou na capture -----\n");
 	if (cmd->inputs)
 	{
-		printf("access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
-		printf("access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
+		dprintf(2, "access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
+		dprintf(2, "access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
 		input = open((char *) cmd->inputs->content, O_RDONLY);
 		if (input == -1)
 			ft_putendl_fd("Error opening input file", 2);
@@ -239,8 +239,8 @@ void	capture_redirections(t_list *next_pipeline, t_command *cmd, int *pipe)
 	//verificar a parte de concatenar
 	if (cmd->outputs)
 	{
-		printf("access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
-		printf("access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
+		dprintf(2, "access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
+		dprintf(2, "access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
 		output = open((char *) cmd->outputs->content,
 			O_CREAT | O_WRONLY | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -252,12 +252,15 @@ void	capture_redirections(t_list *next_pipeline, t_command *cmd, int *pipe)
 	}
 	else if (next_pipeline)
 	{
-		printf("entrou no else\n");
-		printf("pipe[1]: %i\n", pipe[1]);
-		printf("STDOUT_FILENO: %i\n", STDOUT_FILENO);
+		dprintf(2, "----- Pipe detectado -----\n");
+		dprintf(2, "STDOUT_FILENO: %i\n", STDOUT_FILENO);
 		// printf("resultado da dup2: %i\n", dup2(pipe[1], STDOUT_FILENO));
+		dprintf(2, "pipe[0] %d // pipe[1] %d\n", pipe[0], pipe[1]);
 		if (dup2(pipe[1], STDOUT_FILENO) == -1)
-			printf("deu ruim na dup2\n");
+			dprintf(2, "deu ruim na dup2\n");
+		dprintf(2, "----- depois do dup2 -----\n");
+		dprintf(2, "STDOUT_FILENO: %i\n", STDOUT_FILENO);
+		dprintf(2, "pipe[0] %d // pipe[1] %d\n", pipe[0], pipe[1]);
 		// close(STDOUT_FILENO);
 	}
 }
@@ -292,7 +295,7 @@ void	execute_main_pipeline(void)
 	{
 		while (cmd_pivot)
 		{
-			printf("command to execute: %s\n", (char *) ((t_command *) cmd_pivot->content)->cmds_with_flags->content);
+			dprintf(2, "\n\n# COMMAND TO PROCESS: %s\n", (char *) ((t_command *) cmd_pivot->content)->cmds_with_flags->content);
 			if (pipe(fd) == -1)
 				ft_putendl_fd("Error while creating pipe", 2);
 			pid = fork();
@@ -301,9 +304,11 @@ void	execute_main_pipeline(void)
 			else if (pid == 0)
 			{
 				//Adicionada a função para redirecionar inputs e outputs
-				printf("antes da capture\n");
+				dprintf(2, "----- antes da capture -----\n");
+				dprintf(2, "fd[0]: %d // fd[1]: %d\n", fd[0], fd[1]);
 				capture_redirections(cmd_pivot->next, cmd, fd);
-				printf("depois da capture\n");
+				dprintf(2, "----- depois da capture -----\n");
+				dprintf(2, "fd[0]: %d // fd[1]: %d\n", fd[0], fd[1]);
 				execute_command(cmd);
 			}
 			else
