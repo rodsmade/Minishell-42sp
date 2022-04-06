@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 20:34:23 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 20:44:51 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	capture_heredocs(t_command *cmd)
 				ft_free_ptr((void *)&line_read);
 				line_read = readline("> ");
 			}
+			write(g_tudao.pipe_heredoc[1], line_read, ft_strlen(line_read));
+			write(g_tudao.pipe_heredoc[1], "\n", 1);
 			close(pipe_fds[0]);
 			close(pipe_fds[1]);
 			close(g_tudao.pipe_heredoc[0]);
