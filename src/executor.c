@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 21:07:43 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 21:21:20 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 	}
 	capture_inputs(cmd);
 	capture_outputs(cmd);
-	// capture_heredocs(cmd);
+	capture_heredocs(cmd);
 	capture_o_concats(cmd);
 }
 
