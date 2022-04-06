@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 20:47:01 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 21:06:10 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <dirent.h>			// opendir(), closedir(), readdir()
 # include <sys/stat.h>			// stat(), fstat(), lstat()
 # include <sys/types.h>			// stat(), fstat(), lstat()
-# include <stdarg.h>			// variadic functions concat() and free()
 # include <sys/types.h>			// <pid_t> typedef
 # include <sys/wait.h>			// wait()
 # include "libft.h"
