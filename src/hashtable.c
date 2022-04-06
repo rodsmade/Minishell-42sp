@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:56:49 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 21:42:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 21:12:36 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	insert_in_hashtable(char *string, int is_env_var
 	key_value = ft_split(string, '=');
 	index = hash_string(key_value[0]);
 	key_value_alloc = key_value_to_t_env_var(key_value, is_env_var);
-	ft_lst_add_back(&((*hashtable)[index]), ft_lst_new((void *)key_value_alloc));
+	ft_lst_add_back(&((*hashtable)[index]),
+		ft_lst_new((void *)key_value_alloc));
 	ft_free_arr((void *)&key_value);
 	return ;
 }

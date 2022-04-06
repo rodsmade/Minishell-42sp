@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 21:06:01 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 21:07:43 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,56 +207,6 @@ void	execute_command(t_command *cmd)
 		send_to_execve(cmd);
 	return ;
 }
-
-// void	capture_redirections(t_list *next_pipeline, t_command *cmd, int *pipe, int counter)
-// {
-// 	int	input;
-// 	int	output;
-//
-// 	dprintf(2, "----- entrou na capture -----\n");
-// 	if (cmd->inputs)
-// 	{
-// 		dprintf(2, "access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
-// 		dprintf(2, "access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
-// 		input = open((char *) cmd->inputs->content, O_RDONLY);
-// 		if (input == -1)
-// 			ft_putendl_fd("Error opening input file", 2);
-// 		if (dup2(input, STDIN_FILENO) == -1)
-// 			ft_putendl_fd("Error duplicating input file descriptor", 2);
-// 		close(input);
-// 	}
-// 	//verificar a parte de concatenar
-// 	if (cmd->outputs)
-// 	{
-// 		dprintf(2, "access input - if file exists: %i\n", access((char *) cmd->inputs->content, F_OK));
-// 		dprintf(2, "access input - if file has read permission: %i\n", access((char *) cmd->inputs->content, R_OK));
-// 		output = open((char *) cmd->outputs->content,
-// 			O_CREAT | O_WRONLY | O_TRUNC,
-// 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-// 		if (output == -1)
-// 			ft_putendl_fd("Error opening output file", 2);
-// 		if (dup2(output, STDOUT_FILENO) == -1)
-// 			ft_putendl_fd("Error duplicating output file descriptor", 2);
-// 		// close(output);
-// 	}
-// 	else if (next_pipeline)
-// 	{
-// 		dprintf(2, "----- Pipe detectado -----\n");
-// 		dprintf(2, "STDOUT_FILENO: %i\n", STDOUT_FILENO);
-// 		// printf("resultado da dup2: %i\n", dup2(pipe[1], STDOUT_FILENO));
-// 		dprintf(2, "pipe[0] %d // pipe[1] %d\n", pipe[0], pipe[1]);
-// 		if (dup2(pipe[1], STDOUT_FILENO) == -1)
-// 		{
-// 			dprintf(2, "deu ruim na dup2\n");
-// 			// close(pipe[0]);
-// 			close(pipe[1]);
-// 		}
-// 		dprintf(2, "----- depois do dup2 STDOUT -----\n");
-// 		dprintf(2, "STDOUT_FILENO: %i\n", STDOUT_FILENO);
-// 		dprintf(2, "pipe[0] %d // pipe[1] %d\n", pipe[0], pipe[1]);
-// 		// close(STDOUT_FILENO);
-// 	}
-// }
 
 void	capture_redirections(int cmd_counter, t_command *cmd)
 {

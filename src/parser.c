@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 15:36:53 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 21:14:32 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ void	capture_command(t_command	*cmd, t_list **pivot)
 		}
 		else
 		{
-			ft_lst_add_back(&cmd->cmds_with_flags, ft_lst_new((*pivot)->content));
+			ft_lst_add_back(&cmd->cmds_with_flags,
+				ft_lst_new((*pivot)->content));
 			(*pivot) = (*pivot)->next;
 		}
 	}
-	return ;
 }
 
 void	set_up_main_pipeline(void)
@@ -98,7 +98,6 @@ void	set_up_main_pipeline(void)
 void	set_up_command_table(void)
 {
 	set_up_main_pipeline();
-	// print_commands_and_redirects();
 	return ;
 }
 

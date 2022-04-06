@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 20:53:20 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 21:15:13 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	capture_outputs(t_command *cmd)
 		if (access((char *) pivot->content, F_OK) == -1)
 		{
 			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 			if (pivot->next)
 				close(fd);
 		}
@@ -50,8 +50,8 @@ void	capture_outputs(t_command *cmd)
 		if (!pivot->next)
 		{
 			cmd->output_fd = open((char *) pivot->content,
-				O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+					O_CREAT | O_WRONLY | O_TRUNC,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 			dup2(cmd->output_fd, STDOUT_FILENO);
 		}
 		pivot = pivot->next;
@@ -76,7 +76,7 @@ void	capture_o_concats(t_command *cmd)
 		if (access((char *) pivot->content, F_OK) == -1)
 		{
 			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_APPEND,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 			if (pivot->next)
 				close(fd);
 		}
@@ -84,8 +84,8 @@ void	capture_o_concats(t_command *cmd)
 		if (!pivot->next)
 		{
 			cmd->o_concat_fd = open((char *) pivot->content,
-				O_CREAT | O_WRONLY | O_APPEND,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+					O_CREAT | O_WRONLY | O_APPEND,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 			dup2(cmd->o_concat_fd, STDOUT_FILENO);
 		}
 		pivot = pivot->next;
