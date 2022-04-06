@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 17:19:02 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:43:21 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ char	*env_var_to_string(t_env_var *env_var)
 
 	temp = ft_strjoin((char *) env_var->key, "=");
 	if (env_var->value)
+	{
 		env_var_str = ft_strjoin(temp, (char *) env_var->value);
-	ft_free_ptr((void *)&temp);
-	return (env_var_str);
+		ft_free_ptr((void *)&temp);
+		return (env_var_str);
+	}
+	return (temp);
 }
 
 int	count_env_vars(void)
@@ -102,7 +105,7 @@ char	**hashtable_to_array(void)
 			pivot = pivot->next;
 		}
 	}
-	return (NULL);
+	return (hashtable_arr);
 }
 
 char	*ft_strjoin_3(char *str1, char *str2, char *str3)
@@ -126,15 +129,13 @@ char	*find_cmd_path(char *command_str)
 	cmd_path = NULL;
 	i = -1;
 	if (!ft_strncmp(command_str, "~", 1) || !ft_strncmp(command_str, "/", 1) || \
-	!ft_strncmp(command_str, "./", 2) || !ft_strncmp(command_str, "../", 3))
+	!ft_strncmp(command_str, "./", 2) || !ft_strncmp(command_str, "../", 3) || \
+	!ft_strncmp(command_str, ".", 1))
 	{
 		if (access(command_str, F_OK) == 0)
 			return (command_str);
 		else
-		{
-			ft_putendl_fd("bash: command not found", 2);
-			exit(EXIT_FAILURE);
-		}
+			return (NULL);
 	}
 	else
 	{
@@ -144,13 +145,16 @@ char	*find_cmd_path(char *command_str)
 		{
 			cmd_path = ft_strjoin_3(splited_paths[i], "/", command_str);
 			if (access(cmd_path, F_OK) == 0)
+			{
+				ft_free_arr((void *)&splited_paths);
 				return (cmd_path);
+			}
 			else
 				ft_free_ptr((void *)&cmd_path);
 		}
 	}
-	ft_putendl_fd("bash: command not found", 2);
-	exit(EXIT_FAILURE);
+	ft_free_arr((void *)&splited_paths);
+	return (NULL);
 }
 
 void	send_to_execve(t_command *command)
@@ -160,10 +164,21 @@ void	send_to_execve(t_command *command)
 	char	**hashtable_arr;
 
 	cmd_arr = assemble_cmd_array(command);
-	hashtable_arr = hashtable_to_array();
 	cmd_path = find_cmd_path(cmd_arr[0]);
+	if (!cmd_path)
+	{
+		ft_free_ptr((void *)&cmd_arr);
+		ft_putendl_fd("bash: command not found", 2);
+		free_and_exit_fork(NULL);
+	}
+	hashtable_arr = hashtable_to_array();
 	if (execve(cmd_path, cmd_arr, hashtable_arr) == -1)
-		ft_putendl_fd("deu ruim, libera memória ae", 2);
+	{
+		ft_free_ptr((void *)&cmd_arr);
+		ft_putendl_fd("couldn't execute", 2);
+		ft_free_arr((void *)&hashtable_arr);
+		free_and_exit_fork(NULL);
+	}
 }
 
 void	execute_built_in(t_command *command)
