@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 03:40:07 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 11:49:10 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int				value_len(char *line_read);
 int				check_key(char *key_value);
 int				key_len(char *key_value);
 void			print_exported_vars(void);
-void			concat_and_free(char **pair, int num_str, ...);
+void			concat_and_free(char **pair, char *s1, char *s2, char *s3);
 
 //utils_export_2.c
 void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
