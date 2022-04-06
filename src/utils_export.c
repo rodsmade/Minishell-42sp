@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 12:12:26 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/04 11:45:36 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 11:49:00 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,30 +111,14 @@ void	print_exported_vars(void)
 	}	
 }
 
-void	concat_and_free(char **pair, int num_str, ...)
+void	concat_and_free(char **pair, char *s1, char *s2, char *s3)
 {
-	va_list	args;
-	int		count;
-	char	*aux;
 	char	*tmp;
 
-	count = -1;
-	va_start(args, num_str);
-	while (++count < num_str)
-	{
-		if (*pair == NULL)
-		{
-			tmp = va_arg(args, char *);
-			*pair = ft_strdup(tmp);
-			ft_free_ptr((void *)&tmp);
-		}
-		else
-		{
-			aux = *pair;
-			tmp = va_arg(args, char *);
-			*pair = ft_strjoin(aux, tmp);
-			ft_free_ptr((void *)&aux);
-			ft_free_ptr((void *)&tmp);
-		}
-	}
+	tmp = ft_strjoin(s1, s2);
+	*pair = ft_strjoin(tmp, s3);
+	ft_free_ptr((void *)&s1);
+	ft_free_ptr((void *)&s2);
+	ft_free_ptr((void *)&s3);
+	ft_free_ptr((void *)&tmp);
 }
