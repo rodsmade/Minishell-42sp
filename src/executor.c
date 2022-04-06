@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 20:39:02 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 15:51:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,22 +159,11 @@ void	send_to_execve(t_command *command)
 	char	*cmd_path;
 	char	**hashtable_arr;
 
-	dprintf(2, "entrou na send_to_exec, ");
-	dprintf(2, "comando: %s\n", (char *) command->cmds_with_flags->content);
 	cmd_arr = assemble_cmd_array(command);
 	hashtable_arr = hashtable_to_array();
 	cmd_path = find_cmd_path(cmd_arr[0]);
-	dprintf(2, "sending to exec: execve(%s, { ", cmd_path);
-	int i=-1;
-	while (cmd_arr[++i])
-	{
-		printf("%s", cmd_arr[i]);
-		if (cmd_arr[i + 1])
-			printf(", ");
-	}
-	dprintf(2, " }, envp);\n");
 	if (execve(cmd_path, cmd_arr, hashtable_arr) == -1)
-		dprintf(2, "deu ruim, libera memória ae\n");
+		ft_putendl_fd("deu ruim, libera memória ae", 2);
 }
 
 void	execute_built_in(t_command *command)
@@ -201,36 +190,17 @@ void	execute_built_in(t_command *command)
 	return ;
 }
 
-void	close_and_free_pipes(int **pipes, int total_pipes)
-{
-	int	i;
-
-	i = -1;
-	while (++i < total_pipes)
-	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
-		free(pipes[i]);
-	}
-	free(pipes);
-}
-
-void	execute_command(t_command *cmd, int **pipes, int total_pipes)
+void	execute_command(t_command *cmd)
 {
 	// if (is_var_assignment(cmd->cmds_with_flags->content))
 	// 	assign_vars(cmd);
 	if (is_built_in(cmd->cmds_with_flags->content))
 	{
 		execute_built_in(cmd);
-		free_g_tudao();
-		close_and_free_pipes(pipes, total_pipes);
-		exit(1);
+		free_and_exit_fork(NULL);
 	}
 	else
-	{
-		dprintf(2, "executar comando: %s\n", (char *) cmd->cmds_with_flags->content);
 		send_to_execve(cmd);
-	}
 	return ;
 }
 
@@ -296,15 +266,13 @@ void	capture_inputs(t_command *cmd)
 		{
 			err_msg = ft_strjoin_3("bash: ", (char *) pivot->content,
 				": No such file or directory");
-			ft_putendl_fd(err_msg, 2);
-			ft_free_ptr((void *)&err_msg);
+			free_and_exit_fork(err_msg);
 		}
 		if (access((char *) cmd->inputs->content, R_OK) == -1)
 		{
 			err_msg = ft_strjoin_3("bash: ", (char *) pivot->content,
 				": Permission denied");
-			ft_putendl_fd(err_msg, 2);
-			ft_free_ptr((void *)&err_msg);
+			free_and_exit_fork(err_msg);
 		}
 		if (!pivot->next)
 			dup2(open((char *) pivot->content, O_RDONLY), STDIN_FILENO);
@@ -313,32 +281,33 @@ void	capture_inputs(t_command *cmd)
 	return ;
 }
 
-void	capture_redirections(int **pipe, int counter, t_command *cmd)
+void	capture_redirections(int cmd_counter, t_command *cmd)
 {
 	int	total_pipes;
 
 	total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
-	if (counter != total_pipes && total_pipes)
+	if (cmd_counter != total_pipes && total_pipes)
 	{
-		if (counter)
-			dup2(pipe[counter - 1][0], STDIN_FILENO);
-		dup2(pipe[counter][1], STDOUT_FILENO);
+		if (cmd_counter)
+			dup2(g_tudao.pipes[cmd_counter - 1][0], STDIN_FILENO);
+		dup2(g_tudao.pipes[cmd_counter][1], STDOUT_FILENO);
 	}
-	else if (counter == total_pipes && total_pipes)
+	else if (cmd_counter == total_pipes && total_pipes)
 	{
-		if (counter)
-			dup2(pipe[counter -1][0], STDIN_FILENO);
+		if (cmd_counter)
+			dup2(g_tudao.pipes[cmd_counter - 1][0], STDIN_FILENO);
 	}
 	capture_inputs(cmd);
 }
 
-int	**make_pipes(int total_pipes)
+void	make_pipes(void)
 {
-	int		i;
-	int	**pipes;
+	int	i;
+	int	total_pipes;
 
-	pipes = (int **)malloc(total_pipes * sizeof(int *));
-	if (!pipes)
+	total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline);
+	g_tudao.pipes = (int **)malloc(total_pipes * sizeof(int *));
+	if (!g_tudao.pipes)
 	{
 		ft_putendl_fd("Malloc error", 2);
 		exit(EXIT_FAILURE);
@@ -346,16 +315,16 @@ int	**make_pipes(int total_pipes)
 	i = 0;
 	while (i < total_pipes)
 	{
-		pipes[i] = (int *)malloc(2 * sizeof(int));
-		if (!pipes[i])
+		g_tudao.pipes[i] = (int *)malloc(2 * sizeof(int));
+		if (!g_tudao.pipes[i])
 		{
 			ft_putendl_fd("Malloc error", 2);
 			exit(EXIT_FAILURE);
 		}
-		pipe(pipes[i]);
+		pipe(g_tudao.pipes[i]);
 		i++;
 	}
-	return (pipes);
+	return ;
 }
 
 void	execute_main_pipeline(void)
@@ -377,7 +346,6 @@ void	execute_main_pipeline(void)
 	int			wstatus;
 	t_command	*cmd;
 	int			counter;
-	int			**pipes;
 	int			total_pipes;
 	
 	cmd_pivot = g_tudao.command_table.main_pipeline;
@@ -388,30 +356,28 @@ void	execute_main_pipeline(void)
 	else
 	{
 		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
-		pipes = make_pipes(total_pipes);
+		make_pipes();
 		while (cmd_pivot)
 		{
-			dprintf(2, "\n\n# COMMAND TO PROCESS: %s\n", (char *) ((t_command *) cmd_pivot->content)->cmds_with_flags->content);
 			pid = fork();
 			if (pid == -1)
 				ft_putendl_fd("Error while forking", 2);
 			else if (pid == 0)
 			{
-				capture_redirections(pipes, counter, cmd);
-				execute_command(cmd, pipes, total_pipes);
+				capture_redirections(counter, cmd);
+				execute_command(cmd);
 			}
 			else
 			{
 				waitpid(pid, &wstatus, 0);
 				if (counter != total_pipes)
-					close(pipes[counter][1]);
+					close(g_tudao.pipes[counter][1]);
 			}
 			cmd_pivot = cmd_pivot->next;
 			if (cmd_pivot)
 				cmd = (t_command *) cmd_pivot->content;
 			counter++;
 		}
-		close_and_free_pipes(pipes, total_pipes);
+		close_and_free_pipes();
 	}
-	dprintf(2, "\n########## ENCERRA PIPELINE ##########\n\n");
 }

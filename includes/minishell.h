@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 17:13:32 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 03:40:07 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_tudao
 	t_list			*hashtable[TABLE_SIZE];
 	t_list			*token_list;
 	t_cmd_table		command_table;
+	int				**pipes;
 	int				return_code;
 	bool			syntax_error;
 	bool			exit;
@@ -101,15 +102,16 @@ void			execute_main_pipeline(void);
 // exit_routines.c
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
-void			free_main_pipeline(void);
 void			print_syntax_error_exit(char *token);
+void			close_fds(void);
 void			free_g_tudao(void);
 
 // exit_routines_2.c
 void			free_t_command_list(t_list *lst);
 void			free_t_command(t_command *cmd);
 void			free_main_pipeline(void);
-void			close_fds(void);
+void			close_and_free_pipes(void);
+void			free_and_exit_fork(char *err_msg);
 
 // expansor.c
 void			expand_tokens(void);

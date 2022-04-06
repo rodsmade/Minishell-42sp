@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 21:42:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:36:53 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	set_up_main_pipeline(void)
 void	set_up_command_table(void)
 {
 	set_up_main_pipeline();
-	print_commands_and_redirects();
+	// print_commands_and_redirects();
 	return ;
 }
 

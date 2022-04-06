@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 13:36:31 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 15:33:44 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	close_fds(void)
 	close(0);
 	close(1);
 	close(2);
-	close(3);
 	return ;
 }
 
