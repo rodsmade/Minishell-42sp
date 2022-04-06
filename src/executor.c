@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 17:52:14 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:06:53 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,6 @@ char	**hashtable_to_array(void)
 		}
 	}
 	return (NULL);
-}
-
-char	*ft_strjoin_3(char *str1, char *str2, char *str3)
-{
-	char	*new_str;
-	char	*tmp;
-	
-	tmp = ft_strjoin(str1, str2);
-	new_str = ft_strjoin(tmp, str3);
-	ft_free_ptr((void *)&tmp);	
-	return (new_str);
 }
 
 char	*find_cmd_path(char *command_str)

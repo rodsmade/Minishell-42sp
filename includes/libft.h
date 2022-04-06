@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 19:11:12 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 20:23:17 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:08:14 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char		**ft_split(char const *s, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(const char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin_3(char *str1, char *str2, char *str3);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dest_size);
 size_t		ft_strlen(const char *s);

@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/04 19:44:22 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/01 19:40:36 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/06 20:07:46 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRC_FILES =	ft_atoi.c \
 			ft_strchr.c \
 			ft_strdup.c \
 			ft_strjoin.c \
+			ft_strjoin_3.c \
 			ft_strlcat.c \
 			ft_strlcpy.c \
 			ft_strlen.c \
