@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 17:19:02 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:52:14 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,7 @@ void	capture_outputs(t_command *cmd)
 		if (access((char *) pivot->content, F_OK) == -1)
 		{
 			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 			if (pivot->next)
 				close(fd);
 		}
@@ -321,8 +321,36 @@ void	capture_outputs(t_command *cmd)
 		{
 			cmd->output_fd = open((char *) pivot->content,
 				O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 			dup2(cmd->output_fd, STDOUT_FILENO);
+		}
+		pivot = pivot->next;
+	}
+	return ;
+}
+
+void	capture_o_concats(t_command *cmd)
+{
+	t_list	*pivot;
+	int		fd;
+
+	pivot = cmd->o_concats;
+	while (pivot)
+	{
+		if (access((char *) pivot->content, F_OK) == -1)
+		{
+			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_APPEND,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+			if (pivot->next)
+				close(fd);
+		}
+		check_file_has_permissions((char *) pivot->content, W_OK);
+		if (!pivot->next)
+		{
+			cmd->o_concat_fd = open((char *) pivot->content,
+				O_CREAT | O_WRONLY | O_APPEND,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+			dup2(cmd->o_concat_fd, STDOUT_FILENO);
 		}
 		pivot = pivot->next;
 	}
@@ -348,7 +376,7 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 	capture_inputs(cmd);
 	capture_outputs(cmd);
 	// capture_heredocs(cmd);
-	// capture_outputs(cmd);
+	capture_o_concats(cmd);
 }
 
 void	make_pipes(void)
