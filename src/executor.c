@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 15:51:31 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:19:02 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,28 +254,76 @@ void	execute_command(t_command *cmd)
 // 	}
 // }
 
+void	check_file_exists(char *file_name)
+{
+	char	*err_msg;
+
+	if (access(file_name, F_OK) == -1)
+	{
+		err_msg = ft_strjoin_3("bash: ",
+			file_name,
+			": No such file or directory");
+		free_and_exit_fork(err_msg);
+	}
+	return ;
+}
+
+void	check_file_has_permissions(char *file_name, int permissions)
+{
+	char	*err_msg;
+
+	if (access(file_name, permissions) == -1)
+	{
+		err_msg = ft_strjoin_3("bash: ",
+			file_name,
+			": Permission denied");
+		free_and_exit_fork(err_msg);
+	}
+	return ;
+}
+
 void	capture_inputs(t_command *cmd)
 {
 	t_list	*pivot;
-	char	*err_msg;
 
 	pivot = cmd->inputs;
 	while (pivot)
 	{
+		check_file_exists((char *) pivot->content);
+		check_file_has_permissions((char *) pivot->content, R_OK);
+		if (!pivot->next)
+		{
+			cmd->input_fd = open((char *) pivot->content, O_RDONLY);
+			dup2(cmd->input_fd, STDIN_FILENO);
+		}
+		pivot = pivot->next;
+	}
+	return ;
+}
+
+void	capture_outputs(t_command *cmd)
+{
+	t_list	*pivot;
+	int		fd;
+
+	pivot = cmd->outputs;
+	while (pivot)
+	{
 		if (access((char *) pivot->content, F_OK) == -1)
 		{
-			err_msg = ft_strjoin_3("bash: ", (char *) pivot->content,
-				": No such file or directory");
-			free_and_exit_fork(err_msg);
+			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			if (pivot->next)
+				close(fd);
 		}
-		if (access((char *) cmd->inputs->content, R_OK) == -1)
-		{
-			err_msg = ft_strjoin_3("bash: ", (char *) pivot->content,
-				": Permission denied");
-			free_and_exit_fork(err_msg);
-		}
+		check_file_has_permissions((char *) pivot->content, W_OK);
 		if (!pivot->next)
-			dup2(open((char *) pivot->content, O_RDONLY), STDIN_FILENO);
+		{
+			cmd->output_fd = open((char *) pivot->content,
+				O_CREAT | O_WRONLY | O_TRUNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			dup2(cmd->output_fd, STDOUT_FILENO);
+		}
 		pivot = pivot->next;
 	}
 	return ;
@@ -298,6 +346,9 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 			dup2(g_tudao.pipes[cmd_counter - 1][0], STDIN_FILENO);
 	}
 	capture_inputs(cmd);
+	capture_outputs(cmd);
+	// capture_heredocs(cmd);
+	// capture_outputs(cmd);
 }
 
 void	make_pipes(void)

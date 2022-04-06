@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 03:40:07 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:01:07 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ typedef struct s_command
 	t_list	*heredocs;
 	t_list	*o_concats;
 	t_list	*err;
+	int		input_fd;
+	int		output_fd;
+	int		heredoc_fd;
+	int		o_concat_fd;
+	int		err_fd;
 }				t_command;
 
 typedef struct s_cmd_table
