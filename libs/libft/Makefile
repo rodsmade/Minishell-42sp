@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/04 19:44:22 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/06 20:07:46 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/06 19:35:50 by adrianofaus      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,7 @@ $(OBJS_PATH)%.o : $(SRCS_PATH)%.c $(HEADERS_PATH)*.h
 
 clean:
 	@$(RM) $(OBJECTS)
+	@rmdir $(OBJS_PATH)
 
 fclean: clean
 	@$(RM) $(LIBS_PATH)$(LIBNAME)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 00:16:44 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:34:23 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	capture_heredocs(t_command *cmd)
 	t_list	*pivot;
 	char	*line_read;
 	int		pipe_fds[2];
-	int		pipe_aux[2];
-	char	buffer[50];
-	char	*str;
-	char	*temp;
-	int		chars_read;
+	// int		g_tudao.pipe_heredoc[2];
+	// char	buffer[50];
+	// char	*str;
+	// char	*temp;
+	// int		chars_read;
 	int		pid;
 	int		wstatus;
 
@@ -77,8 +77,8 @@ void	capture_heredocs(t_command *cmd)
 	{
 		if (pipe(pipe_fds) == -1)
 			free_and_exit_fork(ft_strdup("Error creating pipe for heredoc"));
-		if (pipe(pipe_aux) == -1)
-			free_and_exit_fork(ft_strdup("Error creating auxiliar pipe for heredoc"));
+		// if (pipe(g_tudao.pipe_heredoc) == -1)
+		// 	free_and_exit_fork(ft_strdup("Error creating auxiliar pipe for heredoc"));
 		pid = fork();
 		if (pid == -1)
 			free_and_exit_fork(ft_strdup("Error forking process for heredoc"));
@@ -90,15 +90,15 @@ void	capture_heredocs(t_command *cmd)
 			{
 				write(pipe_fds[1], line_read, ft_strlen(line_read));
 				write(pipe_fds[1], "\n", 1);
-				write(pipe_aux[1], line_read, ft_strlen(line_read));
-				write(pipe_aux[1], "\n", 1);
+				write(g_tudao.pipe_heredoc[1], line_read, ft_strlen(line_read));
+				write(g_tudao.pipe_heredoc[1], "\n", 1);
 				ft_free_ptr((void *)&line_read);
 				line_read = readline("> ");
 			}
 			close(pipe_fds[0]);
 			close(pipe_fds[1]);
-			close(pipe_aux[0]);
-			close(pipe_aux[1]);
+			close(g_tudao.pipe_heredoc[0]);
+			close(g_tudao.pipe_heredoc[1]);
 			ft_free_ptr((void *)&line_read);
 			free_and_exit_fork(NULL);
 		}
@@ -106,21 +106,23 @@ void	capture_heredocs(t_command *cmd)
 		{
 			waitpid(pid, &wstatus, 0);
 			close(pipe_fds[1]);
-			close(pipe_aux[1]);
-			chars_read = read(pipe_aux[0], buffer, 49);
-			buffer[chars_read] = '\0';
-			str = ft_strdup("");
-			while (chars_read > 0)
-			{
-				temp = str;
-				str = ft_strjoin(temp, buffer);
-				ft_free_ptr((void *)&temp);
-				chars_read = read(pipe_aux[0], buffer, 49);
-				buffer[chars_read] = '\0';
-			}
-			dprintf(2, "what's been read: >|%s|<\n", str);
-			add_history(str);
-			ft_free_ptr((void *)&str);
+			close(g_tudao.pipe_heredoc[0]);
+			close(g_tudao.pipe_heredoc[1]);
+			// close(g_tudao.pipe_heredoc[1]);
+			// chars_read = read(g_tudao.pipe_heredoc[0], buffer, 49);
+			// buffer[chars_read] = '\0';
+			// str = ft_strdup("");
+			// while (chars_read > 0)
+			// {
+			// 	temp = str;
+			// 	str = ft_strjoin(temp, buffer);
+			// 	ft_free_ptr((void *)&temp);
+			// 	chars_read = read(g_tudao.pipe_heredoc[0], buffer, 49);
+			// 	buffer[chars_read] = '\0';
+			// }
+			// dprintf(2, "what's been read: >|%s|<\n", str);
+			// add_history(str);
+			// ft_free_ptr((void *)&str);
 			if (!pivot->next)
 				dup2(pipe_fds[0], STDIN_FILENO);
 			else

@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 18:36:03 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 20:39:27 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	display_cmd_prompt(void)
 	if (ft_strncmp(g_tudao.prompt_input, "quit", 5) == 0)
 	{
 		g_tudao.exit = true;
+		close(g_tudao.pipe_heredoc[0]);
+		close(g_tudao.pipe_heredoc[1]);
 		ft_free_ptr((void *)&prompt);
 		ft_free_ptr((void *)&curr_path);
 		return ;
@@ -70,6 +72,36 @@ void	display_cmd_prompt(void)
 	return ;
 }
 
+void	add_heredoc_to_history()
+{
+	int		chars_read;
+	char	*str;
+	char	*temp;
+	char	buffer[50];
+	
+	close(g_tudao.pipe_heredoc[1]);
+	chars_read = read(g_tudao.pipe_heredoc[0], buffer, 49);
+	buffer[chars_read] = '\0';
+	str = ft_strdup("");
+	while (chars_read > 0)
+	{
+		temp = str;
+		str = ft_strjoin(temp, buffer);
+		ft_free_ptr((void *)&temp);
+		chars_read = read(g_tudao.pipe_heredoc[0], buffer, 49);
+		buffer[chars_read] = '\0';
+	}
+	temp = g_tudao.prompt_input;
+	g_tudao.prompt_input = ft_strjoin(temp, " ");
+	ft_free_ptr((void *)&temp);
+	temp = g_tudao.prompt_input;
+	g_tudao.prompt_input = ft_strjoin(temp, str);
+	ft_free_ptr((void *)&temp);
+	ft_free_ptr((void *)&str);
+	add_history(g_tudao.prompt_input);
+	close(g_tudao.pipe_heredoc[0]);
+}
+
 void	repl(void)
 {
 	g_tudao.exit = false;
@@ -77,11 +109,14 @@ void	repl(void)
 	{
 		init_tudao();
 		display_cmd_prompt();
+		if (pipe(g_tudao.pipe_heredoc) == -1)
+			ft_putendl_fd("Error while opening heredoc pipe", 2);
 		if (g_tudao.prompt_input && g_tudao.token_list
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
 			&& !g_tudao.exit)
 			execute_main_pipeline();
-		add_history(g_tudao.prompt_input);
+		add_heredoc_to_history();
+		// add_history(g_tudao.prompt_input);
 		free_lexer();
 		free_main_pipeline();
 		ft_free_ptr((void *)&g_tudao.prompt_input);

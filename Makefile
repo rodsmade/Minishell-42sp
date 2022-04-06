@@ -73,17 +73,20 @@ $(NAME):			$(addprefix $(PATH_OBJ),$(OBJS))
 $(PATH_OBJ)%.o: 	$(PATH_SRC)%.c $(HEADERS)
 					$(CC) -c -o $@ $< $(LIBS)
 
-run:				$(NAME)
+run:				all
 					./$(NAME)
 
-valgrind:			$(NAME)
+valgrind:			all
 					$(VALGRIND) ./$(NAME)
 
 clean:
 					$(RM) $(addprefix $(PATH_OBJ),$(OBJS))
+					cd $(PATH_LIBRARY)libft && $(MAKE) clean
+					rmdir $(PATH_OBJ)
 
 fclean:				clean
 					$(RM) $(NAME)
+					cd $(PATH_LIBRARY)libft && $(MAKE) fclean
 
 re:					fclean all
 
