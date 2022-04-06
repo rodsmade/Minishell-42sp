@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 17:26:23 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:47:01 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,10 @@ char			*ft_append_char(char *str, char c);
 int				is_valid_key_char(char c);
 void			expand_wildcards(void);
 
+// utils_files_check.c
+void			check_file_exists(char *file_name);
+void			check_file_has_permissions(char *file_name, int permissions);
+
 // utils_lexer.c
 void			skip_quotes(char *line_read, int *index);
 void			quoted_generate(char *line_read, int *index, char *content);
@@ -169,6 +173,12 @@ bool			is_input(t_list *token);
 bool			is_output(t_list *token);
 bool			is_heredoc(t_list *token);
 bool			is_o_concat(t_list *token);
+
+// utils_redirections.c
+void			capture_inputs(t_command *cmd);
+void			capture_outputs(t_command *cmd);
+void			capture_heredocs(t_command *cmd);
+void			capture_o_concats(t_command *cmd);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);

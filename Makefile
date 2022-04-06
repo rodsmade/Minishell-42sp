@@ -26,6 +26,7 @@ FILES			=	builtin_cd.c \
 					builtin_echo.c \
 					builtin_exit.c \
 					builtin_env.c \
+					builtin_export.c \
 					builtin_pwd.c \
 					builtin_unset.c \
 					builtin_var_assignment.c \
@@ -39,14 +40,15 @@ FILES			=	builtin_cd.c \
 					minishell.c \
 					parser.c \
 					utils_expansor.c \
+					utils_export_2.c \
+					utils_export.c \
+					utils_file_check.c \
 					utils_hashtable.c \
 					utils_lexer.c \
 					utils_parser_2.c \
 					utils_parser.c \
-					utils_test.c \
-					builtin_export.c \
-					utils_export.c \
-					utils_export_2.c
+					utils_redirections.c \
+					utils_test.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h

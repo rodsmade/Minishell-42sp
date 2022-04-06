@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 20:06:53 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:21:49 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ void	execute_command(t_command *cmd)
 // {
 // 	int	input;
 // 	int	output;
-
+//
 // 	dprintf(2, "----- entrou na capture -----\n");
 // 	if (cmd->inputs)
 // 	{
@@ -242,109 +242,6 @@ void	execute_command(t_command *cmd)
 // 		// close(STDOUT_FILENO);
 // 	}
 // }
-
-void	check_file_exists(char *file_name)
-{
-	char	*err_msg;
-
-	if (access(file_name, F_OK) == -1)
-	{
-		err_msg = ft_strjoin_3("bash: ",
-			file_name,
-			": No such file or directory");
-		free_and_exit_fork(err_msg);
-	}
-	return ;
-}
-
-void	check_file_has_permissions(char *file_name, int permissions)
-{
-	char	*err_msg;
-
-	if (access(file_name, permissions) == -1)
-	{
-		err_msg = ft_strjoin_3("bash: ",
-			file_name,
-			": Permission denied");
-		free_and_exit_fork(err_msg);
-	}
-	return ;
-}
-
-void	capture_inputs(t_command *cmd)
-{
-	t_list	*pivot;
-
-	pivot = cmd->inputs;
-	while (pivot)
-	{
-		check_file_exists((char *) pivot->content);
-		check_file_has_permissions((char *) pivot->content, R_OK);
-		if (!pivot->next)
-		{
-			cmd->input_fd = open((char *) pivot->content, O_RDONLY);
-			dup2(cmd->input_fd, STDIN_FILENO);
-		}
-		pivot = pivot->next;
-	}
-	return ;
-}
-
-void	capture_outputs(t_command *cmd)
-{
-	t_list	*pivot;
-	int		fd;
-
-	pivot = cmd->outputs;
-	while (pivot)
-	{
-		if (access((char *) pivot->content, F_OK) == -1)
-		{
-			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (pivot->next)
-				close(fd);
-		}
-		check_file_has_permissions((char *) pivot->content, W_OK);
-		if (!pivot->next)
-		{
-			cmd->output_fd = open((char *) pivot->content,
-				O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			dup2(cmd->output_fd, STDOUT_FILENO);
-		}
-		pivot = pivot->next;
-	}
-	return ;
-}
-
-void	capture_o_concats(t_command *cmd)
-{
-	t_list	*pivot;
-	int		fd;
-
-	pivot = cmd->o_concats;
-	while (pivot)
-	{
-		if (access((char *) pivot->content, F_OK) == -1)
-		{
-			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_APPEND,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (pivot->next)
-				close(fd);
-		}
-		check_file_has_permissions((char *) pivot->content, W_OK);
-		if (!pivot->next)
-		{
-			cmd->o_concat_fd = open((char *) pivot->content,
-				O_CREAT | O_WRONLY | O_APPEND,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			dup2(cmd->o_concat_fd, STDOUT_FILENO);
-		}
-		pivot = pivot->next;
-	}
-	return ;
-}
 
 void	capture_redirections(int cmd_counter, t_command *cmd)
 {
