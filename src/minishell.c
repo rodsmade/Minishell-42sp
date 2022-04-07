@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 18:36:03 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/07 17:50:23 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,32 @@ void	display_cmd_prompt(void)
 	return ;
 }
 
+void	add_heredocs_to_history(void)
+{
+	char	*str;
+	char	*temp;
+	char	buffer[50];
+	int		chars_read;
+
+	close(g_tudao.pipe_heredoc[1]);
+	str = ft_strdup("");
+	chars_read = read(g_tudao.pipe_heredoc[0], buffer, 49);
+	while (chars_read > 0)
+	{
+		buffer[chars_read] = '\0';
+		temp = str;
+		str = ft_strjoin(temp, buffer);
+		ft_free_ptr((void *)&temp);
+		chars_read = read(g_tudao.pipe_heredoc[0], buffer, 49);
+	}
+	temp = g_tudao.prompt_input;
+	g_tudao.prompt_input = ft_strjoin(temp, str);
+	ft_free_ptr((void *)&temp);
+	ft_free_ptr((void *)&str);
+	close(g_tudao.pipe_heredoc[0]);
+	return ;
+}
+
 void	repl(void)
 {
 	g_tudao.exit = false;
@@ -81,6 +107,7 @@ void	repl(void)
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
 			&& !g_tudao.exit)
 			execute_main_pipeline();
+		add_heredocs_to_history();
 		add_history(g_tudao.prompt_input);
 		free_lexer();
 		free_main_pipeline();

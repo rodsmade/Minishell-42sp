@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 22:47:05 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:58:35 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,47 @@ void	capture_outputs(t_command *cmd)
 	return ;
 }
 
+void	make_aux_pipes(void)
+{
+	int	i;
+	int	total_pipes;
+
+	total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline);
+	g_tudao.pipes = (int **)malloc(total_pipes * sizeof(int *));
+	if (!g_tudao.pipes)
+	{
+		ft_putendl_fd("Malloc error", 2);
+		exit(EXIT_FAILURE);
+	}
+	i = 0;
+	while (i < total_pipes)
+	{
+		g_tudao.pipes[i] = (int *)malloc(2 * sizeof(int));
+		if (!g_tudao.pipes[i])
+		{
+			ft_putendl_fd("Malloc error", 2);
+			exit(EXIT_FAILURE);
+		}
+		pipe(g_tudao.pipes[i]);
+		i++;
+	}
+	return ;
+}
+
 void	capture_heredocs(t_command *cmd)
 {
 	t_list	*pivot;
 	char	*line_read;
 	int		pipe_fds[2];
+	int		**aux_pipes;
 	int		pid;
 	int		wstatus;
+	char	*str;
+	char	*temp;
 
+	// criar pipes_auxiliares
 	pivot = cmd->heredocs;
+	str = ft_strdup("");
 	while (pivot)
 	{
 		if (pipe(pipe_fds) == -1)
@@ -83,6 +115,8 @@ void	capture_heredocs(t_command *cmd)
 			{
 				write(pipe_fds[1], line_read, ft_strlen(line_read));
 				write(pipe_fds[1], "\n", 1);
+				write(aux_pipes[1], line_read, ft_strlen(line_read));
+				write(aux_pipes[1], "\n", 1);
 				ft_free_ptr((void *)&line_read);
 				line_read = readline("> ");
 			}
@@ -95,6 +129,11 @@ void	capture_heredocs(t_command *cmd)
 		{
 			waitpid(pid, &wstatus, 0);
 			close(pipe_fds[1]);
+			close(aux_pipes[1]);
+			temp = str;
+			read(aux_pipes[0], buffer, size);
+			str = ft_strjoin(temp, pipe_fds[1]);
+			ft_free_ptr(temp);
 			if (!pivot->next)
 				dup2(pipe_fds[0], STDIN_FILENO);
 			else
@@ -102,6 +141,10 @@ void	capture_heredocs(t_command *cmd)
 		}
 		pivot = pivot->next;
 	}
+	dprintf(2, "Tudo o que foi lido:\n>||<\n", str);
+	write(g_tudao.pipe_heredoc[1], str, ft_strlen(str));
+	close(g_tudao.pipe_heredoc[0]);
+	close(g_tudao.pipe_heredoc[1]);
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 21:21:20 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:52:27 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,7 @@ void	execute_main_pipeline(void)
 	{
 		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
 		make_pipes();
+		pipe(g_tudao.pipe_heredoc);
 		while (cmd_pivot)
 		{
 			pid = fork();

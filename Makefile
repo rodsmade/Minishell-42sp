@@ -73,10 +73,10 @@ $(NAME):			$(addprefix $(PATH_OBJ),$(OBJS))
 $(PATH_OBJ)%.o: 	$(PATH_SRC)%.c $(HEADERS)
 					$(CC) -c -o $@ $< $(LIBS)
 
-run:				$(NAME)
+run:				all
 					./$(NAME)
 
-valgrind:			$(NAME)
+valgrind:			all
 					$(VALGRIND) ./$(NAME)
 
 clean:
