@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/04 19:44:22 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/07 22:12:56 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/07 17:38:46 by adrianofaus      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,10 @@ SRC_FILES =	ft_atoi.c \
 			ft_toupper.c \
 			ft_uitoa.c \
 			ft_uitohex.c \
-			ft_ulitohex.c
+			ft_ulitohex.c \
+			ft_free_pipe_arr.c \
+			ft_make_pipes.c
+			
 SOURCES = $(addprefix $(SRCS_PATH), $(SRC_FILES))
 OBJ_FILES = $(patsubst %.c, %.o, $(SRC_FILES))
 OBJECTS = $(addprefix $(OBJS_PATH), $(OBJ_FILES))

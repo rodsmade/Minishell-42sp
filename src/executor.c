@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 22:06:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:57:23 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ void	send_to_execve(t_command *command)
 	{
 		ft_free_ptr((void *)&cmd_arr);
 		ft_putendl_fd("bash: command not found", 2);
+		ft_close_pipe_fds(g_tudao.pipe_heredoc);
 		free_and_exit_fork(NULL);
 	}
 	hashtable_arr = hashtable_to_array();
@@ -166,6 +167,7 @@ void	send_to_execve(t_command *command)
 		ft_free_ptr((void *)&cmd_arr);
 		ft_putendl_fd("couldn't execute", 2);
 		ft_free_arr((void *)&hashtable_arr);
+		ft_close_pipe_fds(g_tudao.pipe_heredoc);
 		free_and_exit_fork(NULL);
 	}
 }

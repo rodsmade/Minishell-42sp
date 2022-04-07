@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 22:11:31 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 18:34:24 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,60 +59,13 @@ void	capture_outputs(t_command *cmd)
 	return ;
 }
 
-int	**ft_make_pipes(int total_pipes)
-{
-	int	i;
-	int	**pipes;
-
-	pipes = (int **)malloc(total_pipes * sizeof(int *));
-	if (!pipes)
-	{
-		ft_putendl_fd("Malloc error", 2);
-		exit(EXIT_FAILURE);
-	}
-	i = 0;
-	while (i < total_pipes)
-	{
-		pipes[i] = (int *)malloc(2 * sizeof(int));
-		if (!pipes[i])
-		{
-			ft_putendl_fd("Malloc error", 2);
-			exit(EXIT_FAILURE);
-		}
-		pipe(pipes[i]);
-		i++;
-	}
-	return (pipes);
-}
-
-void	ft_free_pipe_arr(int ***pipe_arr, int n)
-{
-	int	i;
-
-	i = -1;
-	if (*pipe_arr)
-	{
-		while (++i < n)
-		{
-			if ((*pipe_arr)[i])
-			{
-				close((*pipe_arr)[i][0]);
-				close((*pipe_arr)[i][1]);
-				ft_free_ptr((void *)&(*pipe_arr)[i]);
-			}
-		}
-		ft_free_ptr((void *)&(*pipe_arr));
-	}
-	return ;
-}
-
 char	*get_pipe_content(int fd)
 {
 	char	*temp;
 	char	buffer[50];
 	char	*str;
 	int		chars_read;
-	
+
 	chars_read = read(fd, buffer, 49);
 	str = ft_strdup("");
 	while (chars_read > 0)
@@ -120,7 +73,7 @@ char	*get_pipe_content(int fd)
 		buffer[chars_read] = '\0';
 		temp = str;
 		str = ft_strjoin(temp, buffer);
-		ft_free_ptr((void *)&temp);	
+		ft_free_ptr((void *)&temp);
 		chars_read = read(fd, buffer, 49);
 	}
 	return (str);
@@ -158,17 +111,13 @@ void	capture_heredocs(t_command *cmd)
 			while (strncmp(line_read, (char *) pivot->content,
 					sizeof((char *) pivot->content) + 1) != 0)
 			{
-				write(pipe_fds[1], line_read, ft_strlen(line_read));
-				write(pipe_fds[1], "\n", 1);
-				write(aux_pipes[counter][1], line_read, ft_strlen(line_read));
-				write(aux_pipes[counter][1], "\n", 1);
+				ft_putendl_fd(line_read, pipe_fds[1]);
+				ft_putendl_fd(line_read, aux_pipes[counter][1]);
 				ft_free_ptr((void *)&line_read);
 				line_read = readline("> ");
 			}
-			write(aux_pipes[counter][1], line_read, ft_strlen(line_read));
-			write(aux_pipes[counter][1], "\n", 1);
-			close(pipe_fds[0]);
-			close(pipe_fds[1]);
+			ft_putendl_fd(line_read, aux_pipes[counter][1]);
+			ft_close_pipe_fds(pipe_fds);
 			ft_free_ptr((void *)&line_read);
 			ft_free_ptr((void *)&str);
 			ft_free_pipe_arr(&aux_pipes, total_pipes);
@@ -177,6 +126,7 @@ void	capture_heredocs(t_command *cmd)
 		}
 		waitpid(pid, &wstatus, 0);
 		close(pipe_fds[1]);
+		//Concat_pipe_content
 		close(aux_pipes[counter][1]);
 		tmp_str = get_pipe_content(aux_pipes[counter][0]);
 		close(aux_pipes[counter][0]);
@@ -184,6 +134,7 @@ void	capture_heredocs(t_command *cmd)
 		str = ft_strjoin(aux_str, tmp_str);
 		ft_free_ptr((void *)&tmp_str);
 		ft_free_ptr((void *)&aux_str);
+		//
 		if (!pivot->next)
 			dup2(pipe_fds[0], STDIN_FILENO);
 		else

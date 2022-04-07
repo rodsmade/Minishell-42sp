@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 19:11:12 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 22:12:32 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:38:32 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,7 @@ int			ft_toupper(int c);
 char		*ft_uitoa(unsigned int n);
 char		*ft_uitohex(unsigned int n, char *base_str);
 char		*ft_ulitohex(unsigned long int n, char *base_str);
+void		ft_free_pipe_arr(int ***pipe_arr, int n);
+int			**ft_make_pipes(int total_pipes);
 
 #endif 
