@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 13:10:28 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/07 21:57:00 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	repl(void)
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
 			&& !g_tudao.exit)
 			execute_main_pipeline();
-		add_heredocs_to_history();
 		add_history(g_tudao.prompt_input);
 		free_lexer();
 		free_main_pipeline();

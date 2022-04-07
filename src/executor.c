@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 17:52:27 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 22:06:15 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ void	execute_command(t_command *cmd)
 	if (is_built_in(cmd->cmds_with_flags->content))
 	{
 		execute_built_in(cmd);
+		ft_close_pipe_fds(g_tudao.pipe_heredoc);
 		free_and_exit_fork(NULL);
 	}
 	else
@@ -281,13 +282,16 @@ void	execute_main_pipeline(void)
 	cmd_pivot = g_tudao.command_table.main_pipeline;
 	cmd = (t_command *) cmd_pivot->content;
 	counter = 0;
+	pipe(g_tudao.pipe_heredoc);
 	if (!cmd_pivot->next && is_built_in((char *)cmd->cmds_with_flags->content))
+	{
+		capture_redirections(counter, cmd);
 		execute_built_in(cmd);
+	}
 	else
 	{
 		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
 		make_pipes();
-		pipe(g_tudao.pipe_heredoc);
 		while (cmd_pivot)
 		{
 			pid = fork();
@@ -311,4 +315,5 @@ void	execute_main_pipeline(void)
 		}
 		close_and_free_pipes();
 	}
+	add_heredocs_to_history();
 }

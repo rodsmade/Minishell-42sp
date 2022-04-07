@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 21:41:46 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 22:02:55 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void	capture_heredocs(t_command *cmd)
 	}
 	write(g_tudao.pipe_heredoc[1], str, ft_strlen(str));
 	ft_free_ptr((void *)&str);
+	ft_free_ptr((void *)&aux_pipes);
 	return ;
 }
 
