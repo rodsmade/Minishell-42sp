@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 22:11:44 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 00:44:07 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_tudao
 	t_list			*hashtable[TABLE_SIZE];
 	t_list			*token_list;
 	t_cmd_table		command_table;
-	int				**pipes;
+	int				**cmd_pipes;
 	int				pipe_heredoc[2];
 	int				return_code;
 	bool			syntax_error;

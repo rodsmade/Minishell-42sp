@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 23:50:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 00:27:07 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,13 +219,13 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 	if (cmd_counter != total_pipes && total_pipes)
 	{
 		if (cmd_counter)
-			dup2(g_tudao.pipes[cmd_counter - 1][0], STDIN_FILENO);
-		dup2(g_tudao.pipes[cmd_counter][1], STDOUT_FILENO);
+			dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
+		dup2(g_tudao.cmd_pipes[cmd_counter][1], STDOUT_FILENO);
 	}
 	else if (cmd_counter == total_pipes && total_pipes)
 	{
 		if (cmd_counter)
-			dup2(g_tudao.pipes[cmd_counter - 1][0], STDIN_FILENO);
+			dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
 	}
 	capture_inputs(cmd);
 	capture_outputs(cmd);
@@ -254,7 +254,7 @@ void	execute_main_pipeline(void)
 	else
 	{
 		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
-		g_tudao.pipes = ft_make_pipes(total_pipes);
+		g_tudao.cmd_pipes = ft_make_pipes(total_pipes);
 		while (cmd_pivot)
 		{
 			pid = fork();
@@ -269,7 +269,7 @@ void	execute_main_pipeline(void)
 			{
 				waitpid(pid, &wstatus, 0);
 				if (counter != total_pipes)
-					close(g_tudao.pipes[counter][1]);
+					close(g_tudao.cmd_pipes[counter][1]);
 			}
 			cmd_pivot = cmd_pivot->next;
 			if (cmd_pivot)

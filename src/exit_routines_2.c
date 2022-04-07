@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 00:02:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 00:27:07 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ void	close_and_free_pipes(void)
 {
 	int	i;
 
-	if (!g_tudao.pipes)
+	if (!g_tudao.cmd_pipes)
 		return ;
 	i = -1;
 	while (++i < ft_lst_size(g_tudao.command_table.main_pipeline) - 1)
 	{
-		close(g_tudao.pipes[i][0]);
-		close(g_tudao.pipes[i][1]);
-		free(g_tudao.pipes[i]);
+		close(g_tudao.cmd_pipes[i][0]);
+		close(g_tudao.cmd_pipes[i][1]);
+		free(g_tudao.cmd_pipes[i]);
 	}
-	free(g_tudao.pipes);
+	free(g_tudao.cmd_pipes);
 	return ;
 }
 
