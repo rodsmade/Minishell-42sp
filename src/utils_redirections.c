@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 21:18:43 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 21:41:46 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,27 @@ void	ft_close_pipe_fds(int *pipe)
 	return ;
 }
 
+void	ft_free_pipe_arr(int ***pipe_arr, int n)
+{
+	int	i;
+
+	i = -1;
+	if (*pipe_arr)
+	{
+		while (++i < n)
+		{
+			if ((*pipe_arr)[i])
+			{
+				close((*pipe_arr)[i][0]);
+				close((*pipe_arr)[i][1]);
+				ft_free_ptr((void *)&(*pipe_arr)[i]);
+			}
+		}
+		ft_free_ptr((void *)&(*pipe_arr));
+	}
+	return ;
+}
+
 char	*get_pipe_content(int fd)
 {
 	char	*temp;
@@ -160,6 +181,8 @@ void	capture_heredocs(t_command *cmd)
 			close(pipe_fds[1]);
 			ft_free_ptr((void *)&line_read);
 			ft_free_ptr((void *)&str);
+			ft_free_pipe_arr(&aux_pipes, total_pipes);
+			ft_close_pipe_fds(g_tudao.pipe_heredoc);
 			free_and_exit_fork(NULL);
 		}
 		waitpid(pid, &wstatus, 0);
