@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 13:57:18 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/07 21:18:43 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	capture_outputs(t_command *cmd)
 	return ;
 }
 
-int	**make_aux_pipes(int total_pipes)
+int	**ft_make_pipes(int total_pipes)
 {
 	int	i;
 	int	**pipes;
@@ -85,6 +85,16 @@ int	**make_aux_pipes(int total_pipes)
 	return (pipes);
 }
 
+void	ft_close_pipe_fds(int *pipe)
+{
+	if (pipe)
+	{
+		close(pipe[0]);
+		close(pipe[1]);
+	}
+	return ;
+}
+
 char	*get_pipe_content(int fd)
 {
 	char	*temp;
@@ -93,6 +103,7 @@ char	*get_pipe_content(int fd)
 	int		chars_read;
 	
 	chars_read = read(fd, buffer, 49);
+	str = ft_strdup("");
 	while (chars_read > 0)
 	{
 		buffer[chars_read] = '\0';
@@ -119,9 +130,9 @@ void	capture_heredocs(t_command *cmd)
 	int		counter;
 
 	total_pipes = ft_lst_size(((t_command *)g_tudao.command_table.main_pipeline->content)->heredocs);
-	aux_pipes = make_aux_pipes(total_pipes);
+	aux_pipes = ft_make_pipes(total_pipes);
 	pivot = cmd->heredocs;
-	str = ft_strdup("");
+	str = ft_strdup("\n");
 	counter = 0;
 	while (pivot)
 	{
@@ -143,35 +154,32 @@ void	capture_heredocs(t_command *cmd)
 				ft_free_ptr((void *)&line_read);
 				line_read = readline("> ");
 			}
+			write(aux_pipes[counter][1], line_read, ft_strlen(line_read));
+			write(aux_pipes[counter][1], "\n", 1);
 			close(pipe_fds[0]);
 			close(pipe_fds[1]);
 			ft_free_ptr((void *)&line_read);
+			ft_free_ptr((void *)&str);
 			free_and_exit_fork(NULL);
 		}
+		waitpid(pid, &wstatus, 0);
+		close(pipe_fds[1]);
+		close(aux_pipes[counter][1]);
+		tmp_str = get_pipe_content(aux_pipes[counter][0]);
+		close(aux_pipes[counter][0]);
+		aux_str = str;
+		str = ft_strjoin(aux_str, tmp_str);
+		ft_free_ptr((void *)&tmp_str);
+		ft_free_ptr((void *)&aux_str);
+		if (!pivot->next)
+			dup2(pipe_fds[0], STDIN_FILENO);
 		else
-		{
-			waitpid(pid, &wstatus, 0);
-			close(pipe_fds[1]);
-			close(aux_pipes[counter][1]);
-			tmp_str = get_pipe_content(aux_pipes[counter][0]);
-			close(aux_pipes[counter][0]);
-			aux_str = str;
-			str = ft_strjoin(aux_str, tmp_str);
-			ft_free_ptr((void *)&tmp_str);
-			ft_free_ptr((void *)&aux_str);
-			if (!pivot->next)
-				dup2(pipe_fds[0], STDIN_FILENO);
-			else
-				close(pipe_fds[0]);
-		}
+			close(pipe_fds[0]);
 		pivot = pivot->next;
 		counter++;
 	}
-	dprintf(2, "Tudo o que foi lido:\n>|%s|<\n", str);
 	write(g_tudao.pipe_heredoc[1], str, ft_strlen(str));
 	ft_free_ptr((void *)&str);
-	close(g_tudao.pipe_heredoc[0]);
-	close(g_tudao.pipe_heredoc[1]);
 	return ;
 }
 
