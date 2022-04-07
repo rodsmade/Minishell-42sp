@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_pipes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:38:02 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/07 17:38:17 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/07 23:56:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	**ft_make_pipes(int total_pipes)
 	int	i;
 	int	**pipes;
 
+	if (total_pipes == 0)
+		return (NULL);
 	pipes = (int **)malloc(total_pipes * sizeof(int *));
 	if (!pipes)
 	{

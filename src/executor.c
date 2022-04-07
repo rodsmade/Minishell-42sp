@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 17:57:23 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/07 23:50:22 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,46 +233,7 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 	capture_o_concats(cmd);
 }
 
-void	make_pipes(void)
-{
-	int	i;
-	int	total_pipes;
-
-	total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline);
-	g_tudao.pipes = (int **)malloc(total_pipes * sizeof(int *));
-	if (!g_tudao.pipes)
-	{
-		ft_putendl_fd("Malloc error", 2);
-		exit(EXIT_FAILURE);
-	}
-	i = 0;
-	while (i < total_pipes)
-	{
-		g_tudao.pipes[i] = (int *)malloc(2 * sizeof(int));
-		if (!g_tudao.pipes[i])
-		{
-			ft_putendl_fd("Malloc error", 2);
-			exit(EXIT_FAILURE);
-		}
-		pipe(g_tudao.pipes[i]);
-		i++;
-	}
-	return ;
-}
-
 void	execute_main_pipeline(void)
-/**
- * TODO: Intended complete structure:
- * 		handle_redirections(pivot_cmd);
- * 		if (has_only_var_assignments(pivot_cmd))
- * 			assign_var();
- * 		else if (is_built_in(((t_command *)pivot_cmd->content)->cmds_with_flags->content))
- * 			execute_built_in((t_command *)pivot_cmd->content);
- * 		else if (has_absolute_path())
- * 			exec_absolute_path();
- * 		else
- * 			exec_env_path();
- */
 {
 	t_list		*cmd_pivot;
 	int			pid;
@@ -293,7 +254,7 @@ void	execute_main_pipeline(void)
 	else
 	{
 		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
-		make_pipes();
+		g_tudao.pipes = ft_make_pipes(total_pipes);
 		while (cmd_pivot)
 		{
 			pid = fork();
