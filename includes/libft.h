@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 19:11:12 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 20:08:14 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 22:12:32 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ long int	ft_atoli(const char *nptr);
 int			ft_atoi(const char *nptr);
 void		ft_bzero(void *s, size_t n);
 void		*ft_calloc(size_t nmemb, size_t size);
+void		ft_close_pipe_fds(int *pipe);
 void		ft_free_arr(void ***ptr);
 void		ft_free_ptr(void **ptr);
 char		*ft_get_next_line(int fd);

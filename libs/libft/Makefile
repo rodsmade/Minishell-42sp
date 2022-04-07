@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/04 19:44:22 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/06 20:07:46 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/07 22:12:56 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC_FILES =	ft_atoi.c \
 			ft_atoli.c \
 			ft_bzero.c \
 			ft_calloc.c \
+			ft_close_pipe_fds.c \
 			ft_free_arr.c \
 			ft_free_ptr.c \
 			ft_get_next_line.c \

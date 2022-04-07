@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 22:04:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 22:11:44 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ void			capture_inputs(t_command *cmd);
 void			capture_outputs(t_command *cmd);
 void			capture_heredocs(t_command *cmd);
 void			capture_o_concats(t_command *cmd);
-void			ft_close_pipe_fds(int *pipe);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);

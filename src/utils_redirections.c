@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 22:02:55 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 22:11:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,6 @@ int	**ft_make_pipes(int total_pipes)
 		i++;
 	}
 	return (pipes);
-}
-
-void	ft_close_pipe_fds(int *pipe)
-{
-	if (pipe)
-	{
-		close(pipe[0]);
-		close(pipe[1]);
-	}
-	return ;
 }
 
 void	ft_free_pipe_arr(int ***pipe_arr, int n)
