@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 22:11:44 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 21:37:18 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,15 @@ typedef struct s_tudao
 	bool			syntax_error;
 	bool			exit;
 }				t_tudao;
+
+typedef struct s_data_hd
+{
+	int		total_pipes;
+	int		**aux_pipes;
+	t_list	*cursor;
+	char	*str;
+	int		counter;
+}				t_data_hd;
 
 // ----------------------------------------------	GLOBAL VAR	----------------
 extern t_tudao		g_tudao;
@@ -182,6 +191,13 @@ void			capture_inputs(t_command *cmd);
 void			capture_outputs(t_command *cmd);
 void			capture_heredocs(t_command *cmd);
 void			capture_o_concats(t_command *cmd);
+
+// utils_redirections2.c
+char			*concat_pipe_content(int *pipe, char *str);
+char			*get_pipe_content(int fd);
+int				pipe_and_fork(int *pipe_fds);
+void			process_heredoc_position(t_data_hd *hd, int pipe_fd);
+void			init_heredoc_data(t_data_hd *hd, t_command *cmd);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
