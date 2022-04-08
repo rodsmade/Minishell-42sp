@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 17:35:46 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 20:29:26 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,17 @@ void			lexer_line(char	*line_read);
 
 // parser.c
 void			parse_tokens(void);
+
+// utils_env_vars.c
+char			*env_var_to_string(t_env_var *env_var);
+int				count_env_vars(void);
+
+// utils_executor.c
+bool	is_built_in(char *str);
+char	**assemble_cmd_array(t_command *command);
+bool	has_absolute_path(char *command_str);
+char	*find_cmd_in_path_var(char *command_str);
+char	*find_cmd_path(char *command_str);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);
