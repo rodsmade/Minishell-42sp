@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 00:27:07 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 23:49:42 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,18 +218,27 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 	total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
 	if (cmd_counter != total_pipes && total_pipes)
 	{
-		if (cmd_counter)
-			dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
+		if (!cmd->heredocs)
+		{
+			if (cmd_counter)
+				dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
+		}
+		else
+			capture_heredocs(cmd);
 		dup2(g_tudao.cmd_pipes[cmd_counter][1], STDOUT_FILENO);
 	}
 	else if (cmd_counter == total_pipes && total_pipes)
 	{
-		if (cmd_counter)
-			dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
+		if (!cmd->heredocs)
+		{
+			if (cmd_counter)
+				dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
+		}
+		else
+			capture_heredocs(cmd);
 	}
 	capture_inputs(cmd);
 	capture_outputs(cmd);
-	capture_heredocs(cmd);
 	capture_o_concats(cmd);
 }
 
