@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 21:37:18 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/07 21:53:08 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_tudao
 	t_list			*hashtable[TABLE_SIZE];
 	t_list			*token_list;
 	t_cmd_table		command_table;
-	int				**pipes;
+	int				**cmd_pipes;
 	int				pipe_heredoc[2];
 	int				return_code;
 	bool			syntax_error;
