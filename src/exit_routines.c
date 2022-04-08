@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 21:05:12 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 15:33:44 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 
 	i = -1;
 	while (++i < TABLE_SIZE)
-		ft_lstclear(&(*hashtable)[i], free_env_var);
+		ft_lst_clear(&(*hashtable)[i], free_env_var);
 	return ;
 }
 
@@ -48,4 +48,14 @@ void	close_fds(void)
 	close(1);
 	close(2);
 	return ;
+}
+
+void	free_g_tudao(void)
+{
+	free_hashtable(&g_tudao.hashtable);
+	ft_free_ptr((void *)&g_tudao.prompt_input);
+	rl_clear_history();
+	free_lexer();
+	free_main_pipeline();
+	close_fds();
 }

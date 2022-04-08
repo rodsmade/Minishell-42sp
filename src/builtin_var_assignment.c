@@ -6,11 +6,17 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 00:34:57 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/24 20:03:32 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/01 20:21:37 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	create_new_local_env_var(t_list *var)
+{
+	(void) var;
+	return ;
+}
 
 void	assign_vars(t_command *command)
 /**
@@ -19,17 +25,23 @@ void	assign_vars(t_command *command)
  */
 {
 	t_list	*pivot;
+	t_list	*temp;
+	t_list	**lst_head;
 
-	pivot = command->cmds_with_flags;
-	while (pivot)
+	lst_head = &command->cmds_with_flags;
+	pivot = *lst_head;
+	while (pivot && is_var_assignment(pivot->content))
 	{
-		printf("this is a variable assignment\n");
-		pivot = pivot->next;
+		printf("%s: this is a variable assignment\n", (char *) pivot->content);
+		create_new_local_env_var(pivot);
+		temp = pivot->next;
+		ft_lst_remove_node(lst_head, pivot);
+		pivot = temp;
 	}
 	return ;
 }
 
-static bool	is_var_assignment(char *str)
+bool	is_var_assignment(char *str)
 {
 	int	equal_sign;
 
@@ -46,18 +58,4 @@ static bool	is_var_assignment(char *str)
 		return (false);
 	else
 		return (true);
-}
-
-bool	has_only_var_assignments(t_list *pipeline)
-{
-	t_list	*pivot;
-
-	pivot = ((t_command *)pipeline->content)->cmds_with_flags;
-	while (pivot)
-	{
-		if (!is_var_assignment(pivot->content))
-			return (false);
-		pivot = pivot->next;
-	}
-	return (true);
 }

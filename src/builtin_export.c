@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/03/29 12:45:27 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/06 11:48:55 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ int	generate_pair(char *line_read, char **pair)
 			value = (char *)malloc(sizeof(char) * \
 			(value_len(&line_read[mid_point + 1]) + 1));
 			generate_value(&line_read[mid_point + 1], value);
-			concat_and_free(pair, 3, key, ft_strdup("="), value);
+			concat_and_free(pair, key, ft_strdup("="), value);
 		}
 		else
-			concat_and_free(pair, 3, key, ft_strdup("="), ft_strdup(""));
+			concat_and_free(pair, key, ft_strdup("="), ft_strdup(""));
 		return (1);
 	}
 	else

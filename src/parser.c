@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/23 20:42:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/06 21:14:32 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,22 @@ void	capture_command(t_command	*cmd, t_list **pivot)
 		if (is_redirect((char *)(*pivot)->content))
 		{
 			if (is_input((*pivot)))
-				ft_lstadd_back(&cmd->inputs, ft_lstnew(next_token));
+				ft_lst_add_back(&cmd->inputs, ft_lst_new(next_token));
 			if (is_output((*pivot)))
-				ft_lstadd_back(&cmd->outputs, ft_lstnew(next_token));
+				ft_lst_add_back(&cmd->outputs, ft_lst_new(next_token));
 			if (is_heredoc((*pivot)))
-				ft_lstadd_back(&cmd->heredocs, ft_lstnew(next_token));
+				ft_lst_add_back(&cmd->heredocs, ft_lst_new(next_token));
 			if (is_o_concat((*pivot)))
-				ft_lstadd_back(&cmd->o_concats, ft_lstnew(next_token));
+				ft_lst_add_back(&cmd->o_concats, ft_lst_new(next_token));
 			(*pivot) = (*pivot)->next->next;
 		}
 		else
 		{
-			ft_lstadd_back(&cmd->cmds_with_flags, ft_lstnew((*pivot)->content));
+			ft_lst_add_back(&cmd->cmds_with_flags,
+				ft_lst_new((*pivot)->content));
 			(*pivot) = (*pivot)->next;
 		}
 	}
-	return ;
 }
 
 void	set_up_main_pipeline(void)
@@ -88,8 +88,8 @@ void	set_up_main_pipeline(void)
 			printf("[ERROR] deu ruim o malloc ajustar isso aqui depois\n");
 		init_command(command);
 		capture_command(command, &pivot);
-		ft_lstadd_back(&g_tudao.command_table.main_pipeline,
-			ft_lstnew((void *) command));
+		ft_lst_add_back(&g_tudao.command_table.main_pipeline,
+			ft_lst_new((void *) command));
 		if (pivot && is_pipe(pivot->content))
 			pivot = pivot->next;
 	}
@@ -98,7 +98,6 @@ void	set_up_main_pipeline(void)
 void	set_up_command_table(void)
 {
 	set_up_main_pipeline();
-	print_commands_and_redirects();
 	return ;
 }
 

@@ -26,6 +26,7 @@ FILES			=	builtin_cd.c \
 					builtin_echo.c \
 					builtin_exit.c \
 					builtin_env.c \
+					builtin_export.c \
 					builtin_pwd.c \
 					builtin_unset.c \
 					builtin_var_assignment.c \
@@ -38,16 +39,21 @@ FILES			=	builtin_cd.c \
 					lexer.c \
 					minishell.c \
 					parser.c \
+					utils_env_vars.c \
+					utils_executor.c \
+					utils_executor_2.c \
 					utils_expansor.c \
+					utils_export_2.c \
+					utils_export.c \
+					utils_file_check.c \
 					utils_hashtable.c \
-					utils_lexer_mock.c \
+					utils_heredoc.c \
 					utils_lexer.c \
 					utils_parser_2.c \
 					utils_parser.c \
-					utils_test.c \
-					builtin_export.c \
-					utils_export.c \
-					utils_export_2.c
+					utils_redirections.c \
+					utils_redirections_2.c \
+					utils_test.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
 					$(PATH_INCLUDES)libft.h
@@ -72,10 +78,10 @@ $(NAME):			$(addprefix $(PATH_OBJ),$(OBJS))
 $(PATH_OBJ)%.o: 	$(PATH_SRC)%.c $(HEADERS)
 					$(CC) -c -o $@ $< $(LIBS)
 
-run:				$(NAME)
+run:				all
 					./$(NAME)
 
-valgrind:			$(NAME)
+valgrind:			all
 					$(VALGRIND) ./$(NAME)
 
 clean:

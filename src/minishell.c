@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/29 21:55:44 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 17:25:57 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,55 +44,49 @@ void	assemble_line(char **line_read)
 	free(temp);
 }
 
-char	*display_cmd_prompt(void)
+void	display_cmd_prompt(void)
 {
-	char	*line_read;
 	char	*curr_path;
 	char	*prompt;
 
 	curr_path = getcwd(NULL, 0);
 	prompt = ft_strjoin(curr_path, " $ ");
-	line_read = readline(prompt);
-	if (ft_strncmp(line_read, "quit", 5) == 0)
+	g_tudao.prompt_input = readline(prompt);
+	if (ft_strncmp(g_tudao.prompt_input, "quit", 5) == 0)
 	{
 		g_tudao.exit = true;
 		ft_free_ptr((void *)&prompt);
 		ft_free_ptr((void *)&curr_path);
-		return (line_read);
+		return ;
 	}
-	lexer_line(line_read);
+	lexer_line(g_tudao.prompt_input);
 	expand_tokens();
 	parse_tokens();
 	while (g_tudao.token_list && !g_tudao.syntax_error
-		&& is_pipe_and_or((char *) ft_lstlast(g_tudao.token_list)->content))
-		assemble_line(&line_read);
+		&& is_pipe_and_or((char *) ft_lst_last(g_tudao.token_list)->content))
+		assemble_line(&g_tudao.prompt_input);
 	ft_free_ptr((void *)&curr_path);
 	ft_free_ptr((void *)&prompt);
-	return (line_read);
+	return ;
 }
 
 void	repl(void)
 {
-	char	*line_read;
-
-	line_read = NULL;
 	g_tudao.exit = false;
 	while (!g_tudao.exit)
 	{
 		init_tudao();
-		line_read = display_cmd_prompt();
-		if (line_read && g_tudao.token_list && g_tudao.token_list->content
-			&& !g_tudao.syntax_error && !g_tudao.exit)
-			execute_pipelines();
-		add_history(line_read);
+		display_cmd_prompt();
+		if (g_tudao.prompt_input && g_tudao.token_list
+			&& g_tudao.token_list->content && !g_tudao.syntax_error
+			&& !g_tudao.exit)
+			execute_main_pipeline();
+		add_history(g_tudao.prompt_input);
 		free_lexer();
 		free_main_pipeline();
-		ft_free_ptr((void *)&line_read);
+		ft_free_ptr((void *)&g_tudao.prompt_input);
 	}
-	free_hashtable(&g_tudao.hashtable);
-	ft_free_ptr((void *)&line_read);
-	free_hashtable(&g_tudao.hashtable);
-	rl_clear_history();
+	free_g_tudao();
 	return ;
 }
 

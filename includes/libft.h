@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 19:11:12 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/01/20 18:52:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:38:32 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ long int	ft_atoli(const char *nptr);
 int			ft_atoi(const char *nptr);
 void		ft_bzero(void *s, size_t n);
 void		*ft_calloc(size_t nmemb, size_t size);
+void		ft_close_pipe_fds(int *pipe);
 void		ft_free_arr(void ***ptr);
 void		ft_free_ptr(void **ptr);
 char		*ft_get_next_line(int fd);
@@ -39,15 +40,16 @@ int			ft_isdigit(int c);
 int			ft_isnumeric_s(char *str);
 int			ft_isprint(int c);
 char		*ft_itoa(int n);
-void		ft_lstadd_back(t_list **lst, t_list *new);
-void		ft_lstadd_front(t_list **lst, t_list *new);
-void		ft_lstclear(t_list **lst, void (*del)(void *));
-void		ft_lstdelone(t_list *lst, void (*del)(void *));
-void		ft_lstiter(t_list *lst, void (*f)(void *));
-t_list		*ft_lstlast(t_list *lst);
-t_list		*ft_lstnew(void *content);
-int			ft_lstsize(t_list *lst);
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+void		ft_lst_add_back(t_list **lst, t_list *new);
+void		ft_lst_add_front(t_list **lst, t_list *new);
+void		ft_lst_clear(t_list **lst, void (*del)(void *));
+void		ft_lst_delone(t_list *lst, void (*del)(void *));
+void		ft_lst_iter(t_list *lst, void (*f)(void *));
+t_list		*ft_lst_last(t_list *lst);
+t_list		*ft_lst_new(void *content);
+void		ft_lst_remove_node(t_list **lst_head, t_list *node_to_delete);
+int			ft_lst_size(t_list *lst);
+t_list		*ft_lst_map(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void		*ft_memccpy(void *dest, const void *src, int c, size_t n);
 void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -62,6 +64,7 @@ char		**ft_split(char const *s, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(const char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin_3(char *str1, char *str2, char *str3);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dest_size);
 size_t		ft_strlen(const char *s);
@@ -76,5 +79,7 @@ int			ft_toupper(int c);
 char		*ft_uitoa(unsigned int n);
 char		*ft_uitohex(unsigned int n, char *base_str);
 char		*ft_ulitohex(unsigned long int n, char *base_str);
+void		ft_free_pipe_arr(int ***pipe_arr, int n);
+int			**ft_make_pipes(int total_pipes);
 
 #endif 

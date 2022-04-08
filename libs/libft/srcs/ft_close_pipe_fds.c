@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_close_pipe_fds.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/06 10:54:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2021/10/06 10:54:26 by roaraujo         ###   ########.fr       */
+/*   Created: 2022/04/07 22:10:34 by roaraujo          #+#    #+#             */
+/*   Updated: 2022/04/07 22:11:37 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_close_pipe_fds(int *pipe)
 {
-	t_list	*last_element;
-
-	if (*lst == NULL)
-		*lst = new;
-	else
+	if (pipe)
 	{
-		last_element = ft_lstlast(*lst);
-		last_element->next = new;
+		close(pipe[0]);
+		close(pipe[1]);
 	}
+	return ;
 }

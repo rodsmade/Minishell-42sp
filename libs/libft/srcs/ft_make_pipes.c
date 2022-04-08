@@ -1,22 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_make_pipes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/06 10:54:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2021/10/06 10:54:42 by roaraujo         ###   ########.fr       */
+/*   Created: 2022/04/07 17:38:02 by adrianofaus       #+#    #+#             */
+/*   Updated: 2022/04/07 23:56:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+int	**ft_make_pipes(int total_pipes)
 {
-	if (lst == NULL)
+	int	i;
+	int	**pipes;
+
+	if (total_pipes == 0)
 		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
+	pipes = (int **)malloc(total_pipes * sizeof(int *));
+	if (!pipes)
+	{
+		ft_putendl_fd("Malloc error", 2);
+		exit(EXIT_FAILURE);
+	}
+	i = 0;
+	while (i < total_pipes)
+	{
+		pipes[i] = (int *)malloc(2 * sizeof(int));
+		if (!pipes[i])
+		{
+			ft_putendl_fd("Malloc error", 2);
+			exit(EXIT_FAILURE);
+		}
+		pipe(pipes[i]);
+		i++;
+	}
+	return (pipes);
 }
