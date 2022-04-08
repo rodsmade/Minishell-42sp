@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 19:13:52 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/09 01:27:13 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_command
 typedef struct s_cmd_table
 {
 	t_list	*main_pipeline;
+	int		main_pl_size;
 	t_list	*secondary_pipeline;
 }				t_cmd_table;
 
@@ -111,7 +112,7 @@ void			assign_vars(t_command *command);
 bool			is_var_assignment(char *str);
 
 // executor.c
-void			execute_main_pipeline(void);
+void			execute_pipeline(t_list *pipeline);
 void			execute_command(t_command *cmd);
 void			capture_redirections(int cmd_counter, t_command *cmd);
 void			execute_built_in(t_command *command);
@@ -156,16 +157,20 @@ char			*env_var_to_string(t_env_var *env_var);
 int				count_env_vars(void);
 
 // utils_executor.c
-bool			is_built_in(char *str);
 char			**assemble_cmd_array(t_command *command);
-bool			has_absolute_path(char *command_str);
 char			*find_cmd_in_path_var(char *command_str);
 char			*find_cmd_path(char *command_str);
 
 // utils_executor_2.c
 void			process_executor(int total_pipes, int counter, t_command *cmd);
-bool			execute_only_one_cmd(void);
+bool			execute_only_one_cmd(t_list *pipeline);
 void			create_new_files(void);
+bool			alters_main_memory(char *built_in);
+
+// utils_executor_3.c
+bool			alters_main_memory(char *built_in);
+bool			is_built_in(char *str);
+bool			has_absolute_path(char *command_str);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);

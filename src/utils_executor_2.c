@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/08 19:29:05 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/09 01:41:49 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,18 @@ void	process_executor(int total_pipes, int counter, t_command *cmd)
 	}
 }
 
-bool	execute_only_one_cmd(void)
+bool	execute_only_one_cmd(t_list *pipeline)
 {
-	t_list		*cmd_pivot;
+	// t_list		*pipeline;
 	t_command	*cmd;
 
-	cmd_pivot = g_tudao.command_table.main_pipeline;
-	cmd = (t_command *) cmd_pivot->content;
-	if (!cmd_pivot->next && is_built_in((char *)cmd->cmds_with_flags->content))
+	// pipeline = g_tudao.command_table.main_pipeline;
+	cmd = (t_command *) pipeline->content;
+	if (pipeline && !pipeline->next && cmd->cmds_with_flags
+		&& is_built_in((char *)cmd->cmds_with_flags->content)
+		&& alters_main_memory((char *)cmd->cmds_with_flags->content))
 	{
-		capture_redirections(0, cmd);
+		// capture_redirections(0, cmd);
 		execute_built_in(cmd);
 		return (true);
 	}	

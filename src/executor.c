@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 19:32:41 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/09 01:16:56 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 	capture_o_concats(cmd);
 }
 
-void	execute_main_pipeline(void)
+void	execute_pipeline(t_list *pipeline)
 {
 	t_list		*cmd_pivot;
 	t_command	*cmd;
@@ -103,12 +103,12 @@ void	execute_main_pipeline(void)
 
 	create_new_files();
 	pipe(g_tudao.pipe_heredoc);
-	if (!execute_only_one_cmd())
+	if (!execute_only_one_cmd(pipeline))
 	{
-		cmd_pivot = g_tudao.command_table.main_pipeline;
+		cmd_pivot = pipeline;
 		cmd = (t_command *) cmd_pivot->content;
 		counter = 0;
-		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
+		total_pipes = ft_lst_size(pipeline) - 1;
 		g_tudao.cmd_pipes = ft_make_pipes(total_pipes);
 		while (cmd_pivot)
 		{
