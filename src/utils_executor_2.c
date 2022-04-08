@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/09 01:41:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 20:56:57 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	create_outputs(t_command * cmd)
 {
 	t_list	*pivot;
 	int		fd;
-	
 	pivot = cmd->outputs;
 	while (pivot)
 	{
+		dprintf(2, "Create Output\n");
 		if (access((char *) pivot->content, F_OK) == -1)
 		{
 			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
@@ -110,9 +110,9 @@ void	create_new_files(void)
 	t_list		*pivot;
 
 	pivot = g_tudao.command_table.main_pipeline;
-	cmd = ((t_command *)pivot->content);
 	while (pivot)
 	{
+		cmd = ((t_command *)pivot->content);
 		create_outputs(cmd);
 		create_o_concats(cmd);
 		pivot = pivot->next;
