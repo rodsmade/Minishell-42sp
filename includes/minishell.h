@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 20:29:26 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:48:00 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ bool			is_var_assignment(char *str);
 
 // executor.c
 void			execute_main_pipeline(void);
+void			execute_command(t_command *cmd);
+void			capture_redirections(int cmd_counter, t_command *cmd);
+void			execute_built_in(t_command *command);
 
 // exit_routines.c
 void			free_env_var(void *element);
@@ -153,11 +156,15 @@ char			*env_var_to_string(t_env_var *env_var);
 int				count_env_vars(void);
 
 // utils_executor.c
-bool	is_built_in(char *str);
-char	**assemble_cmd_array(t_command *command);
-bool	has_absolute_path(char *command_str);
-char	*find_cmd_in_path_var(char *command_str);
-char	*find_cmd_path(char *command_str);
+bool			is_built_in(char *str);
+char			**assemble_cmd_array(t_command *command);
+bool			has_absolute_path(char *command_str);
+char			*find_cmd_in_path_var(char *command_str);
+char			*find_cmd_path(char *command_str);
+
+// utils_executor_2.c
+void			process_executor(int total_pipes, int counter, t_command *cmd);
+bool			execute_only_one_cmd(void);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);
@@ -183,6 +190,7 @@ void			check_file_has_permissions(char *file_name, int permissions);
 void			update_hashtable(char *key, char *new_value, int new_env_var);
 char			*read_hashtable(t_list *head, char *key);
 t_list			*find_node_in_hashtable(char *var_name);
+char			**hashtable_to_array(void);
 
 // utils_heredoc.c
 void			init_heredoc_data(t_data_hd *hd, t_command *cmd, int cmd_count);

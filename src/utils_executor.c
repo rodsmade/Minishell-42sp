@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 18:45:03 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 19:00:53 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:50:22 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,6 @@ char	*find_cmd_in_path_var(char *command_str)
 
 char	*find_cmd_path(char *command_str)
 {
-	char	*cmd_path;
-
-	cmd_path = NULL;
 	if (has_absolute_path(command_str))
 	{
 		if (access(command_str, F_OK) == 0)

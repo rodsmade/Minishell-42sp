@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 18:53:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:46:43 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 void	execute_main_pipeline(void)
 {
 	t_list		*cmd_pivot;
-	int			pid;
 	t_command	*cmd;
 	int			counter;
 	int			total_pipes;
@@ -106,34 +105,15 @@ void	execute_main_pipeline(void)
 	cmd = (t_command *) cmd_pivot->content;
 	counter = 0;
 	pipe(g_tudao.pipe_heredoc);
-	if (!cmd_pivot->next && is_built_in((char *)cmd->cmds_with_flags->content))
-	{
-		capture_redirections(counter, cmd);
-		execute_built_in(cmd);
-	}
-	else
+	if (!execute_only_one_cmd())
 	{
 		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
 		g_tudao.cmd_pipes = ft_make_pipes(total_pipes);
 		while (cmd_pivot)
 		{
-			pid = fork();
-			if (pid == -1)
-				ft_putendl_fd("Error while forking", 2);
-			else if (pid == 0)
-			{
-				capture_redirections(counter, cmd);
-				execute_command(cmd);
-			}
-			else
-			{
-				waitpid(pid, NULL, 0);
-				if (counter != total_pipes)
-					close(g_tudao.cmd_pipes[counter][1]);
-			}
+			cmd = (t_command *) cmd_pivot->content;
+			process_executor(total_pipes, counter, cmd);
 			cmd_pivot = cmd_pivot->next;
-			if (cmd_pivot)
-				cmd = (t_command *) cmd_pivot->content;
 			counter++;
 		}
 		close_and_free_pipes();

@@ -41,6 +41,7 @@ FILES			=	builtin_cd.c \
 					parser.c \
 					utils_env_vars.c \
 					utils_executor.c \
+					utils_executor_2.c \
 					utils_expansor.c \
 					utils_export_2.c \
 					utils_export.c \
