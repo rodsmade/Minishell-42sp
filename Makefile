@@ -44,11 +44,12 @@ FILES			=	builtin_cd.c \
 					utils_export.c \
 					utils_file_check.c \
 					utils_hashtable.c \
+					utils_heredoc.c \
 					utils_lexer.c \
 					utils_parser_2.c \
 					utils_parser.c \
 					utils_redirections.c \
-					utils_redirections2.c \
+					utils_redirections_2.c \
 					utils_test.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \

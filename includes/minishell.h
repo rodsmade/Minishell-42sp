@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 21:53:08 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/08 17:35:46 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,6 @@ void			init_command(t_command *command);
 // lexer.c
 void			lexer_line(char	*line_read);
 
-// minishell.c
-void			add_heredocs_to_history(void);
-
 // parser.c
 void			parse_tokens(void);
 
@@ -157,9 +154,29 @@ char			*ft_append_char(char *str, char c);
 int				is_valid_key_char(char c);
 void			expand_wildcards(void);
 
-// utils_files_check.c
+//utils_export.c
+int				value_len(char *line_read);
+int				check_key(char *key_value);
+int				key_len(char *key_value);
+void			print_exported_vars(void);
+void			concat_and_free(char **pair, char *s1, char *s2, char *s3);
+
+//utils_export_2.c
+void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
+
+// utils_file_check.c
 void			check_file_exists(char *file_name);
 void			check_file_has_permissions(char *file_name, int permissions);
+
+//utils_hashtable.c
+void			update_hashtable(char *key, char *new_value, int new_env_var);
+char			*read_hashtable(t_list *head, char *key);
+t_list			*find_node_in_hashtable(char *var_name);
+
+// utils_heredoc.c
+void			init_heredoc_data(t_data_hd *hd, t_command *cmd, int cmd_count);
+void			process_heredoc_position(t_data_hd *hd, int pipe_fd);
+void			add_heredocs_to_history(void);
 
 // utils_lexer.c
 void			skip_quotes(char *line_read, int *index);
@@ -167,11 +184,6 @@ void			quoted_generate(char *line_read, int *index, char *content);
 int				count_redirect(char *line_read);
 void			redirect_gen(char *line_read, char *content);
 void			free_lexer(void);
-
-// utils_lexer_mock.c
-void			print_list_so_far(void);
-void			mock_tokens(void);
-void			free_mock(void);
 
 // utils_parser.c
 bool			is_special_token(char *token);
@@ -189,33 +201,17 @@ bool			is_o_concat(t_list *token);
 // utils_redirections.c
 void			capture_inputs(t_command *cmd);
 void			capture_outputs(t_command *cmd);
-void			capture_heredocs(t_command *cmd);
+void			capture_heredocs(t_command *cmd, int cmd_count);
 void			capture_o_concats(t_command *cmd);
 
-// utils_redirections2.c
-char			*concat_pipe_content(int *pipe, char *str);
+// utils_redirections_2.c
 char			*get_pipe_content(int fd);
+char			*concat_pipe_content(int *pipe, char *str);
 int				pipe_and_fork(int *pipe_fds);
-void			process_heredoc_position(t_data_hd *hd, int pipe_fd);
-void			init_heredoc_data(t_data_hd *hd, t_command *cmd);
+void			get_input_line(t_data_hd *hd, int *pipe_fds);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_commands_and_redirects(void);
-
-//utils_hashtable.c
-void			update_hashtable(char *key, char *new_value, int new_env_var);
-char			*read_hashtable(t_list *head, char *key);
-t_list			*find_node_in_hashtable(char *var_name);
-
-//utils_export.c
-int				value_len(char *line_read);
-int				check_key(char *key_value);
-int				key_len(char *key_value);
-void			print_exported_vars(void);
-void			concat_and_free(char **pair, char *s1, char *s2, char *s3);
-
-//utils_export_2.c
-void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
 
 #endif

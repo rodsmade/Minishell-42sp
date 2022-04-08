@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 21:57:00 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 17:25:57 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,32 +67,6 @@ void	display_cmd_prompt(void)
 		assemble_line(&g_tudao.prompt_input);
 	ft_free_ptr((void *)&curr_path);
 	ft_free_ptr((void *)&prompt);
-	return ;
-}
-
-void	add_heredocs_to_history(void)
-{
-	char	*str;
-	char	*temp;
-	char	buffer[50];
-	int		chars_read;
-
-	close(g_tudao.pipe_heredoc[1]);
-	str = ft_strdup("");
-	chars_read = read(g_tudao.pipe_heredoc[0], buffer, 49);
-	while (chars_read > 0)
-	{
-		buffer[chars_read] = '\0';
-		temp = str;
-		str = ft_strjoin(temp, buffer);
-		ft_free_ptr((void *)&temp);
-		chars_read = read(g_tudao.pipe_heredoc[0], buffer, 49);
-	}
-	temp = g_tudao.prompt_input;
-	g_tudao.prompt_input = ft_strjoin(temp, str);
-	ft_free_ptr((void *)&temp);
-	ft_free_ptr((void *)&str);
-	close(g_tudao.pipe_heredoc[0]);
 	return ;
 }
 

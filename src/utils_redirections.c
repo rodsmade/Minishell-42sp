@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 22:08:36 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/08 17:28:06 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,36 +59,13 @@ void	capture_outputs(t_command *cmd)
 	return ;
 }
 
-void	get_input_line(t_data_hd *hd, int *pipe_fds)
-{
-	char	*line_read;
-	char	*eof;
-
-	eof = (char *) hd->cursor->content;
-	line_read = readline("> ");
-	while (ft_strncmp(line_read, eof, sizeof(eof) + 1) != 0)
-	{
-		ft_putendl_fd(line_read, pipe_fds[1]);
-		ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
-		ft_free_ptr((void *)&line_read);
-		line_read = readline("> ");
-	}
-	ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
-	ft_free_ptr((void *)&line_read);
-	ft_close_pipe_fds(pipe_fds);
-	ft_free_ptr((void *)&(hd->str));
-	ft_free_pipe_arr(&(hd->aux_pipes), hd->total_pipes);
-	ft_close_pipe_fds(g_tudao.pipe_heredoc);
-	free_and_exit_fork(NULL);
-}
-
-void	capture_heredocs(t_command *cmd)
+void	capture_heredocs(t_command *cmd, int cmd_count)
 {
 	int			pipe_fds[2];
 	t_data_hd	hd;
 	int			pid;
 
-	init_heredoc_data(&hd, cmd);
+	init_heredoc_data(&hd, cmd, cmd_count);
 	while (hd.cursor)
 	{
 		pid = pipe_and_fork(pipe_fds);
