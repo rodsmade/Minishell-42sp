@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 18:48:00 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/08 19:13:52 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ char			*find_cmd_path(char *command_str);
 // utils_executor_2.c
 void			process_executor(int total_pipes, int counter, t_command *cmd);
 bool			execute_only_one_cmd(void);
+void			create_new_files(void);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 17:28:06 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/08 19:16:55 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,8 @@ void	capture_inputs(t_command *cmd)
 
 void	capture_outputs(t_command *cmd)
 {
-	t_list	*pivot;
-	int		fd;
-
-	pivot = cmd->outputs;
-	while (pivot)
-	{
-		if (access((char *) pivot->content, F_OK) == -1)
-		{
-			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (pivot->next)
-				close(fd);
-		}
-		check_file_has_permissions((char *) pivot->content, W_OK);
-		if (!pivot->next)
-		{
-			cmd->output_fd = open((char *) pivot->content,
-					O_CREAT | O_WRONLY | O_TRUNC,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			dup2(cmd->output_fd, STDOUT_FILENO);
-		}
-		pivot = pivot->next;
-	}
+	if (cmd->outputs)
+		dup2(cmd->output_fd, STDOUT_FILENO);
 	return ;
 }
 
@@ -84,28 +63,7 @@ void	capture_heredocs(t_command *cmd, int cmd_count)
 
 void	capture_o_concats(t_command *cmd)
 {
-	t_list	*pivot;
-	int		fd;
-
-	pivot = cmd->o_concats;
-	while (pivot)
-	{
-		if (access((char *) pivot->content, F_OK) == -1)
-		{
-			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_APPEND,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (pivot->next)
-				close(fd);
-		}
-		check_file_has_permissions((char *) pivot->content, W_OK);
-		if (!pivot->next)
-		{
-			cmd->o_concat_fd = open((char *) pivot->content,
-					O_CREAT | O_WRONLY | O_APPEND,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			dup2(cmd->o_concat_fd, STDOUT_FILENO);
-		}
-		pivot = pivot->next;
-	}
+	if (cmd->o_concats)
+		dup2(cmd->o_concat_fd, STDOUT_FILENO);
 	return ;
 }

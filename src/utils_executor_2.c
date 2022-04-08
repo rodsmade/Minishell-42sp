@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/08 18:48:19 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/08 19:29:05 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,74 @@ bool	execute_only_one_cmd(void)
 		return (true);
 	}	
 	return (false);
+}
+
+void	create_outputs(t_command * cmd)
+{
+	t_list	*pivot;
+	int		fd;
+	
+	pivot = cmd->outputs;
+	while (pivot)
+	{
+		if (access((char *) pivot->content, F_OK) == -1)
+		{
+			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+			if (pivot->next)
+				close(fd);
+		}
+		check_file_has_permissions((char *) pivot->content, W_OK);
+		if (!pivot->next)
+		{
+			cmd->output_fd = open((char *) pivot->content,
+					O_CREAT | O_WRONLY | O_TRUNC,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+		}
+		pivot = pivot->next;
+	}
+	return ;
+}
+
+void	create_o_concats(t_command * cmd)
+{
+	t_list	*pivot;
+	int		fd;
+
+	pivot = cmd->o_concats;
+	while (pivot)
+	{
+		if (access((char *) pivot->content, F_OK) == -1)
+		{
+			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_APPEND,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+			if (pivot->next)
+				close(fd);
+		}
+		check_file_has_permissions((char *) pivot->content, W_OK);
+		if (!pivot->next)
+		{
+			cmd->o_concat_fd = open((char *) pivot->content,
+					O_CREAT | O_WRONLY | O_APPEND,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+		}
+		pivot = pivot->next;
+	}
+	return ;	
+}
+
+void	create_new_files(void)
+{
+	t_command	*cmd;
+	t_list		*pivot;
+
+	pivot = g_tudao.command_table.main_pipeline;
+	cmd = ((t_command *)pivot->content);
+	while (pivot)
+	{
+		create_outputs(cmd);
+		create_o_concats(cmd);
+		pivot = pivot->next;
+	}
+	return ;
 }

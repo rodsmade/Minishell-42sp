@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 18:46:43 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/08 19:32:41 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,13 @@ void	execute_main_pipeline(void)
 	int			counter;
 	int			total_pipes;
 
-	cmd_pivot = g_tudao.command_table.main_pipeline;
-	cmd = (t_command *) cmd_pivot->content;
-	counter = 0;
+	create_new_files();
 	pipe(g_tudao.pipe_heredoc);
 	if (!execute_only_one_cmd())
 	{
+		cmd_pivot = g_tudao.command_table.main_pipeline;
+		cmd = (t_command *) cmd_pivot->content;
+		counter = 0;
 		total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
 		g_tudao.cmd_pipes = ft_make_pipes(total_pipes);
 		while (cmd_pivot)
