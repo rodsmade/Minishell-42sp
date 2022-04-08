@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 23:57:11 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/08 17:07:38 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	capture_redirections(int cmd_counter, t_command *cmd)
 			dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
 	}
 	else
-		capture_heredocs(cmd);
+		capture_heredocs(cmd, cmd_counter);
 	if (cmd_counter != total_pipes && total_pipes)
 		dup2(g_tudao.cmd_pipes[cmd_counter][1], STDOUT_FILENO);
 	capture_inputs(cmd);
