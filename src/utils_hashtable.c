@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_hashtable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 20:14:20 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/28 21:06:34 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/08 18:47:52 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,30 @@ t_list	*find_node_in_hashtable(char *var_name)
 		pivot = pivot->next;
 	}
 	return (NULL);
+}
+
+char	**hashtable_to_array(void)
+{
+	int		env_vars_count;
+	int		i;
+	int		j;
+	t_list	*pivot;
+	char	**hashtable_arr;
+
+	env_vars_count = count_env_vars();
+	hashtable_arr = (char **) malloc((env_vars_count + 1) * sizeof(char *));
+	hashtable_arr[env_vars_count] = NULL;
+	i = -1;
+	j = -1;
+	while (++i < TABLE_SIZE)
+	{
+		pivot = g_tudao.hashtable[i];
+		while (pivot)
+		{
+			hashtable_arr[++j] = \
+				env_var_to_string((t_env_var *) pivot->content);
+			pivot = pivot->next;
+		}
+	}
+	return (hashtable_arr);
 }
