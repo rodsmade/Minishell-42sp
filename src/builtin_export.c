@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/06 11:48:55 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/09 23:18:06 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	iterate_lst_to_export(t_list *lst)
 	t_list	*tmp;
 	char	*pair;
 	int		status;
+	char	*err_msg;
 
 	tmp = lst->next;
 	pair = NULL;
@@ -106,8 +107,13 @@ void	iterate_lst_to_export(t_list *lst)
 			ft_free_ptr((void *)&pair);
 		}
 		else
-			printf("minishell: export: `%s': not a valid identifier\n", \
-			(char *)tmp->content);
+		{
+			err_msg = ft_strjoin_3("minishell: export: `", (char *)tmp->content,
+				"': not a valid identifier");
+			ft_putendl_fd(err_msg, 2);
+			ft_free_ptr((void *)&pair);
+			return ;
+		}
 		tmp = tmp->next;
 	}
 }

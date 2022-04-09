@@ -3,26 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 01:20:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/09 23:25:43 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	check_tokens_consistency(void)
-/**
- * TODO:
- * 		- refatorar a função (muitas linhas);
- * 		- rever se dá pra deixar o while com pivot só e se pivot->next 
- * 		- se não der, considerar o caso em que o último elemento é um redirect
- * 			sozinho (< > << >>), ex:
- * 	// if (pivot == ">" ou "<" ou ">>" ou "<<")
- * 	// 	printf("bash: syntax error near unexpected token `newline'")
- * 														  ^~~~~~~~~~~ chumbar
- */
 {
 	t_list	*pivot;
 
@@ -85,7 +75,7 @@ void	set_up_main_pipeline(void)
 	{
 		command = malloc(sizeof(t_command));
 		if (!command)
-			printf("[ERROR] deu ruim o malloc ajustar isso aqui depois\n");
+			ft_putendl_fd("[ERROR] deu ruim o malloc ajustar isso aqui depois", 2);
 		init_command(command);
 		capture_command(command, &pivot);
 		ft_lst_add_back(&g_tudao.command_table.main_pipeline,

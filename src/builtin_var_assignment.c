@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_var_assignment.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 00:34:57 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/01 20:21:37 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/09 23:21:37 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	assign_vars(t_command *command)
 	pivot = *lst_head;
 	while (pivot && is_var_assignment(pivot->content))
 	{
-		printf("%s: this is a variable assignment\n", (char *) pivot->content);
+		dprintf(2, "%s: this is a temporary variable assignment\n",
+			(char *) pivot->content);
 		create_new_local_env_var(pivot);
 		temp = pivot->next;
 		ft_lst_remove_node(lst_head, pivot);

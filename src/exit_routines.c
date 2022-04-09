@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 22:28:56 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/09 23:24:12 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ void	print_syntax_error_exit(char *token)
  * 	- retornar o prompt principal (repl), e setar a variável $? = 2.
  */
 {
+	char	*err_msg;
+
 	g_tudao.syntax_error = true;
-	printf("bash: syntax error near unexpected token `%s'\n", token);
+	err_msg = ft_strjoin_3("bash: syntax error near unexpected token `", token, "'");
+	ft_putendl_fd(err_msg, 2);
 	return ;
 }
 
