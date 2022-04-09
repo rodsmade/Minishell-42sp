@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 00:27:07 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/09 22:38:42 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,36 @@ void	free_main_pipeline(void)
 	}
 }
 
+void	close_fds_by_cmd(t_command *command)
+{
+	if (command->input_fd)
+	{
+		dprintf(2, "input_fd: %i\n", command->input_fd);
+		close(command->input_fd);
+	}
+	if (command->output_fd)
+	{
+		dprintf(2, "output_fd: %i\n", command->output_fd);
+		close(command->output_fd);
+	}
+	if (command->heredoc_fd)
+	{
+		dprintf(2, "heredoc_fd: %i\n", command->heredoc_fd);
+		close(command->heredoc_fd);
+	}
+	if (command->o_concat_fd)
+	{
+		dprintf(2, "o_concat_fd: %i\n", command->o_concat_fd);
+		close(command->o_concat_fd);
+	}
+	if (command->err_fd)
+	{
+		dprintf(2, "err_fd: %i\n", command->o_concat_fd);
+		close(command->err_fd);
+	}
+	return ;
+}
+
 void	close_and_free_pipes(void)
 {
 	int	i;
@@ -73,10 +103,18 @@ void	free_and_exit_fork(char *err_msg)
  * TODO: handle properly the return code.
  */
 {
+	t_list	*pivot;
+
 	if (err_msg)
 	{
 		ft_putendl_fd(err_msg, 2);
 		ft_free_ptr((void *)&err_msg);
+	}
+	pivot = g_tudao.command_table.main_pipeline;	
+	while(pivot)
+	{
+		close_fds_by_cmd((t_command *) pivot->content);
+		pivot = pivot->next;
 	}
 	close_and_free_pipes();
 	free_g_tudao();

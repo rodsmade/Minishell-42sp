@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 01:16:56 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/09 22:41:38 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	send_to_execve(t_command *command)
 		ft_free_ptr((void *)&cmd_arr);
 		ft_putendl_fd("bash: command not found", 2);
 		ft_close_pipe_fds(g_tudao.pipe_heredoc);
+		close_fds_by_cmd(command);
 		free_and_exit_fork(NULL);
 	}
 	hashtable_arr = hashtable_to_array();
@@ -34,6 +35,7 @@ void	send_to_execve(t_command *command)
 		ft_putendl_fd("couldn't execute", 2);
 		ft_free_arr((void *)&hashtable_arr);
 		ft_close_pipe_fds(g_tudao.pipe_heredoc);
+		close_fds_by_cmd(command);
 		free_and_exit_fork(NULL);
 	}
 }
@@ -68,6 +70,7 @@ void	execute_command(t_command *cmd)
 	{
 		execute_built_in(cmd);
 		ft_close_pipe_fds(g_tudao.pipe_heredoc);
+		close_fds_by_cmd(cmd);
 		free_and_exit_fork(NULL);
 	}
 	else
@@ -101,21 +104,23 @@ void	execute_pipeline(t_list *pipeline)
 	int			counter;
 	int			total_pipes;
 
-	create_new_files();
-	pipe(g_tudao.pipe_heredoc);
+	create_new_files(pipeline);
+	if (pipe(g_tudao.pipe_heredoc) == -1)
+		ft_putendl_fd("Error trying to create pipe g_tudao.pipe_heredoc", 2);
 	if (!execute_only_one_cmd(pipeline))
 	{
 		cmd_pivot = pipeline;
 		cmd = (t_command *) cmd_pivot->content;
-		counter = 0;
+		counter = -1;
 		total_pipes = ft_lst_size(pipeline) - 1;
 		g_tudao.cmd_pipes = ft_make_pipes(total_pipes);
 		while (cmd_pivot)
 		{
 			cmd = (t_command *) cmd_pivot->content;
-			process_executor(total_pipes, counter, cmd);
+			dprintf(2, "executuo comando: %s\n", (char *) cmd->cmds_with_flags->content);
+			process_executor(total_pipes, ++counter, cmd);
+			close_fds_by_cmd(cmd);
 			cmd_pivot = cmd_pivot->next;
-			counter++;
 		}
 		close_and_free_pipes();
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 01:27:13 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/09 22:47:12 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void			execute_built_in(t_command *command);
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_syntax_error_exit(char *token);
-void			close_fds(void);
+void			close_std_fds(void);
 void			free_g_tudao(void);
 
 // exit_routines_2.c
@@ -164,7 +164,7 @@ char			*find_cmd_path(char *command_str);
 // utils_executor_2.c
 void			process_executor(int total_pipes, int counter, t_command *cmd);
 bool			execute_only_one_cmd(t_list *pipeline);
-void			create_new_files(void);
+void			create_new_files(t_list *pipeline);
 bool			alters_main_memory(char *built_in);
 
 // utils_executor_3.c
@@ -187,6 +187,7 @@ void			concat_and_free(char **pair, char *s1, char *s2, char *s3);
 
 //utils_export_2.c
 void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
+void			close_fds_by_cmd(t_command *command);
 
 // utils_file_check.c
 void			check_file_exists(char *file_name);

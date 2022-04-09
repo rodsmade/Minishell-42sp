@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 15:33:44 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/09 22:28:56 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_syntax_error_exit(char *token)
 	return ;
 }
 
-void	close_fds(void)
+void	close_std_fds(void)
 {
 	close(0);
 	close(1);
@@ -57,5 +57,6 @@ void	free_g_tudao(void)
 	rl_clear_history();
 	free_lexer();
 	free_main_pipeline();
-	close_fds();
+	close_std_fds();
+	return ;
 }
