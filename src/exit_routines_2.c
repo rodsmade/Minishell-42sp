@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 22:38:42 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/09 23:01:25 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,15 @@ void	free_main_pipeline(void)
 void	close_fds_by_cmd(t_command *command)
 {
 	if (command->input_fd)
-	{
-		dprintf(2, "input_fd: %i\n", command->input_fd);
 		close(command->input_fd);
-	}
 	if (command->output_fd)
-	{
-		dprintf(2, "output_fd: %i\n", command->output_fd);
 		close(command->output_fd);
-	}
 	if (command->heredoc_fd)
-	{
-		dprintf(2, "heredoc_fd: %i\n", command->heredoc_fd);
 		close(command->heredoc_fd);
-	}
 	if (command->o_concat_fd)
-	{
-		dprintf(2, "o_concat_fd: %i\n", command->o_concat_fd);
 		close(command->o_concat_fd);
-	}
 	if (command->err_fd)
-	{
-		dprintf(2, "err_fd: %i\n", command->o_concat_fd);
 		close(command->err_fd);
-	}
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 22:41:38 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/09 23:01:03 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ void	execute_pipeline(t_list *pipeline)
 		while (cmd_pivot)
 		{
 			cmd = (t_command *) cmd_pivot->content;
-			dprintf(2, "executuo comando: %s\n", (char *) cmd->cmds_with_flags->content);
 			process_executor(total_pipes, ++counter, cmd);
 			close_fds_by_cmd(cmd);
 			cmd_pivot = cmd_pivot->next;
