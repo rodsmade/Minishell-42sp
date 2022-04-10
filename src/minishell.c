@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 22:30:53 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/10 19:52:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	repl(void)
 			execute_pipeline(g_tudao.command_table.main_pipeline);
 		add_history(g_tudao.prompt_input);
 		free_lexer();
-		free_main_pipeline();
+		free_main_pipeline(&g_tudao.command_table.main_pipeline);
 		ft_free_ptr((void *)&g_tudao.prompt_input);
 	}
 	return ;

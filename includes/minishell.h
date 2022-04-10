@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 17:24:48 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:52:12 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void			close_and_free_pipes(void);
 
 // exit_routines_2.c
 void			free_t_command_list(t_list *lst);
-void			free_main_pipeline(void);
+void			free_main_pipeline(t_list **pipeline);
 void			free_and_exit_fork(char *err_msg);
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
