@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 23:01:33 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/10 23:52:55 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void			builtin_cd(t_list *path);
 void			builtin_echo(t_list *lst);
 
 // builtin_env.c
-void			builtin_env(void);
+void			builtin_env(t_list *cmd_with_flags);
 
 // builtin_exit.c
 void			builtin_exit(void);

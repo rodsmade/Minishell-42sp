@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 22:44:57 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/10 23:54:12 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	execute_built_in(t_command *command)
 	if (ft_strncmp(built_in_str, "echo", 5) == 0)
 		builtin_echo(cmd_lst);
 	if (ft_strncmp(built_in_str, "env", 4) == 0)
-		builtin_env();
+		builtin_env(cmd_lst);
 	if (ft_strncmp(built_in_str, "exit", 5) == 0)
 		builtin_exit();
 	if (ft_strncmp(built_in_str, "export", 7) == 0)
