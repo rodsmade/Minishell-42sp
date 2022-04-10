@@ -3,37 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:53:54 by afaustin          #+#    #+#             */
-/*   Updated: 2022/03/28 21:03:54 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/11 00:00:17 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_env(void)
+void	print_env_var(t_env_var *env_var)
+{
+	ft_putstr_fd(env_var->key, STDOUT_FILENO);
+	write(STDOUT_FILENO, "=", 1);
+	if (env_var->value)
+		ft_putstr_fd(env_var->value, STDOUT_FILENO);
+	write(STDOUT_FILENO, "\n", 1);
+}
+
+void	builtin_env(t_list	*cmd_with_flags)
 {
 	int		i;
-	t_list	*aux;
+	t_list	*env_var;
 
+	if (cmd_with_flags->next)
+	{
+		ft_putendl_fd(ft_strjoin_3("env: ‘",
+				(char *) cmd_with_flags->next->content,
+				"’: No such file or directory"), 2);
+		return ;
+	}
 	i = -1;
 	while (++i < TABLE_SIZE)
 	{
-		aux = g_tudao.hashtable[i];
-		while (aux != NULL)
+		env_var = g_tudao.hashtable[i];
+		while (env_var != NULL)
 		{
-			if (((t_env_var *)(aux->content))->is_env_var == true)
-			{
-				ft_putstr_fd(((t_env_var *)(aux->content))->key, \
-				STDOUT_FILENO);
-				write(STDOUT_FILENO, "=", 1);
-				if (((t_env_var *)(aux->content))->value)
-					ft_putstr_fd(((t_env_var *)(aux->content))->value, \
-					STDOUT_FILENO);
-				write(STDOUT_FILENO, "\n", 1);
-			}
-			aux = aux->next;
+			if (((t_env_var *)(env_var->content))->is_env_var == true)
+				print_env_var((t_env_var *) env_var->content);
+			env_var = env_var->next;
 		}
 	}
 }
