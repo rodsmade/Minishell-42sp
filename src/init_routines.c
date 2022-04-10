@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/05 17:14:02 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/09 22:09:33 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,10 @@ void	init_command(t_command *command)
 	command->heredocs = NULL;
 	command->o_concats = NULL;
 	command->err = NULL;
+	command->input_fd = 0;
+	command->output_fd = 0;
+	command->heredoc_fd = 0;
+	command->o_concat_fd = 0;
+	command->err_fd = 0;
 	return ;
 }

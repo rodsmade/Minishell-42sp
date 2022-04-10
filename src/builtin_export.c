@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/06 11:48:55 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/10 17:13:38 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	iterate_lst_to_export(t_list *lst)
 {
 	t_list	*tmp;
 	char	*pair;
-	int		status;
 
 	tmp = lst->next;
 	pair = NULL;
@@ -98,16 +97,19 @@ void	iterate_lst_to_export(t_list *lst)
 	{
 		if ((check_key((char *)tmp->content)) == true)
 		{
-			status = generate_pair((char *)tmp->content, &pair);
-			if (status)
+			if (generate_pair((char *)tmp->content, &pair))
 				insert_or_update_hashtable(pair, 1, &g_tudao.hashtable);
-			else if (!status)
+			else
 				insert_or_update_hashtable(pair, -1, &g_tudao.hashtable);
 			ft_free_ptr((void *)&pair);
 		}
 		else
-			printf("minishell: export: `%s': not a valid identifier\n", \
-			(char *)tmp->content);
+		{
+			ft_putendl_fd(ft_strjoin_3("minishell: export: `",
+					(char *)tmp->content, "': not a valid identifier"), 2);
+			ft_free_ptr((void *)&pair);
+			return ;
+		}
 		tmp = tmp->next;
 	}
 }

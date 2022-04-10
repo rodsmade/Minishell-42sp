@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 18:48:00 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/10 17:24:48 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_command
 typedef struct s_cmd_table
 {
 	t_list	*main_pipeline;
+	int		main_pl_size;
 	t_list	*secondary_pipeline;
 }				t_cmd_table;
 
@@ -111,24 +112,26 @@ void			assign_vars(t_command *command);
 bool			is_var_assignment(char *str);
 
 // executor.c
-void			execute_main_pipeline(void);
+void			execute_pipeline(t_list *pipeline);
 void			execute_command(t_command *cmd);
 void			capture_redirections(int cmd_counter, t_command *cmd);
 void			execute_built_in(t_command *command);
 
 // exit_routines.c
-void			free_env_var(void *element);
-void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
-void			print_syntax_error_exit(char *token);
-void			close_fds(void);
-void			free_g_tudao(void);
+void			close_std_fds(void);
+void			close_fds_by_cmd(t_command *command);
+void			close_and_free_pipes(void);
 
 // exit_routines_2.c
 void			free_t_command_list(t_list *lst);
-void			free_t_command(t_command *cmd);
 void			free_main_pipeline(void);
-void			close_and_free_pipes(void);
 void			free_and_exit_fork(char *err_msg);
+void			free_env_var(void *element);
+void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+
+// exit_routines_3.c
+void			print_syntax_error_exit(char *token);
+void			free_g_tudao(void);
 
 // expansor.c
 void			expand_tokens(void);
@@ -156,15 +159,20 @@ char			*env_var_to_string(t_env_var *env_var);
 int				count_env_vars(void);
 
 // utils_executor.c
-bool			is_built_in(char *str);
 char			**assemble_cmd_array(t_command *command);
-bool			has_absolute_path(char *command_str);
 char			*find_cmd_in_path_var(char *command_str);
 char			*find_cmd_path(char *command_str);
 
 // utils_executor_2.c
 void			process_executor(int total_pipes, int counter, t_command *cmd);
-bool			execute_only_one_cmd(void);
+bool			execute_only_one_cmd(t_list *pipeline);
+void			create_new_files(t_list *pipeline);
+bool			alters_main_memory(char *built_in);
+
+// utils_executor_3.c
+bool			alters_main_memory(char *built_in);
+bool			is_built_in(char *str);
+bool			has_absolute_path(char *command_str);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);

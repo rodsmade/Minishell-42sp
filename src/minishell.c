@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 17:25:57 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/09 22:30:53 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,12 @@ void	repl(void)
 		if (g_tudao.prompt_input && g_tudao.token_list
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
 			&& !g_tudao.exit)
-			execute_main_pipeline();
+			execute_pipeline(g_tudao.command_table.main_pipeline);
 		add_history(g_tudao.prompt_input);
 		free_lexer();
 		free_main_pipeline();
 		ft_free_ptr((void *)&g_tudao.prompt_input);
 	}
-	free_g_tudao();
 	return ;
 }
 
@@ -99,6 +98,6 @@ int	main(int argc, char *argv[], char **envp)
 	write(1, "Hello World !\n", 14);
 	get_env_variables(envp);
 	repl();
-	close_fds();
+	free_g_tudao();
 	return (0);
 }

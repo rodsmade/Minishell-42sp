@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:15:11 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 21:04:57 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/09 23:02:41 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	builtin_unset(t_list *cmd_with_args)
 	while (pivot)
 	{
 		var_name = (char *) pivot->content;
-		printf("var key to unset: %s\n", var_name);
 		node_to_delete = find_node_in_hashtable(var_name);
 		if (node_to_delete)
 			find_node_and_delete(g_tudao.hashtable[hash_string(var_name)],

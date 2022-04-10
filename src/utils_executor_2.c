@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/08 18:48:19 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/10 16:21:20 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,78 @@ void	process_executor(int total_pipes, int counter, t_command *cmd)
 	}
 }
 
-bool	execute_only_one_cmd(void)
+bool	execute_only_one_cmd(t_list *pipeline)
 {
-	t_list		*cmd_pivot;
 	t_command	*cmd;
 
-	cmd_pivot = g_tudao.command_table.main_pipeline;
-	cmd = (t_command *) cmd_pivot->content;
-	if (!cmd_pivot->next && is_built_in((char *)cmd->cmds_with_flags->content))
+	cmd = (t_command *) pipeline->content;
+	if (pipeline && !pipeline->next && cmd->cmds_with_flags
+		&& is_built_in((char *)cmd->cmds_with_flags->content)
+		&& alters_main_memory((char *)cmd->cmds_with_flags->content))
 	{
-		capture_redirections(0, cmd);
 		execute_built_in(cmd);
+		close_fds_by_cmd(cmd);
 		return (true);
 	}	
 	return (false);
+}
+
+void	create_outputs(t_command *cmd)
+{
+	t_list	*pivot;
+	int		fd;
+
+	pivot = cmd->outputs;
+	while (pivot)
+	{
+		if (access((char *) pivot->content, F_OK) == -1)
+		{
+			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+			if (pivot->next)
+				close(fd);
+			else
+				cmd->output_fd = fd;
+		}
+		pivot = pivot->next;
+	}
+	return ;
+}
+
+void	create_o_concats(t_command *cmd)
+{
+	t_list	*pivot;
+	int		fd;
+
+	pivot = cmd->o_concats;
+	while (pivot)
+	{
+		if (access((char *) pivot->content, F_OK) == -1)
+		{
+			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_APPEND,
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+			if (pivot->next)
+				close(fd);
+			else
+				cmd->o_concat_fd = fd;
+		}
+		pivot = pivot->next;
+	}
+	return ;
+}
+
+void	create_new_files(t_list *pipeline)
+{
+	t_command	*cmd;
+	t_list		*pivot;
+
+	pivot = pipeline;
+	while (pivot)
+	{
+		cmd = ((t_command *)pivot->content);
+		create_outputs(cmd);
+		create_o_concats(cmd);
+		pivot = pivot->next;
+	}
+	return ;
 }
