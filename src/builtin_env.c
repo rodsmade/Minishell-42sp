@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:53:54 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/10 23:58:11 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 00:00:17 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	builtin_env(t_list	*cmd_with_flags)
 	if (cmd_with_flags->next)
 	{
 		ft_putendl_fd(ft_strjoin_3("env: ‘",
-		(char *) cmd_with_flags->next->content,
-		"’: No such file or directory"), 2);
+				(char *) cmd_with_flags->next->content,
+				"’: No such file or directory"), 2);
 		return ;
 	}
 	i = -1;
