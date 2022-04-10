@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/10 17:13:38 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/10 23:02:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	iterate_lst_to_export(t_list *lst)
 	pair = NULL;
 	while (tmp != NULL)
 	{
-		if ((check_key((char *)tmp->content)) == true)
+		if (is_valid_identifier((char *)tmp->content))
 		{
 			if (generate_pair((char *)tmp->content, &pair))
 				insert_or_update_hashtable(pair, 1, &g_tudao.hashtable);

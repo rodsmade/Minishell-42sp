@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 19:52:12 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/10 23:01:33 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void			expand_wildcards(void);
 
 //utils_export.c
 int				value_len(char *line_read);
-int				check_key(char *key_value);
+int				is_valid_identifier(char *key_value);
 int				key_len(char *key_value);
 void			print_exported_vars(void);
 void			concat_and_free(char **pair, char *s1, char *s2, char *s3);
