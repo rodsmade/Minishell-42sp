@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 23:25:43 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/10 16:20:12 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	set_up_main_pipeline(void)
 	{
 		command = malloc(sizeof(t_command));
 		if (!command)
-			ft_putendl_fd("[ERROR] deu ruim o malloc ajustar isso aqui depois", 2);
+			ft_putendl_fd("[ERROR] deu ruim o malloc ajustar aqui depois", 2);
 		init_command(command);
 		capture_command(command, &pivot);
 		ft_lst_add_back(&g_tudao.command_table.main_pipeline,

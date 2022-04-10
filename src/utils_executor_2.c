@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/09 22:59:03 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/10 16:21:20 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ bool	execute_only_one_cmd(t_list *pipeline)
 	return (false);
 }
 
-void	create_outputs(t_command * cmd)
+void	create_outputs(t_command *cmd)
 {
 	t_list	*pivot;
 	int		fd;
+
 	pivot = cmd->outputs;
 	while (pivot)
 	{
@@ -69,7 +70,7 @@ void	create_outputs(t_command * cmd)
 	return ;
 }
 
-void	create_o_concats(t_command * cmd)
+void	create_o_concats(t_command *cmd)
 {
 	t_list	*pivot;
 	int		fd;
@@ -88,7 +89,7 @@ void	create_o_concats(t_command * cmd)
 		}
 		pivot = pivot->next;
 	}
-	return ;	
+	return ;
 }
 
 void	create_new_files(t_list *pipeline)

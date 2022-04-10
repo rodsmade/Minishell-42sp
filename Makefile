@@ -32,6 +32,7 @@ FILES			=	builtin_cd.c \
 					builtin_var_assignment.c \
 					executor.c \
 					exit_routines_2.c \
+					exit_routines_3.c \
 					exit_routines.c \
 					expansor.c \
 					hashtable.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 22:47:12 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/10 17:24:48 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,18 +118,20 @@ void			capture_redirections(int cmd_counter, t_command *cmd);
 void			execute_built_in(t_command *command);
 
 // exit_routines.c
-void			free_env_var(void *element);
-void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
-void			print_syntax_error_exit(char *token);
 void			close_std_fds(void);
-void			free_g_tudao(void);
+void			close_fds_by_cmd(t_command *command);
+void			close_and_free_pipes(void);
 
 // exit_routines_2.c
 void			free_t_command_list(t_list *lst);
-void			free_t_command(t_command *cmd);
 void			free_main_pipeline(void);
-void			close_and_free_pipes(void);
 void			free_and_exit_fork(char *err_msg);
+void			free_env_var(void *element);
+void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
+
+// exit_routines_3.c
+void			print_syntax_error_exit(char *token);
+void			free_g_tudao(void);
 
 // expansor.c
 void			expand_tokens(void);
@@ -187,7 +189,6 @@ void			concat_and_free(char **pair, char *s1, char *s2, char *s3);
 
 //utils_export_2.c
 void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
-void			close_fds_by_cmd(t_command *command);
 
 // utils_file_check.c
 void			check_file_exists(char *file_name);
