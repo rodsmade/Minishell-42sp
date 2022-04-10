@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:15:11 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 23:02:41 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/10 23:12:11 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_lst_free_node(t_list *node)
 	return ;
 }
 
-void	find_node_and_delete(t_list *hashtable_pvt, t_list *node_to_delete,
+void	delete_node(t_list *hashtable_pvt, t_list *node_to_delete,
 	char *var_name)
 {
 	if (hashtable_pvt == node_to_delete)
@@ -57,11 +57,19 @@ void	builtin_unset(t_list *cmd_with_args)
 	while (pivot)
 	{
 		var_name = (char *) pivot->content;
-		node_to_delete = find_node_in_hashtable(var_name);
-		if (node_to_delete)
-			find_node_and_delete(g_tudao.hashtable[hash_string(var_name)],
-				node_to_delete, var_name);
+		if (is_valid_identifier(var_name))
+		{
+			node_to_delete = find_node_in_hashtable(var_name);
+			if (node_to_delete)
+				delete_node(g_tudao.hashtable[hash_string(var_name)],
+					node_to_delete, var_name);
+		}
+		else
+		{
+			ft_putendl_fd(ft_strjoin_3("minishell: unset: `", var_name,
+					"': not a valid identifier"), 2);
+			return ;
+		}
 		pivot = pivot->next;
 	}
-	return ;
 }
