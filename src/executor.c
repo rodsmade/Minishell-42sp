@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 22:36:53 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/10 22:44:57 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	send_to_execve(t_command *command)
 	cmd_path = find_cmd_path(cmd_arr[0]);
 	if (!cmd_path)
 	{
-		ft_putendl_fd(ft_strjoin_3("bash: ", cmd_arr[0], ": command not found"), 2);
+		ft_putendl_fd(ft_strjoin_3("bash: ",
+				cmd_arr[0], ": command not found"), 2);
 		ft_free_ptr((void *)&cmd_arr);
 		ft_close_pipe_fds(g_tudao.pipe_heredoc);
 		close_fds_by_cmd(command);
