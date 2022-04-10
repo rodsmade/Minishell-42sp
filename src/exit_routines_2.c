@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 17:26:01 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:52:22 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	free_t_command_list(t_list *lst)
 	}
 }
 
-void	free_main_pipeline(void)
+void	free_main_pipeline(t_list **pipeline)
 {
 	t_list		*lst;
 	t_list		*tmp;
 	t_command	*cmd;
 
-	lst = g_tudao.command_table.main_pipeline;
+	lst = *pipeline;
 	while (lst)
 	{
 		cmd = (t_command *) lst->content;
@@ -45,6 +45,7 @@ void	free_main_pipeline(void)
 		ft_free_ptr((void *)&(lst));
 		lst = tmp;
 	}
+	*pipeline = NULL;
 	return ;
 }
 
