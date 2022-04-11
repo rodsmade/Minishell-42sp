@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 19:16:55 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/11 21:42:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	capture_heredocs(t_command *cmd, int cmd_count)
 	int			pipe_fds[2];
 	t_data_hd	hd;
 	int			pid;
+	int			i;
 
 	init_heredoc_data(&hd, cmd, cmd_count);
 	while (hd.cursor)
@@ -57,6 +58,9 @@ void	capture_heredocs(t_command *cmd, int cmd_count)
 	}
 	write(g_tudao.pipe_heredoc[1], hd.str, ft_strlen(hd.str));
 	ft_free_ptr((void *)&(hd.str));
+	i = -1;
+	while (++i < hd.total_pipes)
+		ft_free_ptr((void *)&hd.aux_pipes[i]);
 	ft_free_ptr((void *)&(hd.aux_pipes));
 	return ;
 }
