@@ -48,6 +48,7 @@ FILES			=	builtin_cd.c \
 					utils_export_2.c \
 					utils_export.c \
 					utils_file_check.c \
+					utils_hashtable_2.c \
 					utils_hashtable.c \
 					utils_heredoc.c \
 					utils_lexer.c \
