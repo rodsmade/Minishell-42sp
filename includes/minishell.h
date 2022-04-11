@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 23:52:55 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:03:01 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ typedef struct s_env_var
 	int					is_env_var;
 }				t_env_var;
 
+typedef struct s_ext_routine
+{
+	char	*msg;
+	int		code;
+}		t_ext_routine;
+
 typedef struct s_command
 {
 	t_list	*cmds_with_flags;
@@ -68,7 +74,7 @@ typedef struct s_tudao
 	t_cmd_table		command_table;
 	int				**cmd_pipes;
 	int				pipe_heredoc[2];
-	int				return_code;
+	t_ext_routine	ext_routine;
 	bool			syntax_error;
 	bool			exit;
 }				t_tudao;
@@ -132,6 +138,7 @@ void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 // exit_routines_3.c
 void			print_syntax_error_exit(char *token);
 void			free_g_tudao(void);
+void			print_error_and_exit(int ext_code, char *msg);
 
 // expansor.c
 void			expand_tokens(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 19:52:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 10:45:35 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	display_cmd_prompt(void)
 void	repl(void)
 {
 	g_tudao.exit = false;
+	g_tudao.ext_routine.code = 0;
 	while (!g_tudao.exit)
 	{
 		init_tudao();

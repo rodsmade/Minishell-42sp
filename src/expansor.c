@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/29 21:55:56 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 12:46:35 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,32 @@ int	expand_variable(char **expanded_content, char *variable_to_expand)
 	char	*tmp;
 
 	size = 0;
+	if (!ft_strncmp(variable_to_expand, "?", 2))
+	{
+		env_var_value = ft_itoa(WEXITSTATUS(g_tudao.ext_routine.code));
+		*expanded_content = env_var_value;
+		return (1);
+	}
 	while (variable_to_expand[size] && is_valid_key_char(\
 	variable_to_expand[size]) && variable_to_expand[size] != '$')
 		size++;
-	key = ft_substr(variable_to_expand, 0, size);
-	env_var_value = read_hashtable(g_tudao.hashtable[hash_string(key)], key);
-	if (env_var_value != NULL)
+	if (size)
 	{
-		if (*expanded_content == NULL)
-			*expanded_content = ft_strdup(env_var_value);
-		else if (*expanded_content != NULL)
+		key = ft_substr(variable_to_expand, 0, size);
+		env_var_value = read_hashtable(g_tudao.hashtable[hash_string(key)], key);
+		if (env_var_value != NULL)
 		{
-			tmp = *expanded_content;
-			*expanded_content = ft_strjoin(tmp, env_var_value);
-			ft_free_ptr((void *)&tmp);
+			if (*expanded_content == NULL)
+				*expanded_content = ft_strdup(env_var_value);
+			else if (*expanded_content != NULL)
+			{
+				tmp = *expanded_content;
+				*expanded_content = ft_strjoin(tmp, env_var_value);
+				ft_free_ptr((void *)&tmp);
+			}
 		}
+		ft_free_ptr((void *)&key);
 	}
-	ft_free_ptr((void *)&key);
 	return (size);
 }
 

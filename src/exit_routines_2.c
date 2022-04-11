@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 19:52:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 12:30:36 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void	free_and_exit_fork(char *err_msg)
 	}
 	close_and_free_pipes();
 	free_g_tudao();
-	exit(1);
-	return ;
+	exit(g_tudao.ext_routine.code);
 }
 
 void	free_env_var(void *element)
