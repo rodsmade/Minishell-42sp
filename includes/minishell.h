@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 23:52:55 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 16:30:19 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void			builtin_env(t_list *cmd_with_flags);
 // builtin_exit.c
 void			builtin_exit(void);
 
-//builtin_export.c
+// builtin_export.c
 void			builtin_export(t_list *lst);
 
 // builtin_pwd.c
@@ -180,25 +180,28 @@ char			*ft_append_char(char *str, char c);
 int				is_valid_key_char(char c);
 void			expand_wildcards(void);
 
-//utils_export.c
+// utils_export.c
 int				value_len(char *line_read);
 int				is_valid_identifier(char *key_value);
 int				key_len(char *key_value);
 void			print_exported_vars(void);
 void			concat_and_free(char **pair, char *s1, char *s2, char *s3);
 
-//utils_export_2.c
+// utils_export_2.c
 void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
 
 // utils_file_check.c
 void			check_file_exists(char *file_name);
 void			check_file_has_permissions(char *file_name, int permissions);
 
-//utils_hashtable.c
+// utils_hashtable.c
 void			update_hashtable(char *key, char *new_value, int new_env_var);
 char			*read_hashtable(t_list *head, char *key);
 t_list			*find_node_in_hashtable(char *var_name);
 char			**hashtable_to_array(void);
+
+// utils_hashtable_2.c
+char			**split_key_and_value(char *string);
 
 // utils_heredoc.c
 void			init_heredoc_data(t_data_hd *hd, t_command *cmd, int cmd_count);
