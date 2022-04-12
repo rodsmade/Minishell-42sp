@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 17:09:07 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/12 23:26:33 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_syntax_error_exit(char *token);
 void			free_g_tudao(void);
 void			print_error_and_exit(int ext_code, char *msg);
+void			free_list(t_list *list);
 
 // expansor.c
 void			expand_tokens(void);
@@ -189,6 +190,10 @@ int				is_valid_key_char(char c);
 void			expand_wildcards(void);
 void			append_single_quotes(char *token_str, char **expanded_cont,
 					int *index);
+
+// utils_expansor_2.c
+void			substitute_token_by_sublist(char *expanded_str,
+					t_list **token_address);
 
 // utils_export.c
 int				value_len(char *line_read);
@@ -253,5 +258,6 @@ void			get_input_line(t_data_hd *hd, int *pipe_fds);
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_commands_and_redirects(void);
+void			print_token_lst(t_list *lst);
 
 #endif

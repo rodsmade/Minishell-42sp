@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 22:15:02 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/28 21:06:42 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/12 23:21:41 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,21 @@ void	print_commands_and_redirects(void)
 		pivot_cmd = pivot_cmd->next;
 	}
 	return ;
+}
+
+void	print_token_lst(t_list *lst)
+{
+	t_list	*pivot;
+
+	pivot = lst;
+	dprintf(2, ">> ");
+	while (pivot)
+	{
+		if (pivot->next)
+			dprintf(2, "{%s} ", (char *)pivot->content);
+		else
+			dprintf(2, "{%s}", (char *)pivot->content);
+		pivot = pivot->next;
+	}
+	dprintf(2, " <<\n");
 }

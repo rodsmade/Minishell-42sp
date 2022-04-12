@@ -13,14 +13,7 @@ LIBS			=	-lreadline -L $(PATH_LIBRARY) -lft
 
 DEBUG			=	-g3
 
-VALGRIND		=	valgrind --leak-check=full \
-					--show-leak-kinds=all \
-					--track-origins=yes \
-					--quiet \
-					--tool=memcheck \
-					--suppressions=readline.supp \
-					--keep-debuginfo=yes \
-					--track-fds=yes
+VALGRIND		=	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --tool=memcheck --suppressions=readline.supp --keep-debuginfo=yes --track-fds=yes
 
 FILES			=	builtin_cd.c \
 					builtin_echo.c \
@@ -41,9 +34,10 @@ FILES			=	builtin_cd.c \
 					minishell.c \
 					parser.c \
 					utils_env_vars.c \
-					utils_executor.c \
 					utils_executor_2.c \
 					utils_executor_3.c \
+					utils_executor.c \
+					utils_expansor_2.c \
 					utils_expansor.c \
 					utils_export_2.c \
 					utils_export.c \

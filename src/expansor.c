@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 17:50:37 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/12 23:43:16 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,19 +107,27 @@ void	expand_dollar_sign(t_list *token)
 			break ;
 	}
 	ft_free_ptr((void *)&token->content);
-	token->content = expanded_cont;
+	// token->content = expanded_cont;
+	dprintf(2, "current token inside expand dollar sign: {%s}\n", (char *) token->content);
+	dprintf(2, "current expanded content: >>%s<<\n", expanded_cont);
+	substitute_token_by_sublist(expanded_cont, &token);
 }
 
 void	expand_tokens(void)
 {
 	t_list	*pivot;
 
+	dprintf(2, "token list antes:");
+	print_token_lst(g_tudao.token_list);
 	pivot = g_tudao.token_list;
 	while (pivot)
 	{
+		dprintf(2, "current token: {%s}\n", (char *) pivot->content);
 		expand_dollar_sign(pivot);
 		expand_wildcards();
 		pivot = pivot->next;
 	}
 	remove_null_nodes_from_token_list();
+	dprintf(2, "token list depois:");
+	print_token_lst(g_tudao.token_list);
 }
