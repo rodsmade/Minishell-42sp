@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/11 17:20:39 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/11 19:53:51 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	process_executor(int total_pipes, int counter, t_command *cmd)
 {
 	int	pid;
 
+	g_tudao.is_forked = true;
 	pid = fork();
 	if (pid == -1)
 		print_error_and_exit(1, ft_strdup("Error: forking executor"));

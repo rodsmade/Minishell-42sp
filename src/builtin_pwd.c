@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:22:34 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/11 17:03:59 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/11 18:13:55 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	builtin_pwd(void)
 	}
 	else
 	{
-		ft_putendl_fd(curr_path, 1);
 		g_tudao.ext_routine.code = 0;
+		ft_putendl_fd(curr_path, 1);
 	}
 	ft_free_ptr((void *)&curr_path);
 	return ;

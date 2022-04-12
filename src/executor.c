@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 17:25:42 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/12 01:00:47 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	send_to_execve(t_command *command)
 	if (!cmd_path)
 	{
 		g_tudao.ext_routine.msg = \
-		ft_strjoin_3("bash: ", cmd_arr[0], ": No such file or directory");
+		ft_strjoin_3("minishell: ", cmd_arr[0], ": command not found");
 		g_tudao.ext_routine.code = 127;
 		flag = 1;
 	}
@@ -48,32 +48,41 @@ void	execute_built_in(t_command *command)
 	built_in_str = (char *) cmd_lst->content;
 	if (ft_strncmp(built_in_str, "pwd", 4) == 0)
 		builtin_pwd();
-	if (ft_strncmp(built_in_str, "cd", 3) == 0)
+	else if (ft_strncmp(built_in_str, "cd", 3) == 0)
 		builtin_cd(cmd_lst);
-	if (ft_strncmp(built_in_str, "echo", 5) == 0)
+	else if (ft_strncmp(built_in_str, "echo", 5) == 0)
 		builtin_echo(cmd_lst);
-	if (ft_strncmp(built_in_str, "env", 4) == 0)
+	else if (ft_strncmp(built_in_str, "env", 4) == 0)
 		builtin_env(cmd_lst);
-	if (ft_strncmp(built_in_str, "exit", 5) == 0)
+	else if (ft_strncmp(built_in_str, "exit", 5) == 0)
 		builtin_exit();
-	if (ft_strncmp(built_in_str, "export", 7) == 0)
+	else if (ft_strncmp(built_in_str, "export", 7) == 0)
 		builtin_export(cmd_lst);
-	if (ft_strncmp(built_in_str, "unset", 6) == 0)
+	else if (ft_strncmp(built_in_str, "unset", 6) == 0)
 		builtin_unset(cmd_lst);
 	return ;
 }
 
 void	execute_command(t_command *cmd)
 {
-	if (is_built_in(cmd->cmds_with_flags->content))
+	if (cmd->cmds_with_flags)
 	{
-		execute_built_in(cmd);
+		if (is_built_in(cmd->cmds_with_flags->content))
+		{
+			execute_built_in(cmd);
+			ft_close_pipe_fds(g_tudao.pipe_heredoc);
+			close_fds_by_cmd(cmd);
+			free_and_exit_fork(g_tudao.ext_routine.msg);
+		}
+		else
+			send_to_execve(cmd);
+	}
+	else
+	{
 		ft_close_pipe_fds(g_tudao.pipe_heredoc);
 		close_fds_by_cmd(cmd);
 		free_and_exit_fork(g_tudao.ext_routine.msg);
 	}
-	else
-		send_to_execve(cmd);
 	return ;
 }
 
@@ -122,6 +131,4 @@ void	execute_pipeline(t_list *pipeline)
 		}
 		close_and_free_pipes();
 	}
-	dprintf(2, ">: OLDPWD code %d\n", g_tudao.ext_routine.code);
-	add_heredocs_to_history();
 }
