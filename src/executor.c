@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 02:47:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/12 02:59:08 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,6 @@ void	execute_built_in(t_command *command)
 	return ;
 }
 
-// void	execute_command(t_command *cmd)
-// {
-// 	// if (cmd->cmds_with_flags)
-// 	// {
-// 		if (is_built_in(cmd->cmds_with_flags->content))
-// 		{
-// 			execute_built_in(cmd);
-// 			ft_close_pipe_fds(g_tudao.pipe_heredoc);
-// 			close_fds_by_cmd(cmd);
-// 			free_and_exit_fork(NULL);
-// 		}
-// 		else
-// 			send_to_execve(cmd);
-// 	// }
-// 	return ;
-// }
-
 void	execute_command(t_command *cmd)
 {
 	if (cmd->cmds_with_flags)
@@ -91,8 +74,7 @@ void	execute_command(t_command *cmd)
 			execute_built_in(cmd);
 			ft_close_pipe_fds(g_tudao.pipe_heredoc);
 			close_fds_by_cmd(cmd);
-			// free_and_exit_fork(g_tudao.ext_routine.msg);
-			free_and_exit_fork(ft_strdup("saiu ae"));
+			free_and_exit_fork(g_tudao.ext_routine.msg);
 		}
 		else
 			send_to_execve(cmd);
@@ -101,11 +83,11 @@ void	execute_command(t_command *cmd)
 	{
 		ft_close_pipe_fds(g_tudao.pipe_heredoc);
 		close_fds_by_cmd(cmd);
-		// free_and_exit_fork(g_tudao.ext_routine.msg);
-		free_and_exit_fork(ft_strdup("saiu ae"));
+		free_and_exit_fork(g_tudao.ext_routine.msg);
 	}
 	return ;
 }
+
 void	capture_redirections(int cmd_counter, t_command *cmd)
 {
 	int	total_pipes;
@@ -145,10 +127,7 @@ void	execute_pipeline(t_list *pipeline)
 		while (cmd_pivot)
 		{
 			cmd = (t_command *) cmd_pivot->content;
-			printf("vai entrar no process executor\n");
-			if (cmd->cmds_with_flags)
-				process_executor(total_pipes, ++counter, cmd);
-			printf("saiu do process executor\n");
+			process_executor(total_pipes, ++counter, cmd);
 			close_fds_by_cmd(cmd);
 			cmd_pivot = cmd_pivot->next;
 		}
