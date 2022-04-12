@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/10 16:21:20 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 19:53:51 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ void	process_executor(int total_pipes, int counter, t_command *cmd)
 {
 	int	pid;
 
+	g_tudao.is_forked = true;
 	pid = fork();
 	if (pid == -1)
-		ft_putendl_fd("Error while forking", 2);
+		print_error_and_exit(1, ft_strdup("Error: forking executor"));
 	else if (pid == 0)
 	{
 		capture_redirections(counter, cmd);
@@ -26,7 +27,7 @@ void	process_executor(int total_pipes, int counter, t_command *cmd)
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &g_tudao.ext_routine.code, 0);
 		if (counter != total_pipes)
 			close(g_tudao.cmd_pipes[counter][1]);
 	}
@@ -43,6 +44,11 @@ bool	execute_only_one_cmd(t_list *pipeline)
 	{
 		execute_built_in(cmd);
 		close_fds_by_cmd(cmd);
+		if (g_tudao.ext_routine.msg)
+		{
+			ft_putendl_fd(g_tudao.ext_routine.msg, 2);
+			ft_free_ptr((void *)&g_tudao.ext_routine.msg);
+		}
 		return (true);
 	}	
 	return (false);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 18:45:03 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 01:26:09 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 16:12:17 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,20 @@ char	*find_cmd_path(char *command_str)
 	if (has_absolute_path(command_str))
 	{
 		if (access(command_str, F_OK) == 0)
-			return (command_str);
+		{
+			if (access(command_str, X_OK) == 0)
+			{
+				g_tudao.ext_routine.msg = ft_strjoin_3("bash: ", command_str, \
+				": Is a directory");
+				return (command_str);
+			}
+			else
+			{
+				g_tudao.ext_routine.msg = ft_strjoin_3("bash: ", command_str, \
+				": Permission denied");
+				return (command_str);
+			}
+		}
 		else
 			return (NULL);
 	}

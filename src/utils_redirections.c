@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 21:42:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 18:15:17 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 02:59:08 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/12 01:00:47 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,26 @@ void	send_to_execve(t_command *command)
 	char	**cmd_arr;
 	char	*cmd_path;
 	char	**hashtable_arr;
+	int		flag;
 
 	cmd_arr = assemble_cmd_array(command);
 	cmd_path = find_cmd_path(cmd_arr[0]);
+	hashtable_arr = hashtable_to_array();
+	flag = 0;
 	if (!cmd_path)
 	{
-		ft_putendl_fd(ft_strjoin_3("bash: ",
-				cmd_arr[0], ": command not found"), 2);
-		ft_free_ptr((void *)&cmd_arr);
-		ft_close_pipe_fds(g_tudao.pipe_heredoc);
-		close_fds_by_cmd(command);
-		free_and_exit_fork(NULL);
+		g_tudao.ext_routine.msg = \
+		ft_strjoin_3("minishell: ", cmd_arr[0], ": command not found");
+		g_tudao.ext_routine.code = 127;
+		flag = 1;
 	}
-	hashtable_arr = hashtable_to_array();
-	if (execve(cmd_path, cmd_arr, hashtable_arr) == -1)
-	{
-		ft_free_ptr((void *)&cmd_arr);
-		ft_putendl_fd("couldn't execute", 2);
-		ft_free_arr((void *)&hashtable_arr);
-		ft_close_pipe_fds(g_tudao.pipe_heredoc);
-		close_fds_by_cmd(command);
-		free_and_exit_fork(NULL);
-	}
+	if (!flag && execve(cmd_path, cmd_arr, hashtable_arr) == -1)
+		g_tudao.ext_routine.code = 126;
+	ft_free_ptr((void *)&cmd_arr);
+	ft_close_pipe_fds(g_tudao.pipe_heredoc);
+	close_fds_by_cmd(command);
+	ft_free_arr((void *)&hashtable_arr);
+	free_and_exit_fork(g_tudao.ext_routine.msg);
 }
 
 void	execute_built_in(t_command *command)
@@ -50,17 +48,17 @@ void	execute_built_in(t_command *command)
 	built_in_str = (char *) cmd_lst->content;
 	if (ft_strncmp(built_in_str, "pwd", 4) == 0)
 		builtin_pwd();
-	if (ft_strncmp(built_in_str, "cd", 3) == 0)
+	else if (ft_strncmp(built_in_str, "cd", 3) == 0)
 		builtin_cd(cmd_lst);
-	if (ft_strncmp(built_in_str, "echo", 5) == 0)
+	else if (ft_strncmp(built_in_str, "echo", 5) == 0)
 		builtin_echo(cmd_lst);
-	if (ft_strncmp(built_in_str, "env", 4) == 0)
+	else if (ft_strncmp(built_in_str, "env", 4) == 0)
 		builtin_env(cmd_lst);
-	if (ft_strncmp(built_in_str, "exit", 5) == 0)
+	else if (ft_strncmp(built_in_str, "exit", 5) == 0)
 		builtin_exit();
-	if (ft_strncmp(built_in_str, "export", 7) == 0)
+	else if (ft_strncmp(built_in_str, "export", 7) == 0)
 		builtin_export(cmd_lst);
-	if (ft_strncmp(built_in_str, "unset", 6) == 0)
+	else if (ft_strncmp(built_in_str, "unset", 6) == 0)
 		builtin_unset(cmd_lst);
 	return ;
 }
@@ -116,7 +114,7 @@ void	execute_pipeline(t_list *pipeline)
 
 	create_new_files(pipeline);
 	if (pipe(g_tudao.pipe_heredoc) == -1)
-		ft_putendl_fd("Error trying to create pipe g_tudao.pipe_heredoc", 2);
+		print_error_and_exit(1, ft_strdup("Error: pipe heredoc"));
 	if (!execute_only_one_cmd(pipeline))
 	{
 		cmd_pivot = pipeline;
@@ -133,5 +131,4 @@ void	execute_pipeline(t_list *pipeline)
 		}
 		close_and_free_pipes();
 	}
-	add_heredocs_to_history();
 }

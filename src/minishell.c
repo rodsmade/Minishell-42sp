@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 19:52:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/12 15:39:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,6 @@ void	display_cmd_prompt(void)
 	curr_path = getcwd(NULL, 0);
 	prompt = ft_strjoin(curr_path, " $ ");
 	g_tudao.prompt_input = readline(prompt);
-	if (ft_strncmp(g_tudao.prompt_input, "quit", 5) == 0)
-	{
-		g_tudao.exit = true;
-		ft_free_ptr((void *)&prompt);
-		ft_free_ptr((void *)&curr_path);
-		return ;
-	}
 	lexer_line(g_tudao.prompt_input);
 	expand_tokens();
 	parse_tokens();
@@ -73,14 +66,21 @@ void	display_cmd_prompt(void)
 void	repl(void)
 {
 	g_tudao.exit = false;
+	g_tudao.is_forked = false;
+	g_tudao.ext_routine.code = 0;
 	while (!g_tudao.exit)
 	{
 		init_tudao();
 		display_cmd_prompt();
+		g_tudao.is_forked = false;
 		if (g_tudao.prompt_input && g_tudao.token_list
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
 			&& !g_tudao.exit)
+		{
+			g_tudao.ext_routine.code = 0;
 			execute_pipeline(g_tudao.command_table.main_pipeline);
+		}
+		add_heredocs_to_history();
 		add_history(g_tudao.prompt_input);
 		free_lexer();
 		free_main_pipeline(&g_tudao.command_table.main_pipeline);

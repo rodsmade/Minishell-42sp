@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 17:22:33 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 19:52:09 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 13:48:42 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,20 @@ void	free_g_tudao(void)
 	free_main_pipeline(&g_tudao.command_table.main_pipeline);
 	close_std_fds();
 	return ;
+}
+
+void	print_error_and_exit(int ext_code, char *msg)
+{
+	if (ext_code >= 0)
+	{
+		if (msg)
+		{
+			ft_putendl_fd(msg, 2);
+			ft_free_ptr((void *)&msg);
+		}
+		g_tudao.ext_routine.code = ext_code;
+		exit(g_tudao.ext_routine.code);
+	}
+	ft_putendl_fd("Not a valid return code", 2);
+	exit(EXIT_FAILURE);
 }
