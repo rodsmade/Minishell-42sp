@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 23:54:12 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/12 02:59:08 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,24 @@ void	execute_built_in(t_command *command)
 
 void	execute_command(t_command *cmd)
 {
-	if (is_built_in(cmd->cmds_with_flags->content))
+	if (cmd->cmds_with_flags)
 	{
-		execute_built_in(cmd);
-		ft_close_pipe_fds(g_tudao.pipe_heredoc);
-		close_fds_by_cmd(cmd);
-		free_and_exit_fork(NULL);
+		if (is_built_in(cmd->cmds_with_flags->content))
+		{
+			execute_built_in(cmd);
+			ft_close_pipe_fds(g_tudao.pipe_heredoc);
+			close_fds_by_cmd(cmd);
+			free_and_exit_fork(g_tudao.ext_routine.msg);
+		}
+		else
+			send_to_execve(cmd);
 	}
 	else
-		send_to_execve(cmd);
+	{
+		ft_close_pipe_fds(g_tudao.pipe_heredoc);
+		close_fds_by_cmd(cmd);
+		free_and_exit_fork(g_tudao.ext_routine.msg);
+	}
 	return ;
 }
 
