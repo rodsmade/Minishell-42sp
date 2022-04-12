@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 22:25:12 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/12 15:39:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,6 @@ void	display_cmd_prompt(void)
 	curr_path = getcwd(NULL, 0);
 	prompt = ft_strjoin(curr_path, " $ ");
 	g_tudao.prompt_input = readline(prompt);
-	if (ft_strncmp(g_tudao.prompt_input, "quit", 5) == 0)
-	{
-		g_tudao.exit = true;
-		ft_free_ptr((void *)&prompt);
-		ft_free_ptr((void *)&curr_path);
-		return ;
-	}
 	lexer_line(g_tudao.prompt_input);
 	expand_tokens();
 	parse_tokens();
