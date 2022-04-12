@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:27:16 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 17:36:25 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/11 21:31:23 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void	process_heredoc_position(t_data_hd *hd, int pipe_fd)
 {
 	if (!hd->cursor->next)
 		dup2(pipe_fd, STDIN_FILENO);
-	else
-		close(pipe_fd);
+	close(pipe_fd);
 	hd->cursor = hd->cursor->next;
 	hd->counter++;
 }

@@ -43,6 +43,7 @@ void	capture_heredocs(t_command *cmd, int cmd_count)
 	int			pipe_fds[2];
 	t_data_hd	hd;
 	int			pid;
+	int			i;
 
 	init_heredoc_data(&hd, cmd, cmd_count);
 	while (hd.cursor)
@@ -57,6 +58,9 @@ void	capture_heredocs(t_command *cmd, int cmd_count)
 	}
 	write(g_tudao.pipe_heredoc[1], hd.str, ft_strlen(hd.str));
 	ft_free_ptr((void *)&(hd.str));
+	i = -1;
+	while (++i < hd.total_pipes)
+		ft_free_ptr((void *)&hd.aux_pipes[i]);
 	ft_free_ptr((void *)&(hd.aux_pipes));
 	return ;
 }
