@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/13 19:37:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/13 19:47:56 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,14 @@ void	expand_tokens(t_list *token_list)
 	pivot = token_list;
 	while (pivot)
 	{
-		expand_dollar_sign(pivot);
-		expand_wildcards();
+		if (is_expansible(pivot) == true)
+		 {
+			dprintf(2, ">>%s<< is expansible\n", (char *)pivot->content);
+			expand_dollar_sign(pivot);
+			expand_wildcards();
+		 }
+		 else
+		 	dprintf(2, ">>%s<< is not expansible\n", (char *)pivot->content);
 		pivot = pivot->next;
 	}
 	remove_null_nodes_from_token_list();

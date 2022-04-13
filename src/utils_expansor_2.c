@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/13 19:41:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/13 19:48:23 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,38 @@ void	substitute_token_by_sublist(char *expanded_str, t_list **token_address)
 	ft_lst_last(*token_address)->next = temp_next;
 
 	ft_free_ptr((void *)&new_token_sublist);
+}
+
+bool	is_expansible(t_list *token)
+{
+	char	*content;
+	int		i;
+
+	content = (char *)token->content;
+	i = 0;
+	while (content[i])
+	{
+		if (content[i] && content[i] == '\'')
+		{
+			i++;
+			while (content[i] && content[i] != '\'')
+				i++;
+		}
+		else if (content[i] && content[i] == '\"')
+		{
+			i++;
+			while (content[i] && content[i] != '\"')
+			{
+				if (content[i] == '$')
+					return (true);
+				else
+					i++;
+			}
+		}
+		else if (content[i] && content[i] == '$')
+			return (true);
+		if (content[i])
+			i++;
+	}
+	return (false);
 }

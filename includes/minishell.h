@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/13 19:32:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/13 19:48:52 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ void			append_single_quotes(char *token_str, char **expanded_cont,
 // utils_expansor_2.c
 void			substitute_token_by_sublist(char *expanded_str,
 					t_list **token_address);
+bool			is_expansible(t_list *token);
 
 // utils_export.c
 int				value_len(char *line_read);
