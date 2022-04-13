@@ -6,13 +6,13 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/13 17:33:31 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/13 18:05:28 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	jump_whitespaces(char* string)
+static int	jump_whitespaces(char *string)
 {
 	int	i;
 
@@ -59,49 +59,38 @@ void	substitute_token_by_sublist(char *expanded_str, t_list **token_address)
 		return ;
 	temp_next = (*token_address)->next;
 	new_token_sublist = create_sublist(expanded_str);
-
 	if (!new_token_sublist)
 		return ;
-
 	ft_free_ptr((void *)&(*token_address)->content);
 	(*token_address)->content = new_token_sublist->content;
 	(*token_address)->next = new_token_sublist->next;
-
-	// FAZER OPERAÇÃO DO UTIMO ELEMENTO
 	ft_lst_last(*token_address)->next = temp_next;
-
 	ft_free_ptr((void *)&new_token_sublist);
 }
 
-bool	is_expansible(t_list *token)
+bool	is_expansible(char *token_content)
 {
-	char	*content;
 	int		i;
 
-	content = (char *)token->content;
 	i = 0;
-	while (content[i])
+	while (token_content[i])
 	{
-		if (content[i] && content[i] == '\'')
+		if (token_content[i] && token_content[i] == '\'')
 		{
 			i++;
-			while (content[i] && content[i] != '\'')
+			while (token_content[i] && token_content[i] != '\'')
 				i++;
 		}
-		else if (content[i] && content[i] == '\"')
+		else if (token_content[i] && token_content[i] == '\"')
 		{
 			i++;
-			while (content[i] && content[i] != '\"')
-			{
-				if (content[i] == '$')
+			while (token_content[i] && token_content[i] != '\"')
+				if (token_content[i++] == '$')
 					return (true);
-				else
-					i++;
-			}
 		}
-		else if (content[i] && content[i] == '$')
+		else if (token_content[i] && token_content[i] == '$')
 			return (true);
-		if (content[i])
+		if (token_content[i])
 			i++;
 	}
 	return (false);
