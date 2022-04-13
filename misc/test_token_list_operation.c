@@ -52,11 +52,8 @@ t_list	*create_sublist(char *string)
 	char	*token_content;
 	int		i;
 
-	if (string[0] == '\0')
-	{
-		dprintf(2, "bingo\n");
+	if (!string || string[0] == '\0')
 		return (ft_lst_new((void *) NULL));
-	}
 	sublist = NULL;
 	token_content = NULL;
 	i = -1;
@@ -93,14 +90,13 @@ void	substitute_token_by_sublist(char *string_to_be_broken_into_tokens, t_list *
 	dprintf(2, "new token sublist: ");
 	print_token_lst(new_token_sublist);
 
-	// proteger caso a sublist seja = NULL;
-
+	ft_free_ptr((void *)&(*token_address)->content);
 	(*token_address)->content = new_token_sublist->content;
 	(*token_address)->next = new_token_sublist->next;
 
 	// FAZER OPERAÇÃO DO UTIMO ELEMENTO
 	dprintf(2, "last element content: %s\n", (char *) ft_lst_last(new_token_sublist)->content);
-	dprintf(2, "next_temp content: %s\n", (char *) temp_next->content);
+	// dprintf(2, "next_temp content: %s\n", (char *) temp_next->content);
 	ft_lst_last(*token_address)->next = temp_next;
 
 	ft_free_ptr((void *)&new_token_sublist);
@@ -125,7 +121,7 @@ int main(void)
 
 	g_tudao_token_list = NULL;
 	ft_lst_add_back(&g_tudao_token_list, ft_lst_new((void *)ft_strdup("aaa")));
-	ft_lst_add_back(&g_tudao_token_list, ft_lst_new((void *)ft_strdup("bbb")));
+	ft_lst_add_back(&g_tudao_token_list, ft_lst_new((void *)ft_strdup("$bbb")));
 	ft_lst_add_back(&g_tudao_token_list, ft_lst_new((void *)ft_strdup("ccc")));
 	ft_lst_add_back(&g_tudao_token_list, ft_lst_new((void *)ft_strdup("ddd")));
 	ft_lst_add_back(&g_tudao_token_list, ft_lst_new((void *)ft_strdup("eee")));
@@ -135,7 +131,7 @@ int main(void)
 	dprintf(2, "token list before: ");
 	print_token_lst(g_tudao_token_list);
 
-	substitute_token_by_sublist("", &pivot);
+	substitute_token_by_sublist("", &pivot->next);
 
 	dprintf(2, "token list after: ");
 	print_token_lst(g_tudao_token_list);

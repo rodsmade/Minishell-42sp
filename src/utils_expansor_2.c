@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 23:31:31 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/13 19:41:15 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static t_list	*create_sublist(char *string)
 	char	*token_content;
 	int		i;
 
+	if (!string || string[0] == '\0')
+		return (ft_lst_new((void *) NULL));
 	sublist = NULL;
 	token_content = NULL;
 	i = -1;
@@ -51,15 +53,22 @@ static t_list	*create_sublist(char *string)
 void	substitute_token_by_sublist(char *expanded_str, t_list **token_address)
 {
 	t_list	*new_token_sublist;
+	t_list	*temp_next;
 
+	if (!*token_address)
+		return ;
+	temp_next = (*token_address)->next;
 	new_token_sublist = create_sublist(expanded_str);
-	// dprintf(2, "new token sublist: ");
-	print_token_lst(new_token_sublist);
-	if (*token_address)
-	{
-		ft_lst_last(new_token_sublist)->next = (*token_address)->next;
-		ft_free_ptr((void *)&((*token_address)->content));
-	}
-	ft_free_ptr((void *)token_address);
-	*token_address = new_token_sublist;
+
+	if (!new_token_sublist)
+		return ;
+
+	ft_free_ptr((void *)&(*token_address)->content);
+	(*token_address)->content = new_token_sublist->content;
+	(*token_address)->next = new_token_sublist->next;
+
+	// FAZER OPERAÇÃO DO UTIMO ELEMENTO
+	ft_lst_last(*token_address)->next = temp_next;
+
+	ft_free_ptr((void *)&new_token_sublist);
 }

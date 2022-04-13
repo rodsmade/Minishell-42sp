@@ -3,139 +3,125 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 23:22:48 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/13 02:13:32 by afaustin         ###   ########.fr       */
+/*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
+/*   Updated: 2022/04/13 19:37:49 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_expansible(t_list *token)
+void	exp_common_var(char **exp_content, char *var_to_expand, int size)
 {
-	char	*content;
-	int		i;
+	char	*key;
+	char	*env_var_value;
+	char	*tmp;
 
-	content = (char *)token->content;
-	i = 0;
-	while (content[i])
+	if (size)
 	{
-		if (content[i] && content[i] == '\'')
+		key = ft_substr(var_to_expand, 0, size);
+		env_var_value = \
+		read_hashtable(g_tudao.hashtable[hash_string(key)], key);
+		if (env_var_value != NULL)
 		{
-			i++;
-			while (content[i] && content[i] != '\'')
-				i++;
-		}
-		else if (content[i] && content[i] == '\"')
-		{
-			i++;
-			while (content[i] && content[i] != '\"')
+			if (*exp_content == NULL)
+				*exp_content = ft_strdup(env_var_value);
+			else if (*exp_content != NULL)
 			{
-				if (content[i] == '$')
-					return (true);
-				else
-					i++;
+				tmp = *exp_content;
+				*exp_content = ft_strjoin(tmp, env_var_value);
+				ft_free_ptr((void *)&tmp);
 			}
 		}
-		else if (content[i] && content[i] == '$')
-			return (true);
-		if (content[i])
-			i++;
+		ft_free_ptr((void *)&key);
 	}
-	return (false);
 }
 
-char	*get_exp_content(char *content)
+int	expand_variable(char **expanded_content, char *variable_to_expand)
 {
-	char	*exp_content;
-	int		i;
-	
-	i = 0;
-	exp_content = NULL;
-	while (content[i])
+	int		size;
+	char	*env_var_value;
+	char	*temp;
+
+	size = 0;
+	if (variable_to_expand[0] == '?')
 	{
-		if (content[i] == '\'')
-		{
-			i++;
-			while (content[i] && content[i] != '\'')
-			{
-				ft_append_char(exp_content, content[i]);
-				i++;
-			}
-		}
-		else if (content[i] && content[i] == '\"')
-		{
-			i++;
-			while (content[i] && content[i] != '\"')
-			{
-				if (content[i] == '$' && content[i + 1])
-					/* TO DO:
-						-> Buscar um valor de acordo com uma chave
-						-> Caso existam caracteres depois do '$' estes serão a chave
-						-> O index deverá avançar de acordo com o tamanho da chave
-					*/
-					dprintf(2, "Get_key_value\n");
-				else
-				{
-					ft_append_char(exp_content, content[i]);
-					i++;
-				}
-			}
-		}
-		else if (content[i] && content[i] == '$' && content[i + 1])
-			/* TO DO:
-				-> Buscar um valor de acordo com uma chave
-				-> Caso existam caracteres depois do '$' estes serão a chave
-				-> O index deverá avançar de acordo com o tamanho da chave
-			*/	
-			dprintf(2, "Get_key_value\n");
-		if (content[i])
-		{
-			ft_append_char(exp_content, content[i]);
-			i++;
-		}
+		if (g_tudao.is_forked == false)
+			env_var_value = ft_itoa(g_tudao.ext_routine.code);
+		else if (g_tudao.is_forked == true)
+			env_var_value = ft_itoa(WEXITSTATUS(g_tudao.ext_routine.code));
+		temp = *expanded_content;
+		*expanded_content = ft_strjoin(temp, env_var_value);
+		ft_free_ptr((void *)&temp);
+		ft_free_ptr((void *)&env_var_value);
+		return (1);
 	}
-	return (exp_content);
+	else
+	{
+		while (variable_to_expand[size] && is_valid_key_char(\
+		variable_to_expand[size]) && variable_to_expand[size] != '$')
+			size++;
+		exp_common_var(expanded_content, variable_to_expand, size);
+		return (size);
+	}
 }
 
-t_list	*expand_dollar_sign(t_list **head, t_list *token)
+void	treat_db_quote(char *token_content, char **expanded_content, int *index)
 {
-	char	*expanded_content;
+	int	i;
 
-	expanded_content =  get_exp_content((char *)token->content);
-	/* TO DO:
-		-> quebrar o expanded_content em tokens (sub lista)
-		-> caso o token atual seja o primeiro(head)	devo atualizar o head, pois novos tokens serão gerados
-		-> caso o token não seja o primeiro(head), não preciso atualizar o head e apenas adiciono
-		a sublista dentro da lista
-		-> Em todos os casos devo retornar o último token da sublista para a função 'expand tokens'
-		para que o loop continue a partir do token adicionado.
-	*/
-	if (*head)
-		//*head = ft_lst_last(sublist);
+	i = 0;
+	while (token_content[++i] && token_content[i] != '\"')
+	{
+		if (token_content[i] == '$')
+			i += expand_variable(expanded_content, &token_content[i + 1]);
+		else
+			*expanded_content = \
+			ft_append_char(*expanded_content, token_content[i]);
+	}
+	*index += i;
+}
+
+void	expand_dollar_sign(t_list *token)
+{
+	char	*token_str;
+	char	*expanded_cont;
+	int		i;
+
+	expanded_cont = strdup("");
+	token_str = (char *) token->content;
+	i = -1;
+	while (token_str[++i])
+	{
+		if (token_str[i] == '\'')
+			append_single_quotes(&token_str[i], &expanded_cont, &i);
+		else if (token_str[i] == '\"')
+			treat_db_quote(&token_str[i], &expanded_cont, &i);
+		else if (token_str[i] == '$' && (is_valid_key_char(token_str[i + 1])
+				|| token_str[i + 1] == '?'))
+			i += expand_variable(&expanded_cont, &token_str[i + 1]);
+		else
+			expanded_cont = ft_append_char(expanded_cont, token_str[i]);
+		if (!token_str[i])
+			break ;
+	}
+	ft_free_ptr((void *)&token->content);
+	substitute_token_by_sublist(expanded_cont, &token);
 }
 
 void	expand_tokens(t_list *token_list)
 {
-	 t_list	*tmp;
-	 int	is_head;
+	t_list	*pivot;
 
-	 tmp = token_list;
-	 is_head = true;
-	 while (tmp)
-	 {
-		 if (is_expansible(tmp) == true)
-		 {
-			dprintf(2, ">>%s<< is expansible\n", (char *)tmp->content);
-			if (is_head == true)
-				expand_dollar_sign(&token_list, tmp);
-			else if (is_head == false)
-				expand_dollar_sign(NULL, tmp);
-		 }
-		 else
-		 	dprintf(2, ">>%s<< is not expansible\n", (char *)tmp->content);
-		 tmp = tmp->next;
-		 is_head = false;
-	 }
+	print_token_lst(token_list);
+	pivot = token_list;
+	while (pivot)
+	{
+		expand_dollar_sign(pivot);
+		expand_wildcards();
+		pivot = pivot->next;
+	}
+	remove_null_nodes_from_token_list();
+	print_token_lst(token_list);
 }
