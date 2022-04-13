@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/13 19:47:56 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:35:40 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exp_common_var(char **exp_content, char *var_to_expand, int size)
 		key = ft_substr(var_to_expand, 0, size);
 		env_var_value = \
 		read_hashtable(g_tudao.hashtable[hash_string(key)], key);
-		if (env_var_value != NULL)
+		if (env_var_value != NULL && env_var_value[0] != '\0')
 		{
 			if (*exp_content == NULL)
 				*exp_content = ft_strdup(env_var_value);
@@ -89,7 +89,7 @@ void	expand_dollar_sign(t_list *token)
 	char	*expanded_cont;
 	int		i;
 
-	expanded_cont = strdup("");
+	expanded_cont = ft_strdup("");
 	token_str = (char *) token->content;
 	i = -1;
 	while (token_str[++i])
@@ -108,26 +108,27 @@ void	expand_dollar_sign(t_list *token)
 	}
 	ft_free_ptr((void *)&token->content);
 	substitute_token_by_sublist(expanded_cont, &token);
+	ft_free_ptr((void *)&expanded_cont);
 }
 
 void	expand_tokens(t_list *token_list)
 {
 	t_list	*pivot;
 
-	print_token_lst(token_list);
+	// print_token_lst(token_list);
 	pivot = token_list;
 	while (pivot)
 	{
 		if (is_expansible(pivot) == true)
 		 {
-			dprintf(2, ">>%s<< is expansible\n", (char *)pivot->content);
+			// dprintf(2, ">>%s<< is expansible\n", (char *)pivot->content);
 			expand_dollar_sign(pivot);
 			expand_wildcards();
 		 }
-		 else
-		 	dprintf(2, ">>%s<< is not expansible\n", (char *)pivot->content);
+		//  else
+		//  	dprintf(2, ">>%s<< is not expansible\n", (char *)pivot->content);
 		pivot = pivot->next;
 	}
 	remove_null_nodes_from_token_list();
-	print_token_lst(token_list);
+	// print_token_lst(token_list);
 }
