@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 23:26:33 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/13 00:01:45 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void			print_error_and_exit(int ext_code, char *msg);
 void			free_list(t_list *list);
 
 // expansor.c
-void			expand_tokens(void);
+void			expand_tokens(t_list *token_list);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,
