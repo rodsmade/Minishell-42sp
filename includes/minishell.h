@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/14 03:51:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/14 20:49:03 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,9 @@ void			lexer_line(char	*line_read);
 
 // parser.c
 void			parse_tokens(void);
+
+// prompt.c
+void			display_cmd_prompt(void);
 
 // utils_env_vars.c
 char			*env_var_to_string(t_env_var *env_var);
