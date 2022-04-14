@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 18:43:12 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/14 03:51:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>			// stat(), fstat(), lstat()
 # include <sys/types.h>			// <pid_t> typedef
 # include <sys/wait.h>			// wait()
+# include <signal.h>			// sigaction()
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
