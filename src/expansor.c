@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/13 18:47:53 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/14 17:25:46 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void	expand_tokens(t_list *token_list)
 {
 	t_list	*pivot;
 
-	print_token_lst(token_list);
 	pivot = token_list;
 	while (pivot)
 	{
@@ -127,5 +126,4 @@ void	expand_tokens(t_list *token_list)
 		pivot = pivot->next;
 	}
 	// remove_null_nodes_from_token_list();
-	print_token_lst(token_list);
 }

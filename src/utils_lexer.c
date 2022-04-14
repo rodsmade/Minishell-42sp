@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:13:48 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/15 13:05:55 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/14 01:58:02 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_lexer(void)
 	}
 }
 
-void	skip_quotes(char *line_read, int *index)
+void	skip_quotes(char *line_read, int *index, int *token_len)
 {
 	char	quote_type;
 
@@ -34,7 +34,10 @@ void	skip_quotes(char *line_read, int *index)
 		quote_type = line_read[(*index)];
 		*index = (*index) + 1;
 		while (line_read[(*index)] && line_read[(*index)] != quote_type)
+		{
 			*index = (*index) + 1;
+			*token_len = (*token_len) + 1;
+		}
 	}
 }
 

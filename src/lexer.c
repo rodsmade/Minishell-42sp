@@ -3,83 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/01 21:42:19 by roaraujo         ###   ########.fr       */
+/*   Created: 2022/04/14 13:14:42 by afaustin          #+#    #+#             */
+/*   Updated: 2022/04/14 17:06:02 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	token_len(char *line_read)
+char *get_token_content(char *og_line, int *index)
 {
-	int		i;
-	int		redirect;
+	char	*token_content;
+	char	quote_type;
+	int		og_index;
 
-	i = 0;
-	redirect = count_redirect(&line_read[i]);
-	if (!redirect)
+	og_index = *index;
+	token_content = ft_strdup("");
+	while (og_line[og_index] && og_line[og_index] != ' ' && og_line[og_index] != '\t')
 	{
-		while (line_read[i] && line_read[i] != ' ' && !redirect)
+		if (og_line[og_index] == '\'' || og_line[og_index] == '\"')
 		{
-			skip_quotes(line_read, &i);
-			if (line_read[i])
+			quote_type = og_line[og_index];
+			token_content = ft_append_char(token_content, og_line[og_index]);
+			og_index++;
+			while (og_line[og_index] && og_line[og_index] != quote_type)
 			{
-				i++;
-				redirect = count_redirect(&line_read[i]);
+				token_content = ft_append_char(token_content, og_line[og_index]);
+				og_index++;
 			}
 		}
-		return (i);
-	}
-	return (redirect);
-}
-
-void	tokenizer(char *line_read, char *content)
-{
-	int		i;
-	int		redirect;
-
-	i = 0;
-	redirect = count_redirect(&line_read[i]);
-	if (!redirect)
-	{
-		while (line_read[i] && line_read[i] != ' ' && !redirect)
-		{
-			quoted_generate(line_read, &i, content);
-			if (line_read[i])
-			{
-				content[i] = line_read[i];
-				i++;
-				redirect = count_redirect(&line_read[i]);
-			}
-		}
-		content[i] = '\0';
-	}
-	else
-		redirect_gen(&line_read[i], content);
+		token_content = ft_append_char(token_content, og_line[og_index]);
+		if (og_line[og_index])
+			og_index++;
+	}	
+	*index = og_index;
+	return (token_content);
 }
 
 void	lexer_line(char *line_read)
 {
-	char	*content;
-	int		len;
 	int		i;
+	char	*token_content;
 
 	i = 0;
-	len = 0;
+	token_content = NULL;
 	while (line_read[i])
 	{
 		while (line_read[i] && (line_read[i] == ' ' || line_read[i] == '\t'))
 			i++;
-		len = token_len(&line_read[i]);
-		if (len)
+		if (line_read[i])
+			token_content = get_token_content(line_read, &i);
+		if (token_content)
 		{
-			content = (char *)malloc(sizeof(char) * (len + 1));
-			tokenizer(&line_read[i], content);
-			ft_lst_add_back(&g_tudao.token_list, ft_lst_new(content));
-			content = NULL;
+			ft_lst_add_back(&g_tudao.token_list, ft_lst_new(token_content));
+			token_content = NULL;
 		}
-		i += len;
+		if (line_read[i])
+			i++;
 	}
 }

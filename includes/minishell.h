@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/13 18:06:57 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/14 01:57:11 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void			process_heredoc_position(t_data_hd *hd, int pipe_fd);
 void			add_heredocs_to_history(void);
 
 // utils_lexer.c
-void			skip_quotes(char *line_read, int *index);
+void			skip_quotes(char *line_read, int *index, int *token_len);
 void			quoted_generate(char *line_read, int *index, char *content);
 int				count_redirect(char *line_read);
 void			redirect_gen(char *line_read, char *content);
