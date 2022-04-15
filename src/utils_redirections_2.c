@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/08 17:29:23 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/15 23:16:32 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,49 @@ int	pipe_and_fork(int *pipe_fds)
 	return (pid);
 }
 
+void	close_heredoc_prompt(char *hd_delimiter, int curr_line_count)
+{
+	char	*itoa;
+
+	ft_putstr_fd("bash: warning: here-document at line ", 2);
+	itoa = ft_itoa(curr_line_count);
+	ft_putstr_fd(itoa, 2);
+	ft_free_ptr((void *)&itoa);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(hd_delimiter, 2);
+	ft_putendl_fd("')", 2);
+	return ;
+}
+
 void	get_input_line(t_data_hd *hd, int *pipe_fds)
 {
 	char	*line_read;
-	char	*eof;
+	int		hd_line;
 
-	eof = (char *) hd->cursor->content;
+	hd_line = g_tudao.line_count;
 	line_read = readline("> ");
-	while (ft_strncmp(line_read, eof, sizeof(eof) + 1) != 0)
+	if (!line_read)
+		close_heredoc_prompt((char *) hd->cursor->content, hd_line);
+	else
 	{
-		ft_putendl_fd(line_read, pipe_fds[1]);
-		ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
+		while (ft_strncmp(line_read, (char *) hd->cursor->content,
+				ft_strlen((char *) hd->cursor->content) + 1) != 0)
+		{
+			g_tudao.line_count++;
+			ft_putendl_fd(line_read, pipe_fds[1]);
+			ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
+			ft_free_ptr((void *)&line_read);
+			line_read = readline("> ");
+			if (!line_read)
+			{
+				close_heredoc_prompt((char *) hd->cursor->content, hd_line);
+				break ;
+			}
+		}
+		if (line_read)
+			ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
 		ft_free_ptr((void *)&line_read);
-		line_read = readline("> ");
 	}
-	ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
-	ft_free_ptr((void *)&line_read);
 	ft_close_pipe_fds(pipe_fds);
 	ft_free_ptr((void *)&(hd->str));
 	ft_free_pipe_arr(&(hd->aux_pipes), hd->total_pipes);

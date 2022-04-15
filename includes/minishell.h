@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/14 20:49:03 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/15 22:28:08 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_cmd_table
 typedef struct s_tudao
 {
 	char			*prompt_input;
+	size_t			line_count;
 	t_list			*hashtable[TABLE_SIZE];
 	t_list			*token_list;
 	t_cmd_table		command_table;

@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/14 20:50:34 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/15 23:12:20 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	repl(void)
 	g_tudao.exit = false;
 	g_tudao.is_forked = false;
 	g_tudao.ext_routine.code = 0;
+	g_tudao.line_count = 0;
 	while (!g_tudao.exit)
 	{
 		init_tudao();
@@ -62,5 +63,5 @@ int	main(int argc, char *argv[], char **envp)
 	get_env_variables(envp);
 	repl();
 	free_g_tudao();
-	return (0);
+	return (g_tudao.ext_routine.code);
 }

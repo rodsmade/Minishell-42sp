@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/14 21:15:06 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/15 22:39:28 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	assemble_line(char **line_read)
 	aux_str = readline("> ");
 	if (aux_str)
 	{
+		g_tudao.line_count++;
 		temp = aux_str;
 		aux_str = ft_strjoin(" ", aux_str);
 		ft_free_ptr((void *)&temp);
@@ -50,6 +51,7 @@ void	display_cmd_prompt(void)
 	g_tudao.prompt_input = readline(prompt);
 	if (g_tudao.prompt_input)
 	{
+		g_tudao.line_count++;
 		lexer_line(g_tudao.prompt_input);
 		expand_tokens();
 		parse_tokens();
