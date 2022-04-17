@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/15 23:16:32 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/18 00:02:40 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,40 +72,4 @@ void	close_heredoc_prompt(char *hd_delimiter, int curr_line_count)
 	ft_putstr_fd(hd_delimiter, 2);
 	ft_putendl_fd("')", 2);
 	return ;
-}
-
-void	get_input_line(t_data_hd *hd, int *pipe_fds)
-{
-	char	*line_read;
-	int		hd_line;
-
-	hd_line = g_tudao.line_count;
-	line_read = readline("> ");
-	if (!line_read)
-		close_heredoc_prompt((char *) hd->cursor->content, hd_line);
-	else
-	{
-		while (ft_strncmp(line_read, (char *) hd->cursor->content,
-				ft_strlen((char *) hd->cursor->content) + 1) != 0)
-		{
-			g_tudao.line_count++;
-			ft_putendl_fd(line_read, pipe_fds[1]);
-			ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
-			ft_free_ptr((void *)&line_read);
-			line_read = readline("> ");
-			if (!line_read)
-			{
-				close_heredoc_prompt((char *) hd->cursor->content, hd_line);
-				break ;
-			}
-		}
-		if (line_read)
-			ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
-		ft_free_ptr((void *)&line_read);
-	}
-	ft_close_pipe_fds(pipe_fds);
-	ft_free_ptr((void *)&(hd->str));
-	ft_free_pipe_arr(&(hd->aux_pipes), hd->total_pipes);
-	ft_close_pipe_fds(g_tudao.pipe_heredoc);
-	free_and_exit_fork(NULL);
 }
