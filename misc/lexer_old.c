@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_old.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/14 16:27:44 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:34:33 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 int	token_len(char *line_read, int *len)
 {
 	int		i;
-	// int		len;
+	int		len;
 	int		redirect;
 
 	i = 0;
-	// len = 0;
+	len = 0;
 	redirect = count_redirect(&line_read[i]);
 	if (!redirect)
 	{
@@ -88,3 +88,4 @@ void	lexer_line(char *line_read)
 		i += j;
 	}
 }
+*/

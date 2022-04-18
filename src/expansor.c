@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/18 14:06:00 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/18 14:39:24 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,34 +111,6 @@ void	expand_dollar_sign(t_list *token)
 	ft_free_ptr((void *)&expanded_cont);
 }
 
-char	*treat_quotes(char *token_content)
-{
-	int		i;
-	char	quote_type;
-	char	*new_content;
-
-	i = 0;
-	new_content = ft_strdup("");
-	while (token_content[i])
-	{
-		if (token_content[i] == '\'' || token_content[i] == '\"')
-		{
-			quote_type = token_content[i];
-			i++;
-			while (token_content[i] && token_content[i] != quote_type)
-			{
-				new_content = ft_append_char(new_content, token_content[i]);
-				i++;
-			}
-		}
-		else
-			new_content = ft_append_char(new_content, token_content[i]);
-		if (token_content[i])
-			i++;
-	}
-	return (new_content);
-}
-
 void	expand_tokens(t_list *token_list)
 {
 	t_list	*pivot;
@@ -161,5 +133,4 @@ void	expand_tokens(t_list *token_list)
 		}
 		pivot = pivot->next;
 	}
-	// remove_null_nodes_from_token_list();
 }

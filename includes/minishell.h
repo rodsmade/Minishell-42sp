@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/14 01:57:11 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:37:59 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void			append_single_quotes(char *token_str, char **expanded_cont,
 void			substitute_token_by_sublist(char *expanded_str,
 					t_list **token_address);
 bool			is_expansible(char *token_content);
+char			*treat_quotes(char *token_content);
 
 // utils_export.c
 int				value_len(char *line_read);

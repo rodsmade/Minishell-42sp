@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/13 18:05:28 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:44:49 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,32 @@ bool	is_expansible(char *token_content)
 			i++;
 	}
 	return (false);
+}
+
+char	*treat_quotes(char *token_content)
+{
+	int		i;
+	char	quote_type;
+	char	*new_content;
+
+	i = 0;
+	new_content = ft_strdup("");
+	while (token_content[i])
+	{
+		if (token_content[i] == '\'' || token_content[i] == '\"')
+		{
+			quote_type = token_content[i];
+			i++;
+			while (token_content[i] && token_content[i] != quote_type)
+			{
+				new_content = ft_append_char(new_content, token_content[i]);
+				i++;
+			}
+		}
+		else
+			new_content = ft_append_char(new_content, token_content[i]);
+		if (token_content[i])
+			i++;
+	}
+	return (new_content);
 }
