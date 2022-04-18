@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 01:05:56 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:39:24 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exp_common_var(char **exp_content, char *var_to_expand, int size)
 		key = ft_substr(var_to_expand, 0, size);
 		env_var_value = \
 		read_hashtable(g_tudao.hashtable[hash_string(key)], key);
-		if (env_var_value != NULL)
+		if (env_var_value != NULL && env_var_value[0] != '\0')
 		{
 			if (*exp_content == NULL)
 				*exp_content = ft_strdup(env_var_value);
@@ -42,15 +42,19 @@ int	expand_variable(char **expanded_content, char *variable_to_expand)
 {
 	int		size;
 	char	*env_var_value;
+	char	*temp;
 
 	size = 0;
-	if (!ft_strncmp(variable_to_expand, "?", 2))
+	if (variable_to_expand[0] == '?')
 	{
 		if (g_tudao.is_forked == false)
 			env_var_value = ft_itoa(g_tudao.ext_routine.code);
 		else if (g_tudao.is_forked == true)
 			env_var_value = ft_itoa(WEXITSTATUS(g_tudao.ext_routine.code));
-		*expanded_content = env_var_value;
+		temp = *expanded_content;
+		*expanded_content = ft_strjoin(temp, env_var_value);
+		ft_free_ptr((void *)&temp);
+		ft_free_ptr((void *)&env_var_value);
 		return (1);
 	}
 	else
@@ -81,43 +85,52 @@ void	treat_db_quote(char *token_content, char **expanded_content, int *index)
 
 void	expand_dollar_sign(t_list *token)
 {
-	char	*token_content;
-	char	*exp_content;
+	char	*token_str;
+	char	*expanded_cont;
 	int		i;
 
-	exp_content = NULL;
-	token_content = (char *) token->content;
+	expanded_cont = ft_strdup("");
+	token_str = (char *) token->content;
 	i = -1;
-	while (token_content[++i])
+	while (token_str[++i])
 	{
-		if (token_content[i] == '\'')
-		{
-			while (token_content[++i] && token_content[i] != '\'')
-				exp_content = ft_append_char(exp_content, token_content[i]);
-		}
-		else if (token_content[i] == '\"')
-			treat_db_quote(&token_content[i], &exp_content, &i);
-		else if (token_content[i] == '$')
-			i += expand_variable(&exp_content, &token_content[i + 1]);
+		if (token_str[i] == '\'')
+			append_single_quotes(&token_str[i], &expanded_cont, &i);
+		else if (token_str[i] == '\"')
+			treat_db_quote(&token_str[i], &expanded_cont, &i);
+		else if (token_str[i] == '$' && (is_valid_key_char(token_str[i + 1])
+				|| token_str[i + 1] == '?'))
+			i += expand_variable(&expanded_cont, &token_str[i + 1]);
 		else
-			exp_content = ft_append_char(exp_content, token_content[i]);
-		if (!token_content[i])
+			expanded_cont = ft_append_char(expanded_cont, token_str[i]);
+		if (!token_str[i])
 			break ;
 	}
 	ft_free_ptr((void *)&token->content);
-	token->content = exp_content;
+	substitute_token_by_sublist(expanded_cont, &token);
+	ft_free_ptr((void *)&expanded_cont);
 }
 
-void	expand_tokens(void)
+void	expand_tokens(t_list *token_list)
 {
 	t_list	*pivot;
+	char	*new_content;
 
-	pivot = g_tudao.token_list;
+	pivot = token_list;
+	new_content = NULL;
 	while (pivot)
 	{
-		expand_dollar_sign(pivot);
-		expand_wildcards();
+		if (is_expansible((char *) pivot->content) == true)
+		{
+			expand_dollar_sign(pivot);
+			expand_wildcards();
+		}
+		else
+		{
+			new_content = treat_quotes((char *) pivot->content);
+			ft_free_ptr((void *)&pivot->content);
+			pivot->content = new_content;
+		}
 		pivot = pivot->next;
 	}
-	remove_null_nodes_from_token_list();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 18:45:03 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 16:12:17 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:38:34 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,25 @@ char	*find_cmd_in_path_var(char *command_str)
 	char	*cmd_path;
 	int		i;
 
-	all_paths = read_hashtable(g_tudao.hashtable[hash_string("PATH")],
-			"PATH");
-	split_paths = ft_split(all_paths, ':');
-	i = -1;
-	while (split_paths[++i])
+	if (command_str && command_str[0] != '\0')
 	{
-		cmd_path = ft_strjoin_3(split_paths[i], "/", command_str);
-		if (access(cmd_path, F_OK) == 0)
+		all_paths = read_hashtable(g_tudao.hashtable[hash_string("PATH")],
+				"PATH");
+		split_paths = ft_split(all_paths, ':');
+		i = -1;
+		while (split_paths[++i])
 		{
-			ft_free_arr((void *)&split_paths);
-			return (cmd_path);
+			cmd_path = ft_strjoin_3(split_paths[i], "/", command_str);
+			if (access(cmd_path, F_OK) == 0)
+			{
+				ft_free_arr((void *)&split_paths);
+				return (cmd_path);
+			}
+			else
+				ft_free_ptr((void *)&cmd_path);
 		}
-		else
-			ft_free_ptr((void *)&cmd_path);
+		ft_free_arr((void *)&split_paths);
 	}
-	ft_free_arr((void *)&split_paths);
 	return (NULL);
 }
 

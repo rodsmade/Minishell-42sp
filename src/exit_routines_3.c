@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 17:22:33 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 13:48:42 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/12 23:23:23 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ void	print_error_and_exit(int ext_code, char *msg)
 	}
 	ft_putendl_fd("Not a valid return code", 2);
 	exit(EXIT_FAILURE);
+}
+
+void	free_list(t_list *list)
+{
+	t_list	*tmp;
+
+	while (list != NULL)
+	{
+		tmp = list->next;
+		ft_free_ptr((void *)&list->content);
+		ft_free_ptr((void *)&list);
+		list = tmp;
+	}
 }

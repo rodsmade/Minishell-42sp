@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 15:39:34 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:48:38 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	assemble_line(char **line_read)
 	temp = (*line_read);
 	(*line_read) = ft_strjoin((*line_read), aux_str);
 	lexer_line(aux_str);
-	expand_tokens();
+	expand_tokens(g_tudao.token_list);
+	free_main_pipeline(&g_tudao.command_table.main_pipeline);
 	parse_tokens();
 	free(aux_str);
 	free(temp);
@@ -53,7 +54,7 @@ void	display_cmd_prompt(void)
 	prompt = ft_strjoin(curr_path, " $ ");
 	g_tudao.prompt_input = readline(prompt);
 	lexer_line(g_tudao.prompt_input);
-	expand_tokens();
+	expand_tokens(g_tudao.token_list);
 	parse_tokens();
 	while (g_tudao.token_list && !g_tudao.syntax_error
 		&& is_pipe_and_or((char *) ft_lst_last(g_tudao.token_list)->content))

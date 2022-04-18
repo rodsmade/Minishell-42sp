@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 15:08:58 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/01 19:38:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/12 17:06:49 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,16 @@ void	remove_null_nodes_from_token_list(void)
 		else
 			pivot = pivot->next;
 	}
+	return ;
+}
+
+void	append_single_quotes(char *token_str, char **expanded_cont, int *index)
+{
+	int	i;
+
+	i = 0;
+	while (token_str[++i] && token_str[i] != '\'')
+		*expanded_cont = ft_append_char(*expanded_cont, token_str[i]);
+	*index += i;
 	return ;
 }
