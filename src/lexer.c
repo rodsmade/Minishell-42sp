@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:14:42 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/14 17:06:02 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:33:27 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,21 @@ void	lexer_line(char *line_read)
 
 	i = 0;
 	token_content = NULL;
-	while (line_read[i])
+	if (line_read)
 	{
-		while (line_read[i] && (line_read[i] == ' ' || line_read[i] == '\t'))
-			i++;
-		if (line_read[i])
-			token_content = get_token_content(line_read, &i);
-		if (token_content)
+		while (line_read[i])
 		{
-			ft_lst_add_back(&g_tudao.token_list, ft_lst_new(token_content));
-			token_content = NULL;
+			while (line_read[i] && (line_read[i] == ' ' || line_read[i] == '\t'))
+				i++;
+			if (line_read[i])
+				token_content = get_token_content(line_read, &i);
+			if (token_content)
+			{
+				ft_lst_add_back(&g_tudao.token_list, ft_lst_new(token_content));
+				token_content = NULL;
+			}
+			if (line_read[i])
+				i++;
 		}
-		if (line_read[i])
-			i++;
 	}
 }

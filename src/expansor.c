@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/14 17:25:46 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/18 14:06:00 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,17 +111,53 @@ void	expand_dollar_sign(t_list *token)
 	ft_free_ptr((void *)&expanded_cont);
 }
 
+char	*treat_quotes(char *token_content)
+{
+	int		i;
+	char	quote_type;
+	char	*new_content;
+
+	i = 0;
+	new_content = ft_strdup("");
+	while (token_content[i])
+	{
+		if (token_content[i] == '\'' || token_content[i] == '\"')
+		{
+			quote_type = token_content[i];
+			i++;
+			while (token_content[i] && token_content[i] != quote_type)
+			{
+				new_content = ft_append_char(new_content, token_content[i]);
+				i++;
+			}
+		}
+		else
+			new_content = ft_append_char(new_content, token_content[i]);
+		if (token_content[i])
+			i++;
+	}
+	return (new_content);
+}
+
 void	expand_tokens(t_list *token_list)
 {
 	t_list	*pivot;
+	char	*new_content;
 
 	pivot = token_list;
+	new_content = NULL;
 	while (pivot)
 	{
 		if (is_expansible((char *) pivot->content) == true)
 		{
 			expand_dollar_sign(pivot);
 			expand_wildcards();
+		}
+		else
+		{
+			new_content = treat_quotes((char *) pivot->content);
+			ft_free_ptr((void *)&pivot->content);
+			pivot->content = new_content;
 		}
 		pivot = pivot->next;
 	}
