@@ -41,6 +41,7 @@ FILES			=	builtin_cd.c \
 					minishell.c \
 					parser.c \
 					prompt.c \
+					signal_handler.c \
 					utils_env_vars.c \
 					utils_executor.c \
 					utils_executor_2.c \

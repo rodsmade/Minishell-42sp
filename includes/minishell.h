@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/18 00:14:30 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/19 22:24:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,20 @@ typedef struct s_cmd_table
 
 typedef struct s_tudao
 {
-	char			*prompt_input;
-	size_t			line_count;
-	t_list			*hashtable[TABLE_SIZE];
-	t_list			*token_list;
-	t_cmd_table		command_table;
-	int				**cmd_pipes;
-	int				pipe_heredoc[2];
-	int				is_forked;
-	t_ext_routine	ext_routine;
-	bool			syntax_error;
-	bool			exit;
+	char				*prompt_input;
+	size_t				line_count;
+	t_list				*hashtable[TABLE_SIZE];
+	t_list				*token_list;
+	t_cmd_table			command_table;
+	int					**cmd_pipes;
+	int					pipe_heredoc[2];
+	int					is_forked;
+	t_ext_routine		ext_routine;
+	struct sigaction	action;
+	bool				syntax_error;
+	bool				exit;
+	bool				skip_execution;
+	bool				is_ctrl_d;
 }				t_tudao;
 
 typedef struct s_data_hd
@@ -166,6 +169,12 @@ void			parse_tokens(void);
 
 // prompt.c
 void			display_cmd_prompt(void);
+
+// prompt.c
+void			catch_signals_parent(int signal);
+void	set_signal(int signal, void handler(int), struct sigaction *act);
+void	catch_signals_extra_input(int signal);
+void	unset_signal(int signal, struct sigaction *act);
 
 // utils_env_vars.c
 char			*env_var_to_string(t_env_var *env_var);

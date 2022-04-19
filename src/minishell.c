@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/15 23:12:20 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/19 21:04:38 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,27 @@ void	get_env_variables(char **envp)
 void	repl(void)
 {
 	g_tudao.exit = false;
-	g_tudao.is_forked = false;
 	g_tudao.ext_routine.code = 0;
 	g_tudao.line_count = 0;
 	while (!g_tudao.exit)
 	{
 		init_tudao();
 		display_cmd_prompt();
-		g_tudao.is_forked = false;
 		if (g_tudao.prompt_input && g_tudao.token_list
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
-			&& !g_tudao.exit)
+			&& !g_tudao.exit && !g_tudao.skip_execution)
 		{
 			g_tudao.ext_routine.code = 0;
 			execute_pipeline(g_tudao.command_table.main_pipeline);
-			add_heredocs_to_history();
-			add_history(g_tudao.prompt_input);
+			// add_heredocs_to_history();
+			// add_history(g_tudao.prompt_input);
 			free_lexer();
 			free_main_pipeline(&g_tudao.command_table.main_pipeline);
-			ft_free_ptr((void *)&g_tudao.prompt_input);
+			// ft_free_ptr((void *)&g_tudao.prompt_input);
 		}
+		add_heredocs_to_history();
+		add_history(g_tudao.prompt_input);
+		ft_free_ptr((void *)&g_tudao.prompt_input);
 	}
 	return ;
 }

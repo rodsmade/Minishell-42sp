@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 01:05:56 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/18 03:17:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	expand_variable(char **expanded_content, char *variable_to_expand)
 	{
 		if (g_tudao.is_forked == false)
 			env_var_value = ft_itoa(g_tudao.ext_routine.code);
-		else if (g_tudao.is_forked == true)
+		else
 			env_var_value = ft_itoa(WEXITSTATUS(g_tudao.ext_routine.code));
 		*expanded_content = env_var_value;
 		return (1);
