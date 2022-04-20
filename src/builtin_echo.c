@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:15:44 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/03/23 23:18:44 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:33:43 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_arg(char *str)
-{
-	int		index;
-	char	quote_type;
-
-	index = 0;
-	while (str[index])
-	{
-		if (str[index] == '\'' || str[index] == '\"')
-		{
-			quote_type = str[index];
-			index++;
-			while (str[index] && str[index] != quote_type)
-			{
-				ft_putchar_fd(str[index], 1);
-				index++;
-			}
-		}
-		else
-		{
-			ft_putchar_fd(str[index], 1);
-			index++;
-		}
-	}
-	ft_putchar_fd(' ', 1);
-}
 
 void	builtin_echo(t_list *lst)
 {
@@ -46,12 +19,15 @@ void	builtin_echo(t_list *lst)
 
 	pivot = lst->next;
 	option = 0;
+	if (pivot != NULL && !ft_strncmp((char *)pivot->content, "-n", 3))
+	{
+		option = 1;
+		pivot = pivot->next;
+	}
 	while (pivot != NULL)
 	{
-		if (!ft_strncmp((char *)pivot->content, "-n", 3))
-			option = 1;
-		else
-			print_arg((char *)pivot->content);
+		ft_putstr_fd((char *) pivot->content, 1);
+		ft_putchar_fd(' ', 1);
 		pivot = pivot->next;
 	}
 	if (!option)

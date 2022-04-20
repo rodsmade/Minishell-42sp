@@ -146,9 +146,10 @@ void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_syntax_error_exit(char *token);
 void			free_g_tudao(void);
 void			print_error_and_exit(int ext_code, char *msg);
+void			free_list(t_list *list);
 
 // expansor.c
-void			expand_tokens(void);
+void			expand_tokens(t_list *token_list);
 
 // hashtable.c
 void			insert_in_hashtable(char *string, int is_env_var,
@@ -202,6 +203,14 @@ void			remove_null_nodes_from_token_list(void);
 char			*ft_append_char(char *str, char c);
 int				is_valid_key_char(char c);
 void			expand_wildcards(void);
+void			append_single_quotes(char *token_str, char **expanded_cont,
+					int *index);
+
+// utils_expansor_2.c
+void			substitute_token_by_sublist(char *expanded_str,
+					t_list **token_address);
+bool			is_expansible(char *token_content);
+char			*treat_quotes(char *token_content);
 
 // utils_export.c
 int				value_len(char *line_read);
@@ -237,7 +246,7 @@ void			get_heredoc_content(t_data_hd *hd, int *pipe_fds,
 void			get_input_line(t_data_hd *hd, int *pipe_fds);
 
 // utils_lexer.c
-void			skip_quotes(char *line_read, int *index);
+void			skip_quotes(char *line_read, int *index, int *token_len);
 void			quoted_generate(char *line_read, int *index, char *content);
 int				count_redirect(char *line_read);
 void			redirect_gen(char *line_read, char *content);
@@ -271,5 +280,6 @@ void			close_heredoc_prompt(char *hd_delimiter, int curr_line_count);
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 void			print_commands_and_redirects(void);
+void			print_token_lst(t_list *lst);
 
 #endif
