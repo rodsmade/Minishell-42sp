@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/14 13:14:42 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/18 14:40:57 by adrianofaus      ###   ########.fr       */
+/*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
+/*   Updated: 2022/04/20 02:03:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_token_content(char *og_line, int *index)
 	return (token_content);
 }
 
-void	lexer_line(char *line)
+void	create_token_list(char *line)
 {
 	int		i;
 	char	*token_content;

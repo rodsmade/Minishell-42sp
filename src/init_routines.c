@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/09 22:09:33 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/20 01:53:05 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ void	init_tudao(void)
 	g_tudao.command_table.secondary_pipeline = NULL;
 	g_tudao.syntax_error = false;
 	g_tudao.exit = false;
+	g_tudao.is_forked = false;
+	g_tudao.skip_execution = false;
+	g_tudao.is_ctrl_d = true;
+	g_tudao.ext_routine.code = 0;
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 17:22:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 01:49:10 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	close_std_fds(void)
 	close(0);
 	close(1);
 	close(2);
+	close(g_tudao.backup_stdin);
 	return ;
 }
 

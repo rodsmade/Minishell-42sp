@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/18 14:37:59 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/20 02:03:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>			// stat(), fstat(), lstat()
 # include <sys/types.h>			// <pid_t> typedef
 # include <sys/wait.h>			// wait()
+# include <signal.h>			// sigaction()
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
@@ -68,16 +69,21 @@ typedef struct s_cmd_table
 
 typedef struct s_tudao
 {
-	char			*prompt_input;
-	t_list			*hashtable[TABLE_SIZE];
-	t_list			*token_list;
-	t_cmd_table		command_table;
-	int				**cmd_pipes;
-	int				pipe_heredoc[2];
-	int				is_forked;
-	t_ext_routine	ext_routine;
-	bool			syntax_error;
-	bool			exit;
+	char				*prompt_input;
+	size_t				line_count;
+	t_list				*hashtable[TABLE_SIZE];
+	t_list				*token_list;
+	t_cmd_table			command_table;
+	int					**cmd_pipes;
+	int					pipe_heredoc[2];
+	int					is_forked;
+	t_ext_routine		ext_routine;
+	struct sigaction	action;
+	bool				syntax_error;
+	bool				exit;
+	bool				skip_execution;
+	bool				is_ctrl_d;
+	int					backup_stdin;
 }				t_tudao;
 
 typedef struct s_data_hd
@@ -158,10 +164,19 @@ void			init_tudao(void);
 void			init_command(t_command *command);
 
 // lexer.c
-void			lexer_line(char	*line_read);
+void			create_token_list(char	*line_read);
 
 // parser.c
 void			parse_tokens(void);
+
+// prompt.c
+void			display_cmd_prompt(void);
+
+// prompt.c
+void			catch_signals_parent(int signal);
+void			set_signal(int sig, void handler(int), struct sigaction *act);
+void			catch_signals_extra_input(int signal);
+void			unset_signal(int signal, struct sigaction *act);
 
 // utils_env_vars.c
 char			*env_var_to_string(t_env_var *env_var);
@@ -225,6 +240,11 @@ void			init_heredoc_data(t_data_hd *hd, t_command *cmd, int cmd_count);
 void			process_heredoc_position(t_data_hd *hd, int pipe_fd);
 void			add_heredocs_to_history(void);
 
+// utils_heredoc_2.c
+void			get_heredoc_content(t_data_hd *hd, int *pipe_fds,
+					int hd_line_nbr);
+void			get_input_line(t_data_hd *hd, int *pipe_fds);
+
 // utils_lexer.c
 void			skip_quotes(char *line_read, int *index, int *token_len);
 void			quoted_generate(char *line_read, int *index, char *content);
@@ -255,7 +275,7 @@ void			capture_o_concats(t_command *cmd);
 char			*get_pipe_content(int fd);
 char			*concat_pipe_content(int *pipe, char *str);
 int				pipe_and_fork(int *pipe_fds);
-void			get_input_line(t_data_hd *hd, int *pipe_fds);
+void			close_heredoc_prompt(char *hd_delimiter, int curr_line_count);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
