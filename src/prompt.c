@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 02:05:45 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/21 00:34:10 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	process_input(char *string)
 {
 	create_token_list(string);
-	expand_tokens();
+	expand_tokens(g_tudao.token_list);
 	parse_tokens();
 	return ;
 }
@@ -25,7 +25,7 @@ static void	assemble_line(char **line_read)
 	char	*aux_str;
 	char	*temp;
 
-	set_signal(SIGINT, catch_signals_extra_input, &g_tudao.action);
+	set_signal_hook(SIGINT, catch_signal_parent_extra_input, &g_tudao.action);
 	aux_str = readline("> ");
 	if (aux_str && !g_tudao.skip_execution)
 	{
@@ -46,7 +46,6 @@ static void	assemble_line(char **line_read)
 		g_tudao.ext_routine.code = 2;
 		g_tudao.exit = true;
 	}
-	unset_signal(SIGINT, &g_tudao.action);
 }
 
 void	display_cmd_prompt(void)
@@ -56,7 +55,7 @@ void	display_cmd_prompt(void)
 
 	curr_path = getcwd(NULL, 0);
 	prompt = ft_strjoin(curr_path, " $ ");
-	set_signal(SIGINT, catch_signals_parent, &g_tudao.action);
+	set_signal_hook(SIGINT, catch_signal_parent, &g_tudao.action);
 	dup2(g_tudao.backup_stdin, STDIN_FILENO);
 	g_tudao.prompt_input = readline(prompt);
 	if (g_tudao.prompt_input)
@@ -73,7 +72,7 @@ void	display_cmd_prompt(void)
 		ft_putendl_fd("exit", 2);
 		g_tudao.exit = true;
 	}
-	unset_signal(SIGINT, &g_tudao.action);
+	disable_signal(SIGINT, &g_tudao.action);
 	ft_free_ptr((void *)&curr_path);
 	ft_free_ptr((void *)&prompt);
 }
