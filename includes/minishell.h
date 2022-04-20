@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 02:03:30 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/21 01:30:54 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void			execute_built_in(t_command *command);
 
 // exit_routines.c
 void			close_std_fds(void);
-void			close_fds_by_cmd(t_command *command);
+void			close_fds(t_command *command);
 void			close_and_free_pipes(void);
 
 // exit_routines_2.c
@@ -173,10 +173,12 @@ void			parse_tokens(void);
 void			display_cmd_prompt(void);
 
 // prompt.c
-void			catch_signals_parent(int signal);
-void			set_signal(int sig, void handler(int), struct sigaction *act);
-void			catch_signals_extra_input(int signal);
-void			unset_signal(int signal, struct sigaction *act);
+void			catch_signal_parent(int signal);
+void			catch_signals_child(int signal);
+void			catch_signal_parent_extra_input(int signal);
+void			disable_signal(int signal, struct sigaction *act);
+void			set_signal_hook(int sig, void handler(int),
+					struct sigaction *act);
 
 // utils_env_vars.c
 char			*env_var_to_string(t_env_var *env_var);
@@ -188,7 +190,8 @@ char			*find_cmd_in_path_var(char *command_str);
 char			*find_cmd_path(char *command_str);
 
 // utils_executor_2.c
-void			process_executor(int total_pipes, int counter, t_command *cmd);
+void			fork_and_execute_cmd(int total_pipes, int counter,
+					t_command *cmd);
 bool			execute_only_one_cmd(t_list *pipeline);
 void			create_new_files(t_list *pipeline);
 bool			alters_main_memory(char *built_in);
@@ -197,6 +200,7 @@ bool			alters_main_memory(char *built_in);
 bool			alters_main_memory(char *built_in);
 bool			is_built_in(char *str);
 bool			has_absolute_path(char *command_str);
+void			process_child_return_code(int wstatus);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);
