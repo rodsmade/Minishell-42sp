@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 02:05:45 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 02:18:51 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	process_input(char *string)
 {
 	create_token_list(string);
-	expand_tokens();
+	expand_tokens(g_tudao.token_list);
 	parse_tokens();
 	return ;
 }
