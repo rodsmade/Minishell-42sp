@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 13:19:36 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/03/29 21:58:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:01:48 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

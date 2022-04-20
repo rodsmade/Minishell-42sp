@@ -6,44 +6,45 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/20 02:03:30 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 18:32:03 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_token_content(char *og_line, int *index)
+char	*get_token_content(char *line, int *index)
 {
 	char	*token_content;
 	char	quote_type;
-	int		idx;
+	int		i;
 
-	idx = *index;
+	i = *index;
 	token_content = ft_strdup("");
-	while (og_line[idx] && og_line[idx] != ' ' && og_line[idx] != '\t')
+	while (line[i] && line[i] != ' ' && line[i] != '\t' && !count_redirect(&line[i]))
 	{
-		if (og_line[idx] == '\'' || og_line[idx] == '\"')
+		if (line[i] == '\'' || line[i] == '\"')
 		{
-			quote_type = og_line[idx];
-			token_content = ft_append_char(token_content, og_line[idx]);
-			idx++;
-			while (og_line[idx] && og_line[idx] != quote_type)
+			quote_type = line[i];
+			token_content = ft_append_char(token_content, line[i]);
+			i++;
+			while (line[i] && line[i] != quote_type)
 			{
-				token_content = ft_append_char(token_content, og_line[idx]);
-				idx++;
+				token_content = ft_append_char(token_content, line[i]);
+				i++;
 			}
 		}
-		token_content = ft_append_char(token_content, og_line[idx]);
-		if (og_line[idx])
-			idx++;
-	}	
-	*index = idx;
+		token_content = ft_append_char(token_content, line[i]);
+		if (line[i])
+			i++;
+	}
+	*index = i;
 	return (token_content);
 }
 
 void	create_token_list(char *line)
 {
 	int		i;
+	int		redir;
 	char	*token_content;
 
 	i = 0;
@@ -54,14 +55,20 @@ void	create_token_list(char *line)
 		{
 			while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 				i++;
-			if (line[i])
+			redir = count_redirect(&line[i]);
+			if (redir)
+			{
+				token_content = redirect_gen(&line[i]);
+				i += redir;
+			}
+			else if (line[i])
 				token_content = get_token_content(line, &i);
 			if (token_content)
 			{
 				ft_lst_add_back(&g_tudao.token_list, ft_lst_new(token_content));
-				token_content = NULL;
+				token_content = NULL; 
 			}
-			if (line[i])
+			if (line[i] && !count_redirect(&line[i]))
 				i++;
 		}
 	}

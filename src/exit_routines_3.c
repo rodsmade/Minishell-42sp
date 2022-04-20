@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 17:22:33 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/12 23:23:23 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 18:51:47 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	print_syntax_error_exit(char *token)
  * 	- retornar o prompt principal (repl), e setar a variável $? = 2.
  */
 {
-	char	*err_msg;
-
 	g_tudao.syntax_error = true;
-	err_msg = ft_strjoin_3("bash: syntax error near unexpected token `",
+	g_tudao.ext_routine.code = 2;
+	g_tudao.ext_routine.msg = 
+			ft_strjoin_3("bash: syntax error near unexpected token `", 
 			token, "'");
-	ft_putendl_fd(err_msg, 2);
+	ft_putendl_fd(g_tudao.ext_routine.msg, 2);
+	ft_free_ptr((void *)&g_tudao.ext_routine.msg);
 	return ;
 }
 

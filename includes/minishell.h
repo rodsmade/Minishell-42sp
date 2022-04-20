@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 02:03:30 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:12:24 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void			get_input_line(t_data_hd *hd, int *pipe_fds);
 void			skip_quotes(char *line_read, int *index, int *token_len);
 void			quoted_generate(char *line_read, int *index, char *content);
 int				count_redirect(char *line_read);
-void			redirect_gen(char *line_read, char *content);
+char			*redirect_gen(char *line_read);
 void			free_lexer(void);
 
 // utils_parser.c

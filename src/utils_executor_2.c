@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/11 19:53:51 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/20 19:17:02 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
