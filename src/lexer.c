@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/01 21:42:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 02:03:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	tokenizer(char *line_read, char *content)
 		redirect_gen(&line_read[i], content);
 }
 
-void	lexer_line(char *line_read)
+void	create_token_list(char *line_read)
 {
 	char	*content;
 	int		len;

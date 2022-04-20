@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/19 22:24:30 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 02:03:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_tudao
 	bool				exit;
 	bool				skip_execution;
 	bool				is_ctrl_d;
+	int					backup_stdin;
 }				t_tudao;
 
 typedef struct s_data_hd
@@ -162,7 +163,7 @@ void			init_tudao(void);
 void			init_command(t_command *command);
 
 // lexer.c
-void			lexer_line(char	*line_read);
+void			create_token_list(char	*line_read);
 
 // parser.c
 void			parse_tokens(void);
@@ -172,9 +173,9 @@ void			display_cmd_prompt(void);
 
 // prompt.c
 void			catch_signals_parent(int signal);
-void	set_signal(int signal, void handler(int), struct sigaction *act);
-void	catch_signals_extra_input(int signal);
-void	unset_signal(int signal, struct sigaction *act);
+void			set_signal(int sig, void handler(int), struct sigaction *act);
+void			catch_signals_extra_input(int signal);
+void			unset_signal(int signal, struct sigaction *act);
 
 // utils_env_vars.c
 char			*env_var_to_string(t_env_var *env_var);

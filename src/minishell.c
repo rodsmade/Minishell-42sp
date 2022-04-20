@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/19 21:04:38 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 01:53:24 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	repl(void)
 	g_tudao.exit = false;
 	g_tudao.ext_routine.code = 0;
 	g_tudao.line_count = 0;
+	g_tudao.backup_stdin = dup(STDIN_FILENO);
 	while (!g_tudao.exit)
 	{
 		init_tudao();
@@ -38,15 +39,9 @@ void	repl(void)
 		if (g_tudao.prompt_input && g_tudao.token_list
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
 			&& !g_tudao.exit && !g_tudao.skip_execution)
-		{
-			g_tudao.ext_routine.code = 0;
 			execute_pipeline(g_tudao.command_table.main_pipeline);
-			// add_heredocs_to_history();
-			// add_history(g_tudao.prompt_input);
-			free_lexer();
-			free_main_pipeline(&g_tudao.command_table.main_pipeline);
-			// ft_free_ptr((void *)&g_tudao.prompt_input);
-		}
+		free_lexer();
+		free_main_pipeline(&g_tudao.command_table.main_pipeline);
 		add_heredocs_to_history();
 		add_history(g_tudao.prompt_input);
 		ft_free_ptr((void *)&g_tudao.prompt_input);

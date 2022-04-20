@@ -41,28 +41,13 @@ void	catch_signals_extra_input(int signal)
 		g_tudao.ext_routine.code = 130;
 		g_tudao.skip_execution = true;
 		ft_putendl_fd("", 1);
-		// rl_pending_input = 'J';
-		rl_done = true;
-		// rl_line_buffer = ft_strdup("NAO VAI APRENDER TECH RAPIDO");
-		close(rl_instream->_fileno);
-		// rl_outstream. = ft_strdup("aaaaaa");
 		g_tudao.is_ctrl_d = false;
+		rl_replace_line("", 0);
+		rl_done = true;
+		close(rl_instream->_fileno);
 	}
 	return ;
 }
-
-// void	catch_signals_extra_input(int signal)
-// {
-// 	if (signal == SIGINT)
-// 	{
-// 		g_tudao.skip_execution = true;
-// 		// rl_done = true;
-// 		ft_putendl_fd("", 1);
-// 		ft_free_ptr((void *)&rl_line_buffer);
-// 		rl_line_buffer = ft_strdup("");
-// 	}
-// 	return ;
-// }
 
 void	unset_signal(int signal, struct sigaction *act)
 {
@@ -71,12 +56,11 @@ void	unset_signal(int signal, struct sigaction *act)
 	return ;
 }
 
-
 void	catch_signals_child(int signal)
 {
 	if (signal == SIGINT)
 	{
 		(void) signal;
 	}
-	return;
+	return ;
 }

@@ -6,11 +6,19 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/19 22:25:38 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 02:05:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	process_input(char *string)
+{
+	create_token_list(string);
+	expand_tokens();
+	parse_tokens();
+	return ;
+}
 
 static void	assemble_line(char **line_read)
 {
@@ -19,7 +27,6 @@ static void	assemble_line(char **line_read)
 
 	set_signal(SIGINT, catch_signals_extra_input, &g_tudao.action);
 	aux_str = readline("> ");
-	printf("aux string: %s\n", aux_str);
 	if (aux_str && !g_tudao.skip_execution)
 	{
 		g_tudao.line_count++;
@@ -28,12 +35,9 @@ static void	assemble_line(char **line_read)
 		ft_free_ptr((void *)&temp);
 		temp = (*line_read);
 		(*line_read) = ft_strjoin((*line_read), aux_str);
-		lexer_line(aux_str);
-		expand_tokens();
-		parse_tokens();
+		process_input(aux_str);
 		ft_free_ptr((void *)&aux_str);
 		ft_free_ptr((void *)&temp);
-		// printf("até o momento: %s\n", (*line_read));
 	}
 	else if (!aux_str && g_tudao.is_ctrl_d)
 	{
@@ -53,23 +57,20 @@ void	display_cmd_prompt(void)
 	curr_path = getcwd(NULL, 0);
 	prompt = ft_strjoin(curr_path, " $ ");
 	set_signal(SIGINT, catch_signals_parent, &g_tudao.action);
+	dup2(g_tudao.backup_stdin, STDIN_FILENO);
 	g_tudao.prompt_input = readline(prompt);
 	if (g_tudao.prompt_input)
 	{
 		g_tudao.line_count++;
-		lexer_line(g_tudao.prompt_input);
-		expand_tokens();
-		parse_tokens();
+		process_input(g_tudao.prompt_input);
 		while (g_tudao.token_list && !g_tudao.exit && !g_tudao.syntax_error
-			&& is_pipe_and_or((char *)ft_lst_last(g_tudao.token_list)->content)
-			&& !g_tudao.skip_execution)
+			&& !g_tudao.skip_execution
+			&& is_pipe_and_or((char *)ft_lst_last(g_tudao.token_list)->content))
 			assemble_line(&g_tudao.prompt_input);
-		printf("[DEBUG] gtudao.prompt input: %s\n", g_tudao.prompt_input);
 	}
 	else
 	{
 		ft_putendl_fd("exit", 2);
-		g_tudao.ext_routine.code = 0;
 		g_tudao.exit = true;
 	}
 	unset_signal(SIGINT, &g_tudao.action);
