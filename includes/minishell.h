@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 01:30:54 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:41:05 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,11 +243,15 @@ char			**split_key_and_value(char *string);
 void			init_heredoc_data(t_data_hd *hd, t_command *cmd, int cmd_count);
 void			process_heredoc_position(t_data_hd *hd, int pipe_fd);
 void			add_heredocs_to_history(void);
-
-// utils_heredoc_2.c
 void			get_heredoc_content(t_data_hd *hd, int *pipe_fds,
 					int hd_line_nbr);
 void			get_input_line(t_data_hd *hd, int *pipe_fds);
+
+// utils_heredoc_2.c
+char			*get_pipe_content(int fd);
+char			*concat_pipe_content(int *pipe, char *str);
+int				pipe_and_fork(int *pipe_fds);
+void			close_heredoc_prompt(char *hd_delimiter, int curr_line_count);
 
 // utils_lexer.c
 void			skip_quotes(char *line_read, int *index, int *token_len);
@@ -275,11 +279,6 @@ void			capture_outputs(t_command *cmd);
 void			capture_heredocs(t_command *cmd, int cmd_count);
 void			capture_o_concats(t_command *cmd);
 
-// utils_redirections_2.c
-char			*get_pipe_content(int fd);
-char			*concat_pipe_content(int *pipe, char *str);
-int				pipe_and_fork(int *pipe_fds);
-void			close_heredoc_prompt(char *hd_delimiter, int curr_line_count);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
