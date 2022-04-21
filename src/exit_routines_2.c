@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 12:30:36 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/21 00:25:00 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ void	free_main_pipeline(t_list **pipeline)
 }
 
 void	free_and_exit_fork(char *err_msg)
-/**
- * TODO: handle properly the return code.
- */
 {
 	t_list	*pivot;
 
@@ -64,7 +61,7 @@ void	free_and_exit_fork(char *err_msg)
 	pivot = g_tudao.command_table.main_pipeline;
 	while (pivot)
 	{
-		close_fds_by_cmd((t_command *) pivot->content);
+		close_fds((t_command *) pivot->content);
 		pivot = pivot->next;
 	}
 	close_and_free_pipes();

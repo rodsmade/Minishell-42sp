@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	set_signal(int signal, void handler(int), struct sigaction *act)
+void	set_signal_hook(int signal, void handler(int), struct sigaction *act)
 {
 	act->sa_handler = handler;
 	act->sa_flags = SA_RESTART;
@@ -21,7 +21,7 @@ void	set_signal(int signal, void handler(int), struct sigaction *act)
 	return ;
 }
 
-void	catch_signals_parent(int signal)
+void	catch_signal_parent(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -34,7 +34,23 @@ void	catch_signals_parent(int signal)
 	return ;
 }
 
-void	catch_signals_extra_input(int signal)
+void	catch_signals_child(int signal)
+{
+	if (signal == SIGQUIT)
+	{
+		g_tudao.ext_routine.code = 131;
+		dprintf(2, "teste\n");
+		free_and_exit_fork(ft_strdup("Quit (core dumped)"));
+	}
+	if (signal == SIGINT)
+	{
+		g_tudao.ext_routine.code = 130;
+		free_and_exit_fork(ft_strdup(""));
+	}
+	return ;
+}
+
+void	catch_signal_parent_extra_input(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -49,18 +65,9 @@ void	catch_signals_extra_input(int signal)
 	return ;
 }
 
-void	unset_signal(int signal, struct sigaction *act)
+void	disable_signal(int signal, struct sigaction *act)
 {
 	act->sa_handler = SIG_IGN;
 	sigaction(signal, act, NULL);
-	return ;
-}
-
-void	catch_signals_child(int signal)
-{
-	if (signal == SIGINT)
-	{
-		(void) signal;
-	}
 	return ;
 }
