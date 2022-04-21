@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_old.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/20 13:33:37 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/21 12:41:50 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	token_len(char *line_read, int *len)
 				redirect = count_redirect(&line_read[i]);
 			}
 		}
-		*len = (*len) -1;
+		*len = (*len) - 1;
 		return (i);
 	}
 	return (redirect);

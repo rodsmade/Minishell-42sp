@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 19:18:18 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/21 12:42:08 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	init_tudao(void)
 	g_tudao.exit = false;
 	g_tudao.skip_execution = false;
 	g_tudao.is_ctrl_d = true;
-	// g_tudao.ext_routine.code = 0;
 	return ;
 }
 
