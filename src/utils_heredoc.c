@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:27:16 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 20:46:47 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 00:18:16 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	init_heredoc_data(t_data_hd *hd, t_command *cmd, int cmd_count)
 {
-	hd->total_pipes = ft_lst_size(((t_command *) \
-	g_tudao.command_table.main_pipeline->content)->heredocs);
+	hd->total_pipes = ft_lst_size(cmd->heredocs);
 	hd->aux_pipes = ft_make_pipes(hd->total_pipes);
 	hd->cursor = cmd->heredocs;
 	if (cmd_count == 0)
