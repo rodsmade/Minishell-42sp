@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 20:47:35 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/20 20:59:32 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/22 00:42:32 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

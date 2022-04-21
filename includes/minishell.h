@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 21:39:56 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 01:17:50 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct s_tudao
 	t_cmd_table			command_table;
 	int					**cmd_pipes;
 	int					pipe_heredoc[2];
-	int					is_forked;
 	t_ext_routine		ext_routine;
 	struct sigaction	action;
 	bool				syntax_error;

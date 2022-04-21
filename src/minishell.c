@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 21:11:05 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/22 01:17:33 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	repl(void)
 	g_tudao.exit = false;
 	g_tudao.ext_routine.code = 0;
 	g_tudao.line_count = 0;
-	g_tudao.is_forked = false;
 	g_tudao.backup_stdin = dup(STDIN_FILENO);
 	while (!g_tudao.exit)
 	{
