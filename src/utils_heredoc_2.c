@@ -1,55 +1,75 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_heredoc_2.c                                  :+:      :+:    :+:   */
+/*   utils_redirections_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 00:02:14 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/18 00:14:37 by roaraujo         ###   ########.fr       */
+/*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
+/*   Updated: 2022/04/18 00:02:40 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_heredoc_content(t_data_hd *hd, int *pipe_fds, int hd_line_nbr)
+char	*get_pipe_content(int fd)
 {
-	char	*line_read;
+	char	*temp;
+	char	buffer[50];
+	char	*str;
+	int		chars_read;
 
-	line_read = readline("> ");
-	if (!line_read)
-		close_heredoc_prompt((char *) hd->cursor->content, hd_line_nbr);
-	else
+	chars_read = read(fd, buffer, 49);
+	str = ft_strdup("");
+	while (chars_read > 0)
 	{
-		while (ft_strncmp(line_read, (char *) hd->cursor->content,
-				ft_strlen((char *) hd->cursor->content) + 1) != 0)
-		{
-			g_tudao.line_count++;
-			ft_putendl_fd(line_read, pipe_fds[1]);
-			ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
-			ft_free_ptr((void *)&line_read);
-			line_read = readline("> ");
-			if (!line_read)
-			{
-				close_heredoc_prompt((char *) hd->cursor->content, hd_line_nbr);
-				break ;
-			}
-		}
-		if (line_read)
-			ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
-		ft_free_ptr((void *)&line_read);
+		buffer[chars_read] = '\0';
+		temp = str;
+		str = ft_strjoin(temp, buffer);
+		ft_free_ptr((void *)&temp);
+		chars_read = read(fd, buffer, 49);
 	}
+	return (str);
 }
 
-void	get_input_line(t_data_hd *hd, int *pipe_fds)
+char	*concat_pipe_content(int *pipe, char *str)
 {
-	int		hd_line_nbr;
+	char	*pipe_content;
+	char	*aux;
+	char	*new_str;
 
-	hd_line_nbr = g_tudao.line_count;
-	get_heredoc_content(hd, pipe_fds, hd_line_nbr);
-	ft_close_pipe_fds(pipe_fds);
-	ft_free_ptr((void *)&(hd->str));
-	ft_free_pipe_arr(&(hd->aux_pipes), hd->total_pipes);
-	ft_close_pipe_fds(g_tudao.pipe_heredoc);
-	free_and_exit_fork(NULL);
+	close(pipe[1]);
+	aux = str;
+	pipe_content = get_pipe_content(pipe[0]);
+	close(pipe[0]);
+	new_str = ft_strjoin(aux, pipe_content);
+	ft_free_ptr((void *)&aux);
+	ft_free_ptr((void *)&pipe_content);
+	return (new_str);
+}
+
+int	pipe_and_fork(int *pipe_fds)
+{
+	int	pid;
+
+	if (pipe(pipe_fds) == -1)
+		free_and_exit_fork(ft_strdup("Error creating pipe for heredoc"));
+	pid = fork();
+	if (pid == -1)
+		free_and_exit_fork(ft_strdup("Error forking process for heredoc"));
+	return (pid);
+}
+
+void	close_heredoc_prompt(char *hd_delimiter, int curr_line_count)
+{
+	char	*itoa;
+
+	ft_putstr_fd("bash: warning: here-document at line ", 2);
+	itoa = ft_itoa(curr_line_count);
+	ft_putstr_fd(itoa, 2);
+	ft_free_ptr((void *)&itoa);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(hd_delimiter, 2);
+	ft_putendl_fd("')", 2);
+	return ;
 }

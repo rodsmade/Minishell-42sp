@@ -52,7 +52,6 @@ FILES			=	builtin_cd.c \
 					utils_parser_2.c \
 					utils_parser.c \
 					utils_redirections.c \
-					utils_redirections_2.c \
 					utils_test.c
 
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
