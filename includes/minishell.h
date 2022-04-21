@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 21:02:21 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 01:17:50 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct s_tudao
 	t_cmd_table			command_table;
 	int					**cmd_pipes;
 	int					pipe_heredoc[2];
-	int					is_forked;
 	t_ext_routine		ext_routine;
 	struct sigaction	action;
 	bool				syntax_error;
@@ -172,6 +171,9 @@ void			parse_tokens(void);
 // prompt.c
 void			display_cmd_prompt(void);
 
+// command_table.c
+void			set_up_command_table(void);
+
 // prompt.c
 void			catch_signal_parent(int signal);
 void			catch_signals_child(int signal);
@@ -257,7 +259,7 @@ void			close_heredoc_prompt(char *hd_delimiter, int curr_line_count);
 void			skip_quotes(char *line_read, int *index, int *token_len);
 void			quoted_generate(char *line_read, int *index, char *content);
 int				count_redirect(char *line_read);
-void			redirect_gen(char *line_read, char *content);
+char			*redirect_gen(char *line_read);
 void			free_lexer(void);
 
 // utils_parser.c

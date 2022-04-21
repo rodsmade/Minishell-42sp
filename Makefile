@@ -33,6 +33,7 @@ FILES			=	builtin_cd.c \
 					lexer.c \
 					minishell.c \
 					parser.c \
+					command_table.c \
 					prompt.c \
 					signal_handler.c \
 					utils_env_vars.c \

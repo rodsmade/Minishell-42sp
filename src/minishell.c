@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 01:53:24 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 01:17:33 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	repl(void)
 	{
 		init_tudao();
 		display_cmd_prompt();
+		set_up_command_table();
+		print_commands_and_redirects();
 		if (g_tudao.prompt_input && g_tudao.token_list
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
 			&& !g_tudao.exit && !g_tudao.skip_execution)

@@ -6,20 +6,18 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/18 14:34:33 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/21 12:41:50 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
+
 int	token_len(char *line_read, int *len)
 {
 	int		i;
-	int		len;
 	int		redirect;
 
 	i = 0;
-	len = 0;
 	redirect = count_redirect(&line_read[i]);
 	if (!redirect)
 	{
@@ -33,7 +31,7 @@ int	token_len(char *line_read, int *len)
 				redirect = count_redirect(&line_read[i]);
 			}
 		}
-		*len = (*len) -1;
+		*len = (*len) - 1;
 		return (i);
 	}
 	return (redirect);
@@ -64,7 +62,7 @@ void	tokenizer(char *line_read, char *content)
 		redirect_gen(&line_read[i], content);
 }
 
-void	lexer_line(char *line_read)
+void	create_token_list(char *line_read)
 {
 	char	*content;
 	int		len;
@@ -88,4 +86,3 @@ void	lexer_line(char *line_read)
 		i += j;
 	}
 }
-*/

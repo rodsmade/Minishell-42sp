@@ -39,7 +39,6 @@ void	catch_signals_child(int signal)
 	if (signal == SIGQUIT)
 	{
 		g_tudao.ext_routine.code = 131;
-		dprintf(2, "teste\n");
 		free_and_exit_fork(ft_strdup("Quit (core dumped)"));
 	}
 	if (signal == SIGINT)

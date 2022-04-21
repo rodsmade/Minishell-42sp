@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/21 01:29:59 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 01:17:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	fork_and_execute_cmd(int total_pipes, int counter, t_command *cmd)
 	int	pid;
 	int	wstatus;
 
-	g_tudao.is_forked = true;
 	disable_signal(SIGQUIT, &g_tudao.action);
 	disable_signal(SIGINT, &g_tudao.action);
 	pid = fork();
