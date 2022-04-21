@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:38:02 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/22 00:33:09 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 01:01:36 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	**ft_make_pipes(int total_pipes)
 	while (++i < total_pipes)
 	{
 		pipes_arr[i] = (int *)malloc(2 * sizeof(int));
-		if (!pipes_arr[i] || !pipe(pipes_arr[i]))
+		if (!pipes_arr[i] || pipe(pipes_arr[i]) != 0)
 		{
 			free_previous_pipes(&pipes_arr, i);
 			return (NULL);
