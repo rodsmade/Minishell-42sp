@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 15:12:24 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/20 20:57:13 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,9 @@ void			parse_tokens(void);
 
 // prompt.c
 void			display_cmd_prompt(void);
+
+// command_table.c
+void			set_up_command_table(void);
 
 // prompt.c
 void			catch_signals_parent(int signal);

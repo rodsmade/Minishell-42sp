@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/20 18:32:03 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/20 21:19:23 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	create_token_list(char *line)
 		{
 			while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 				i++;
-			redir = count_redirect(&line[i]);
-			if (redir)
+			redir = count_redirect(&line[i]) - 1;
+			if (redir > 0)
 			{
 				token_content = redirect_gen(&line[i]);
 				i += redir;
@@ -68,7 +68,7 @@ void	create_token_list(char *line)
 				ft_lst_add_back(&g_tudao.token_list, ft_lst_new(token_content));
 				token_content = NULL; 
 			}
-			if (line[i] && !count_redirect(&line[i]))
+			if (line[i])
 				i++;
 		}
 	}
