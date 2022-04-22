@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:15:44 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/20 22:20:17 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/21 21:41:13 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ void	builtin_echo(t_list *lst)
 	}
 	while (pivot != NULL)
 	{
-		ft_putstr_fd((char *) pivot->content, 1);
-		ft_putchar_fd(' ', 1);
+		if ((pivot->next != NULL && !option) || option == 1)
+		{
+			ft_putstr_fd((char *) pivot->content, 1);
+			if (pivot->next != NULL)
+				ft_putchar_fd(' ', 1);
+		}
+		else
+			ft_putendl_fd((char *) pivot->content, 1);
 		pivot = pivot->next;
 	}
-	if (!option)
-		write(1, "\n", 1);
 	g_tudao.ext_routine.code = 0;
 }
