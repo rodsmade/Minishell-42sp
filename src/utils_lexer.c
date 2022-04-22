@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:13:48 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/14 01:58:02 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/21 12:44:45 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,24 +75,23 @@ int	count_redirect(char *line_read)
 		return (0);
 }
 
-void	redirect_gen(char *line_read, char *content)
+char	*redirect_gen(char *line_read)
 {
-	int	i;
+	int		i;
+	char	*token_content;
 
 	i = 0;
+	token_content = ft_strdup("");
 	if ((line_read[i] == '>' && line_read[i + 1] && line_read[i + 1] == '>') || \
 		(line_read[i] == '<' && line_read[i + 1] && line_read[i + 1] == '<') || \
 		(line_read[i] == '&' && line_read[i + 1] && line_read[i + 1] == '&') || \
 		(line_read[i] == '|' && line_read[i + 1] && line_read[i + 1] == '|'))
 	{
-		content[i] = line_read[i];
-		content[i + 1] = line_read[i + 1];
-		content[i + 2] = '\0';
+		token_content = ft_append_char(token_content, line_read[i]);
+		token_content = ft_append_char(token_content, line_read[i + 1]);
 	}
 	else if (line_read[i] == '>' || line_read[i] == '<' || \
 			line_read[i] == '&' || line_read[i] == '|')
-	{
-		content[i] = line_read[i];
-		content[i + 1] = '\0';
-	}
+		token_content = ft_append_char(token_content, line_read[i]);
+	return (token_content);
 }

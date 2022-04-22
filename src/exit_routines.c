@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 17:22:22 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/20 21:09:15 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void	close_std_fds(void)
 	close(0);
 	close(1);
 	close(2);
+	close(g_tudao.backup_stdin);
 	return ;
 }
 
-void	close_fds_by_cmd(t_command *command)
+void	close_fds(t_command *command)
 {
 	if (command->input_fd)
 		close(command->input_fd);

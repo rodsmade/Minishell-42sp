@@ -3,47 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/14 13:14:42 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/18 14:40:57 by adrianofaus      ###   ########.fr       */
+/*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
+/*   Updated: 2022/04/22 01:14:26 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_token_content(char *og_line, int *index)
+static char	*get_token_content(char *line, int *index)
 {
 	char	*token_content;
 	char	quote_type;
-	int		idx;
 
-	idx = *index;
 	token_content = ft_strdup("");
-	while (og_line[idx] && og_line[idx] != ' ' && og_line[idx] != '\t')
+	while (line[*index] && line[*index] != ' ' && line[*index] != '\t'
+		&& !count_redirect(&line[*index]))
 	{
-		if (og_line[idx] == '\'' || og_line[idx] == '\"')
+		if (line[*index] == '\'' || line[*index] == '\"')
 		{
-			quote_type = og_line[idx];
-			token_content = ft_append_char(token_content, og_line[idx]);
-			idx++;
-			while (og_line[idx] && og_line[idx] != quote_type)
+			quote_type = line[*index];
+			token_content = ft_append_char(token_content, line[*index]);
+			(*index)++;
+			while (line[*index] && line[*index] != quote_type)
 			{
-				token_content = ft_append_char(token_content, og_line[idx]);
-				idx++;
+				token_content = ft_append_char(token_content, line[*index]);
+				(*index)++;
 			}
 		}
-		token_content = ft_append_char(token_content, og_line[idx]);
-		if (og_line[idx])
-			idx++;
-	}	
-	*index = idx;
+		token_content = ft_append_char(token_content, line[*index]);
+		if (line[*index])
+			(*index)++;
+	}
+	(*index)--;
 	return (token_content);
 }
 
-void	lexer_line(char *line)
+static void	add_to_token_list(char **token_content)
+{
+	if (*token_content)
+	{
+		ft_lst_add_back(&g_tudao.token_list, ft_lst_new(*token_content));
+		*token_content = NULL;
+	}
+	return ;
+}
+
+void	create_token_list(char *line)
 {
 	int		i;
+	int		redir;
 	char	*token_content;
 
 	i = 0;
@@ -54,14 +64,16 @@ void	lexer_line(char *line)
 		{
 			while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 				i++;
-			if (line[i])
-				token_content = get_token_content(line, &i);
-			if (token_content)
+			redir = count_redirect(&line[i]);
+			if (redir > 0)
 			{
-				ft_lst_add_back(&g_tudao.token_list, ft_lst_new(token_content));
-				token_content = NULL;
+				token_content = redirect_gen(&line[i]);
+				i += redir;
 			}
-			if (line[i])
+			else if (line[i])
+				token_content = get_token_content(line, &i);
+			add_to_token_list(&token_content);
+			if (line[i] && !redir)
 				i++;
 		}
 	}

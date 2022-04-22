@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/18 14:39:24 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/22 01:17:46 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ int	expand_variable(char **expanded_content, char *variable_to_expand)
 	size = 0;
 	if (variable_to_expand[0] == '?')
 	{
-		if (g_tudao.is_forked == false)
-			env_var_value = ft_itoa(g_tudao.ext_routine.code);
-		else if (g_tudao.is_forked == true)
-			env_var_value = ft_itoa(WEXITSTATUS(g_tudao.ext_routine.code));
+		env_var_value = ft_itoa(g_tudao.ext_routine.code);
 		temp = *expanded_content;
 		*expanded_content = ft_strjoin(temp, env_var_value);
 		ft_free_ptr((void *)&temp);
 		ft_free_ptr((void *)&env_var_value);
+		g_tudao.ext_routine.code = 0;
+		g_tudao.ext_routine.msg = NULL;
 		return (1);
 	}
 	else
