@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 17:22:33 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 12:43:07 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	print_syntax_error_exit(char *token)
 {
 	g_tudao.syntax_error = true;
-	g_tudao.ext_routine.code = 2;
-	g_tudao.ext_routine.msg = \
+	g_tudao.exit.code = 2;
+	g_tudao.exit.msg = \
 	ft_strjoin_3("bash: syntax error near unexpected token `", token, "'");
-	ft_putendl_fd(g_tudao.ext_routine.msg, 2);
-	ft_free_ptr((void *)&g_tudao.ext_routine.msg);
+	ft_putendl_fd(g_tudao.exit.msg, 2);
+	ft_free_ptr((void *)&g_tudao.exit.msg);
 	return ;
 }
 
@@ -43,8 +43,8 @@ void	print_error_and_exit(int ext_code, char *msg)
 			ft_putendl_fd(msg, 2);
 			ft_free_ptr((void *)&msg);
 		}
-		g_tudao.ext_routine.code = ext_code;
-		exit(g_tudao.ext_routine.code);
+		g_tudao.exit.code = ext_code;
+		exit(g_tudao.exit.code);
 	}
 	ft_putendl_fd("Not a valid return code", 2);
 	exit(EXIT_FAILURE);

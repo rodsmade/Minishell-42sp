@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 01:17:50 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:55:38 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_env_var
 
 typedef struct s_ext_routine
 {
+	bool	flag;
 	char	*msg;
 	int		code;
 }		t_ext_routine;
@@ -76,10 +77,9 @@ typedef struct s_tudao
 	t_cmd_table			command_table;
 	int					**cmd_pipes;
 	int					pipe_heredoc[2];
-	t_ext_routine		ext_routine;
+	t_ext_routine		exit;
 	struct sigaction	action;
 	bool				syntax_error;
-	bool				exit;
 	bool				skip_execution;
 	bool				is_ctrl_d;
 	int					backup_stdin;
@@ -132,12 +132,13 @@ void			execute_built_in(t_command *command);
 // exit_routines.c
 void			close_std_fds(void);
 void			close_fds(t_command *command);
-void			close_and_free_pipes(void);
+void			close_heredoc_pipe(void);
+void			close_and_free_cmd_pipes(void);
 
 // exit_routines_2.c
 void			free_t_command_list(t_list *lst);
 void			free_main_pipeline(t_list **pipeline);
-void			free_and_exit_fork(char *err_msg);
+void			free_and_exit_fork(char *err_msg, int err_code);
 void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 

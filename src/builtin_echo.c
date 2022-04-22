@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:15:44 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/21 21:41:13 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	builtin_echo(t_list *lst)
 			ft_putendl_fd((char *) pivot->content, 1);
 		pivot = pivot->next;
 	}
-	g_tudao.ext_routine.code = 0;
+	g_tudao.exit.code = 0;
 }

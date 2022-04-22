@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/18 15:24:52 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	iterate_lst_to_export(t_list *lst)
 		}
 		else
 		{
-			g_tudao.ext_routine.code = 1;
-			g_tudao.ext_routine.msg = ft_strjoin_3("minishell: export: `",
+			g_tudao.exit.code = 1;
+			g_tudao.exit.msg = ft_strjoin_3("minishell: export: `",
 					(char *)tmp->content, "': not a valid identifier");
 			ft_free_ptr((void *)&pair);
 		}

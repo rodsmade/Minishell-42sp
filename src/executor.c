@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 21:09:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:47:15 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ void	send_to_execve(t_command *command)
 	flag = 0;
 	if (!cmd_path)
 	{
-		g_tudao.ext_routine.msg = \
+		g_tudao.exit.msg = \
 		ft_strjoin_3("minishell: ", cmd_arr[0], ": command not found");
-		g_tudao.ext_routine.code = 127;
+		g_tudao.exit.code = 127;
 		flag = 1;
 	}
 	if (!flag && execve(cmd_path, cmd_arr, hashtable_arr) == -1)
-		g_tudao.ext_routine.code = 126;
+		g_tudao.exit.code = 126;
 	ft_free_ptr((void *)&cmd_arr);
 	ft_close_pipe_fds(g_tudao.pipe_heredoc);
 	close_fds(command);
 	ft_free_arr((void *)&hashtable_arr);
-	free_and_exit_fork(g_tudao.ext_routine.msg);
+	free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
 }
 
 void	execute_built_in(t_command *command)
@@ -72,7 +72,7 @@ void	execute_command(t_command *cmd)
 			execute_built_in(cmd);
 			ft_close_pipe_fds(g_tudao.pipe_heredoc);
 			close_fds(cmd);
-			free_and_exit_fork(g_tudao.ext_routine.msg);
+			free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
 		}
 		else
 			send_to_execve(cmd);
@@ -81,7 +81,7 @@ void	execute_command(t_command *cmd)
 	{
 		ft_close_pipe_fds(g_tudao.pipe_heredoc);
 		close_fds(cmd);
-		free_and_exit_fork(g_tudao.ext_routine.msg);
+		free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
 	}
 	return ;
 }
@@ -129,6 +129,6 @@ void	execute_pipeline(t_list *pipeline)
 			close_fds(cmd);
 			cmd_pivot = cmd_pivot->next;
 		}
-		close_and_free_pipes();
+		close_and_free_cmd_pipes();
 	}
 }

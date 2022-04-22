@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 00:25:00 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:55:38 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ void	free_main_pipeline(t_list **pipeline)
 	return ;
 }
 
-void	free_and_exit_fork(char *err_msg)
+void	free_and_exit_fork(char *err_msg, int err_code)
 {
 	t_list	*pivot;
 
+	g_tudao.exit.code = err_code;
 	if (err_msg)
 	{
 		ft_putendl_fd(err_msg, 2);
@@ -64,9 +65,10 @@ void	free_and_exit_fork(char *err_msg)
 		close_fds((t_command *) pivot->content);
 		pivot = pivot->next;
 	}
-	close_and_free_pipes();
+	close_heredoc_pipe();
+	close_and_free_cmd_pipes();
 	free_g_tudao();
-	exit(g_tudao.ext_routine.code);
+	exit(g_tudao.exit.code);
 }
 
 void	free_env_var(void *element)

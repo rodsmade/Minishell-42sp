@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/21 20:46:08 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/22 20:49:32 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ bool	execute_only_one_cmd(t_list *pipeline)
 	{
 		execute_built_in(cmd);
 		close_fds(cmd);
-		if (g_tudao.ext_routine.msg)
+		if (g_tudao.exit.msg)
 		{
-			ft_putendl_fd(g_tudao.ext_routine.msg, 2);
-			ft_free_ptr((void *)&g_tudao.ext_routine.msg);
+			ft_putendl_fd(g_tudao.exit.msg, 2);
+			ft_free_ptr((void *)&g_tudao.exit.msg);
 		}
 		return (true);
 	}	

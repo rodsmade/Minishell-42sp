@@ -25,7 +25,7 @@ void	catch_signal_parent(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_tudao.ext_routine.code = 130;
+		g_tudao.exit.code = 130;
 		ft_putendl_fd("", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -37,15 +37,9 @@ void	catch_signal_parent(int signal)
 void	catch_signals_child(int signal)
 {
 	if (signal == SIGQUIT)
-	{
-		g_tudao.ext_routine.code = 131;
-		free_and_exit_fork(ft_strdup("Quit (core dumped)"));
-	}
+		free_and_exit_fork(ft_strdup("Quit (core dumped)"), 131);
 	if (signal == SIGINT)
-	{
-		g_tudao.ext_routine.code = 130;
-		free_and_exit_fork(ft_strdup(""));
-	}
+		free_and_exit_fork(ft_strdup(""), 130);
 	return ;
 }
 
@@ -53,7 +47,7 @@ void	catch_signal_parent_extra_input(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_tudao.ext_routine.code = 130;
+		g_tudao.exit.code = 130;
 		g_tudao.skip_execution = true;
 		ft_putendl_fd("", 1);
 		g_tudao.is_ctrl_d = false;

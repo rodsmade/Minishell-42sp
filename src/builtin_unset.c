@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:15:11 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/10 23:12:11 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 21:17:54 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	delete_node(t_list *hashtable_pvt, t_list *node_to_delete,
 void	builtin_unset(t_list *cmd_with_args)
 {
 	char	*var_name;
-	t_list	*node_to_delete;
 	t_list	*pivot;
 
 	if (!cmd_with_args->next)
@@ -59,15 +58,15 @@ void	builtin_unset(t_list *cmd_with_args)
 		var_name = (char *) pivot->content;
 		if (is_valid_identifier(var_name))
 		{
-			node_to_delete = find_node_in_hashtable(var_name);
-			if (node_to_delete)
+			if (find_node_in_hashtable(var_name))
 				delete_node(g_tudao.hashtable[hash_string(var_name)],
-					node_to_delete, var_name);
+					find_node_in_hashtable(var_name), var_name);
 		}
 		else
 		{
-			ft_putendl_fd(ft_strjoin_3("minishell: unset: `", var_name,
-					"': not a valid identifier"), 2);
+			g_tudao.exit.msg = ft_strjoin_3("minishell: unset: `", var_name,
+					"': not a valid identifier");
+			g_tudao.exit.code = EXIT_FAILURE;
 			return ;
 		}
 		pivot = pivot->next;

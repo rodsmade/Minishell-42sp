@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_redirections_2.c                             :+:      :+:    :+:   */
+/*   utils_heredoc_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/18 00:02:40 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:14:25 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ int	pipe_and_fork(int *pipe_fds)
 	int	pid;
 
 	if (pipe(pipe_fds) == -1)
-		free_and_exit_fork(ft_strdup("Error creating pipe for heredoc"));
+		free_and_exit_fork(ft_strdup("Error creating pipe for heredoc"), \
+			EXIT_FAILURE);
 	pid = fork();
 	if (pid == -1)
-		free_and_exit_fork(ft_strdup("Error forking process for heredoc"));
+		free_and_exit_fork(ft_strdup("Error forking process for heredoc"), \
+			EXIT_FAILURE);
 	return (pid);
 }
 

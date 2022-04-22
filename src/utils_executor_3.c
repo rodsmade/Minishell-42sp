@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:25:26 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 01:30:08 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@ bool	is_built_in(char *str)
 void	process_child_return_code(int wstatus)
 {
 	if (WIFEXITED(wstatus))
-		g_tudao.ext_routine.code = WEXITSTATUS(wstatus);
+		g_tudao.exit.code = WEXITSTATUS(wstatus);
 	else if (WIFSIGNALED(wstatus))
 	{
-		g_tudao.ext_routine.code = WTERMSIG(wstatus) + 128;
-		if (g_tudao.ext_routine.code == 130)
+		g_tudao.exit.code = WTERMSIG(wstatus) + 128;
+		if (g_tudao.exit.code == 130)
 			ft_putendl_fd("", 2);
-		else if (g_tudao.ext_routine.code == 131)
+		else if (g_tudao.exit.code == 131)
 			ft_putendl_fd("Quit (core dumped)", 2);
 	}
 	else
-		g_tudao.ext_routine.code = -42;
+		g_tudao.exit.code = -42;
 	return ;
 }

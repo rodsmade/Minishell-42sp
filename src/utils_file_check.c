@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_file_check.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:15:16 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/06 21:13:13 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:13:04 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_file_exists(char *file_name)
 		err_msg = ft_strjoin_3("bash: ",
 				file_name,
 				": No such file or directory");
-		free_and_exit_fork(err_msg);
+		free_and_exit_fork(err_msg, 2);
 	}
 	return ;
 }
@@ -35,7 +35,7 @@ void	check_file_has_permissions(char *file_name, int permissions)
 		err_msg = ft_strjoin_3("bash: ",
 				file_name,
 				": Permission denied");
-		free_and_exit_fork(err_msg);
+		free_and_exit_fork(err_msg, EXIT_FAILURE);
 	}
 	return ;
 }

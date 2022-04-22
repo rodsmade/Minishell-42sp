@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 20:35:53 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static void	assemble_line(char **line_read)
 	{
 		ft_putendl_fd("bash: syntax error: unexpected end of file", 2);
 		ft_putendl_fd("exit", 2);
-		g_tudao.ext_routine.code = 2;
-		g_tudao.exit = true;
+		g_tudao.exit.code = 2;
+		g_tudao.exit.flag = true;
 	}
 }
 
@@ -62,7 +62,7 @@ void	display_cmd_prompt(void)
 	{
 		g_tudao.line_count++;
 		process_input(g_tudao.prompt_input);
-		while (g_tudao.token_list && !g_tudao.exit && !g_tudao.syntax_error
+		while (g_tudao.token_list && !g_tudao.exit.flag && !g_tudao.syntax_error
 			&& !g_tudao.skip_execution
 			&& is_pipe_and_or((char *)ft_lst_last(g_tudao.token_list)->content))
 			assemble_line(&g_tudao.prompt_input);
@@ -70,7 +70,7 @@ void	display_cmd_prompt(void)
 	else
 	{
 		ft_putendl_fd("exit", 2);
-		g_tudao.exit = true;
+		g_tudao.exit.flag = true;
 	}
 	disable_signal(SIGINT, &g_tudao.action);
 	ft_free_ptr((void *)&curr_path);
