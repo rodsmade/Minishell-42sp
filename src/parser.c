@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 20:59:40 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/21 21:01:37 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	check_tokens_consistency(void)
 
 void	parse_tokens(void)
 {
-	check_tokens_consistency();
+	if (g_tudao.token_list)
+		check_tokens_consistency();
 	return ;
 }
