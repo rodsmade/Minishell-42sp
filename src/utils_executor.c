@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 18:45:03 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/18 14:38:34 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/22 20:00:18 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,15 @@ char	*find_cmd_path(char *command_str)
 		{
 			if (access(command_str, X_OK) == 0)
 			{
-				g_tudao.ext_routine.msg = ft_strjoin_3("bash: ", command_str, \
+				g_tudao.exit.msg = ft_strjoin_3("bash: ", command_str, \
 				": Is a directory");
 				return (command_str);
 			}
 			else
 			{
-				g_tudao.ext_routine.msg = ft_strjoin_3("bash: ", command_str, \
-				": Permission denied");
+				g_tudao.exit.msg = ft_strjoin_3("bash: ", command_str,
+						": Permission denied");
+				g_tudao.exit.code = EXIT_FAILURE;
 				return (command_str);
 			}
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:45 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/20 21:09:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:55:38 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,14 @@ void	close_fds(t_command *command)
 	return ;
 }
 
-void	close_and_free_pipes(void)
+void	close_heredoc_pipe(void)
+{
+	close(g_tudao.pipe_heredoc[0]);
+	close(g_tudao.pipe_heredoc[1]);
+	return ;
+}
+
+void	close_and_free_cmd_pipes(void)
 {
 	int	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 01:17:46 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	expand_variable(char **expanded_content, char *variable_to_expand)
 	size = 0;
 	if (variable_to_expand[0] == '?')
 	{
-		env_var_value = ft_itoa(g_tudao.ext_routine.code);
+		env_var_value = ft_itoa(g_tudao.exit.code);
 		temp = *expanded_content;
 		*expanded_content = ft_strjoin(temp, env_var_value);
 		ft_free_ptr((void *)&temp);
 		ft_free_ptr((void *)&env_var_value);
-		g_tudao.ext_routine.code = 0;
-		g_tudao.ext_routine.msg = NULL;
+		g_tudao.exit.code = 0;
+		g_tudao.exit.msg = NULL;
 		return (1);
 	}
 	else

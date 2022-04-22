@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 20:47:35 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/22 00:42:32 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 20:37:51 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,17 @@ void	set_up_main_pipeline(void)
 	{
 		command = malloc(sizeof(t_command));
 		if (!command)
-			ft_putendl_fd("[ERROR] deu ruim o malloc ajustar aqui depois", 2);
-		init_command(command);
-		capture_command(command, &pivot);
+		{
+			pivot = NULL;
+			g_tudao.skip_execution = true;
+			g_tudao.exit.code = EXIT_FAILURE;
+			ft_putendl_fd("[ERROR] Failed to alloc memory in command table", 2);
+		}
+		else
+		{
+			init_command(command);
+			capture_command(command, &pivot);
+		}
 		ft_lst_add_back(&g_tudao.command_table.main_pipeline,
 			ft_lst_new((void *) command));
 		if (pivot && is_pipe(pivot->content))

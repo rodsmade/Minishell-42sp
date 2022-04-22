@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:53:54 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/11 00:00:17 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:58:55 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	builtin_env(t_list	*cmd_with_flags)
 
 	if (cmd_with_flags->next)
 	{
-		ft_putendl_fd(ft_strjoin_3("env: ‘",
+		free_and_exit_fork(ft_strjoin_3("env: ‘",
 				(char *) cmd_with_flags->next->content,
-				"’: No such file or directory"), 2);
+				"’: No such file or directory"), EXIT_FAILURE);
 		return ;
 	}
 	i = -1;

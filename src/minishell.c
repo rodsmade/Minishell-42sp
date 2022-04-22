@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/21 20:36:06 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/22 20:21:43 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,23 @@ void	get_env_variables(char **envp)
 
 void	repl(void)
 {
-	g_tudao.exit = false;
-	g_tudao.ext_routine.code = 0;
+	g_tudao.exit.flag = false;
+	g_tudao.exit.code = 0;
 	g_tudao.line_count = 0;
 	g_tudao.backup_stdin = dup(STDIN_FILENO);
-	while (!g_tudao.exit)
+	while (!g_tudao.exit.flag)
 	{
 		init_tudao();
 		display_cmd_prompt();
 		set_up_command_table();
 		if (g_tudao.prompt_input && g_tudao.token_list
 			&& g_tudao.token_list->content && !g_tudao.syntax_error
-			&& !g_tudao.exit && !g_tudao.skip_execution)
+			&& !g_tudao.exit.flag && !g_tudao.skip_execution)
 			execute_pipeline(g_tudao.command_table.main_pipeline);
-		free_lexer();
-		free_main_pipeline(&g_tudao.command_table.main_pipeline);
 		add_heredocs_to_history();
 		add_history(g_tudao.prompt_input);
+		free_lexer();
+		free_main_pipeline(&g_tudao.command_table.main_pipeline);
 		ft_free_ptr((void *)&g_tudao.prompt_input);
 	}
 	return ;
@@ -60,5 +60,5 @@ int	main(int argc, char *argv[], char **envp)
 	get_env_variables(envp);
 	repl();
 	free_g_tudao();
-	return (g_tudao.ext_routine.code);
+	return (g_tudao.exit.code);
 }
