@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 12:12:26 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/18 14:54:22 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/23 14:07:21 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	is_valid_identifier(char *key_value)
 	i = 0;
 	quote_type = 0;
 	flag = 0;
-	if (key_value == NULL || key_value[i] == '\0')
+	if (key_value == NULL || key_value[i] == '\0' || key_value[i] == '=')
 		return (false);
 	while (key_value[i] && key_value[i] != '=')
 	{
