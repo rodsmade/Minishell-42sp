@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/22 23:29:28 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,24 @@ void	builtin_cd(t_list *cmd_lst)
 {
 	char	*path;
 
-	if (cmd_lst->next)
-		path = (char *) cmd_lst->next->content;
-	if (cmd_lst->next && cmd_lst->next->next != NULL)
+	if (cmd_lst->next && cmd_lst->next->content)
 	{
-		g_tudao.exit.msg = \
-		ft_strdup("minishell: cd: too many arguments");
-		g_tudao.exit.code = EXIT_FAILURE;
-		return ;
+		path = (char *) cmd_lst->next->content;
+		if (cmd_lst->next && cmd_lst->next->next != NULL)
+		{
+			g_tudao.exit.msg = \
+			ft_strdup("minishell: cd: too many arguments");
+			g_tudao.exit.code = EXIT_FAILURE;
+			return ;
+		}
+		else if (cmd_lst->next == NULL
+			|| (ft_strncmp(path, "", 1) == 0)
+			|| (ft_strncmp(path, "~", 2) == 0))
+			go_to_pattern("HOME");
+		else if (ft_strncmp(path, "-", 2) == 0)
+			go_to_pattern("OLDPWD");
+		else
+			go_to_path(path);
 	}
-	else if (cmd_lst->next == NULL
-		|| (ft_strncmp(path, "", 1) == 0)
-		|| (ft_strncmp(path, "~", 2) == 0))
-		go_to_pattern("HOME");
-	else if (ft_strncmp(path, "-", 2) == 0)
-		go_to_pattern("OLDPWD");
-	else
-		go_to_path(path);
+	g_tudao.exit.code = 0;
 }
