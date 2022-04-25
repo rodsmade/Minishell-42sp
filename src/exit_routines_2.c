@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/25 18:36:53 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/25 19:45:05 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	free_and_exit_fork(char *err_msg, int err_code)
 		close_fds((t_command *) pivot->content);
 		pivot = pivot->next;
 	}
+	ft_close_pipe_fds(g_tudao.pipe_heredoc);
 	close_heredoc_pipe();
 	close_and_free_cmd_pipes();
 	free_g_tudao();

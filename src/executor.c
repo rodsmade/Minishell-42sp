@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/25 18:44:41 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/25 19:44:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	send_to_execve(t_command *command)
 	if (!flag && execve(cmd_path, cmd_arr, hashtable_arr) == -1)
 		g_tudao.exit.code = 126;
 	ft_free_ptr((void *)&cmd_arr);
-	ft_close_pipe_fds(g_tudao.pipe_heredoc);
-	close_fds(command);
 	ft_free_arr((void *)&hashtable_arr);
 	free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
 }
@@ -70,19 +68,13 @@ void	execute_command(t_command *cmd)
 		if (is_built_in(cmd->cmds_with_flags->content))
 		{
 			execute_built_in(cmd);
-			ft_close_pipe_fds(g_tudao.pipe_heredoc);
-			close_fds(cmd);
 			free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
 		}
 		else
 			send_to_execve(cmd);
 	}
 	else
-	{
-		ft_close_pipe_fds(g_tudao.pipe_heredoc);
-		close_fds(cmd);
 		free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
-	}
 	return ;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:07:21 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/25 19:28:10 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	init_tudao(void)
 	g_tudao.exit.flag = false;
 	g_tudao.skip_execution = false;
 	g_tudao.is_ctrl_d = true;
+	g_tudao.pipe_heredoc[0] = -1;
+	g_tudao.pipe_heredoc[1] = -1;
 	return ;
 }
 

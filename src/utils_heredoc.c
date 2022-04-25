@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:27:16 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:15:07 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/25 19:45:09 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,5 @@ void	get_input_line(t_data_hd *hd, int *pipe_fds)
 	ft_close_pipe_fds(pipe_fds);
 	ft_free_ptr((void *)&(hd->str));
 	ft_free_pipe_arr(&(hd->aux_pipes), hd->total_pipes);
-	ft_close_pipe_fds(g_tudao.pipe_heredoc);
 	free_and_exit_fork(NULL, EXIT_SUCCESS);
 }
