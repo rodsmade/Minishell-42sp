@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 22:38:02 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/26 12:50:23 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/26 13:03:41 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	is_directory(char *path)
 bool	is_accessible(char *cmd_str, int is_abs_path, char *combination)
 {
 	ft_free_ptr((void *)&g_tudao.exit.msg);
-	if (access(combination, F_OK) == 0)
+	if (combination != NULL && access(combination, F_OK) == 0)
 	{
 		g_tudao.exit.code = 0;
 		g_tudao.exit.msg = NULL;
