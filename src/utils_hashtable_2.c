@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:06:49 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 16:36:41 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/26 18:23:51 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char	**split_key_and_value(char *string)
 {
 	char	**key_value;
 
+	if (!ft_strchr(string, '='))
+		return (NULL);
 	key_value = malloc(3 * sizeof(*key_value));
 	key_value[0] = alloc_env_var_key(string);
 	key_value[1] = alloc_env_var_value(string);

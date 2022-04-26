@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/26 17:46:56 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,7 @@ void	iterate_lst_to_export(t_list *lst)
 void	builtin_export(t_list *lst)
 {
 	if (lst->next == NULL)
-	{
 		print_exported_vars();
-		return ;
-	}
-	iterate_lst_to_export(lst);
+	else
+		iterate_lst_to_export(lst);
 }
