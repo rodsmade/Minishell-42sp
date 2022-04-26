@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 22:38:02 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/26 15:28:50 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/26 15:44:55 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ char	*find_valid_combination(char **split_paths, char *command_str)
 
 	i = -1;
 	combination = NULL;
-	while (split_paths && split_paths[++i])
+	while (split_paths && split_paths[++i] && \
+	ft_strncmp(command_str, ".", 2) && ft_strncmp(command_str, "..", 2))
 	{
 		combination = ft_strjoin_3(split_paths[i], "/", command_str);
 		if (is_accessible(command_str, false, combination) == true)
