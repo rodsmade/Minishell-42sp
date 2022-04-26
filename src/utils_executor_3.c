@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:25:26 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/26 01:26:11 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ bool	has_absolute_path(char *command_str)
 	return (!ft_strncmp(command_str, "~", 1)
 		|| !ft_strncmp(command_str, "/", 1)
 		|| !ft_strncmp(command_str, "./", 2)
-		|| !ft_strncmp(command_str, "../", 3)
-		|| !ft_strncmp(command_str, ".", 1));
+		|| !ft_strncmp(command_str, "../", 3));
 }
 
 bool	is_built_in(char *str)
@@ -62,4 +61,17 @@ void	process_child_return_code(int wstatus)
 	else
 		g_tudao.exit.code = -42;
 	return ;
+}
+
+bool	is_valid_env_path(char *path, char *command_str)
+{
+	if (path && path[0] != '\0')
+		return (true);
+	else
+	{
+		g_tudao.exit.msg = ft_strjoin_3("minishell: ", command_str, \
+		": No such file or directory");
+		g_tudao.exit.code = 127;
+		return (false);
+	}
 }

@@ -47,6 +47,7 @@ FILES			=	builtin_cd.c \
 					utils_env_vars.c \
 					utils_executor_2.c \
 					utils_executor_3.c \
+					utils_executor_4.c \
 					utils_executor.c \
 					utils_expansor_2.c \
 					utils_expansor.c \
