@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:47:15 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/26 20:40:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	execute_built_in(t_command *command)
 	else if (ft_strncmp(built_in_str, "env", 4) == 0)
 		builtin_env(cmd_lst);
 	else if (ft_strncmp(built_in_str, "exit", 5) == 0)
-		builtin_exit();
+		builtin_exit(command);
 	else if (ft_strncmp(built_in_str, "export", 7) == 0)
 		builtin_export(cmd_lst);
 	else if (ft_strncmp(built_in_str, "unset", 6) == 0)
