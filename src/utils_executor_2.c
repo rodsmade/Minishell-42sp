@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/25 23:46:37 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/26 15:46:51 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	fork_and_execute_cmd(int total_pipes, int counter, t_command *cmd)
 	}
 	else
 	{
-		waitpid(pid, &wstatus, WNOHANG);
+		waitpid(-1, &wstatus, 0);
 		process_child_return_code(wstatus);
 		if (counter != total_pipes)
 			close(g_tudao.cmd_pipes[counter][1]);

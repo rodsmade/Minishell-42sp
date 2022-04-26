@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 11:56:49 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/11 16:36:21 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/26 18:58:38 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	insert_or_update_hashtable(char *string, int is_env_var
 	char		**key_value;
 
 	key_value = split_key_and_value(string);
+	if (!key_value)
+		return ;
 	if (find_node_in_hashtable(key_value[0]) == NULL)
 		insert_in_hashtable(string, is_env_var, hashtable);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/22 23:29:28 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:31:58 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	go_to_path(char	*path)
 	char	*new_pwd;
 
 	old_pwd = get_old_pwd();
-	if (!old_pwd)
+	if (!old_pwd || !path[0])
 		return ;
 	new_pwd = ft_strdup(path);
 	if (chdir(new_pwd) != 0)
@@ -76,7 +76,9 @@ void	builtin_cd(t_list *cmd_lst)
 {
 	char	*path;
 
-	if (cmd_lst->next && cmd_lst->next->content)
+	if (!cmd_lst->next)
+		go_to_pattern("HOME");
+	else if (cmd_lst->next->content)
 	{
 		path = (char *) cmd_lst->next->content;
 		if (cmd_lst->next && cmd_lst->next->next != NULL)
@@ -86,14 +88,14 @@ void	builtin_cd(t_list *cmd_lst)
 			g_tudao.exit.code = EXIT_FAILURE;
 			return ;
 		}
-		else if (cmd_lst->next == NULL
-			|| (ft_strncmp(path, "", 1) == 0)
-			|| (ft_strncmp(path, "~", 2) == 0))
+		else if (ft_strncmp(path, "~", 2) == 0)
 			go_to_pattern("HOME");
 		else if (ft_strncmp(path, "-", 2) == 0)
+		{
 			go_to_pattern("OLDPWD");
+			builtin_pwd();
+		}
 		else
 			go_to_path(path);
 	}
-	g_tudao.exit.code = 0;
 }

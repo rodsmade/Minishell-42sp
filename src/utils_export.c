@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 12:12:26 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/23 14:07:21 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:43:27 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ void	print_exported_vars(void)
 		aux = g_tudao.hashtable[i];
 		while (aux != NULL)
 		{
-			ft_putstr_fd("declare -x ", 1);
-			ft_putstr_fd(((t_env_var *)(aux->content))->key, \
-			STDOUT_FILENO);
-			write(STDOUT_FILENO, "=", 1);
-			if (((t_env_var *)(aux->content))->value)
-				ft_putstr_fd(((t_env_var *)(aux->content))->value, \
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
+			ft_putstr_fd(((t_env_var *)(aux->content))->key,
 				STDOUT_FILENO);
-			write(STDOUT_FILENO, "\n", 1);
+			ft_putchar_fd('=', STDOUT_FILENO);
+			if (((t_env_var *)(aux->content))->value)
+				ft_putstr_fd(((t_env_var *)(aux->content))->value,
+					STDOUT_FILENO);
+			ft_putchar_fd('\n', STDOUT_FILENO);
 			aux = aux->next;
 		}
 	}	
