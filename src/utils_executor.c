@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 18:45:03 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/26 01:25:01 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/26 12:50:54 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*find_cmd_path(char **cmd_arr)
 	command_str = cmd_arr[0];
 	if (has_absolute_path(command_str) == true)
 	{
-		if (is_accessible(command_str, true) == true)
+		if (is_accessible(command_str, true, command_str) == true)
 		{
 			if (is_directory(command_str) == false)
 			{

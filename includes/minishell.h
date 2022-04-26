@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/26 01:25:26 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/26 12:53:49 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ void			process_child_return_code(int wstatus);
 
 // utils_executor_4.c
 bool			is_directory(char *path);
-bool			is_accessible(char *command_str, int is_absolute_path);
+bool			is_accessible(char *cmd, int is_abs_path, char *combination);
 bool			is_executable(char *command_str);
 char			*find_valid_combination(char **split_paths, char *command_str);
 

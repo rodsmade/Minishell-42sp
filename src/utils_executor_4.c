@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 22:38:02 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/26 01:16:06 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/26 12:50:23 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,23 @@ bool	is_directory(char *path)
 		return (false);
 }
 
-bool	is_accessible(char *command_str, int is_absolute_path)
+bool	is_accessible(char *cmd_str, int is_abs_path, char *combination)
 {
-	if (access(command_str, F_OK) == 0)
+	ft_free_ptr((void *)&g_tudao.exit.msg);
+	if (access(combination, F_OK) == 0)
+	{
+		g_tudao.exit.code = 0;
+		g_tudao.exit.msg = NULL;
 		return (true);
+	}
 	else
 	{
 		g_tudao.exit.code = 127;
-		ft_free_ptr((void *)&g_tudao.exit.msg);
-		if (is_absolute_path == true)
-			g_tudao.exit.msg = ft_strjoin_3("minishell: ", command_str, \
+		if (is_abs_path == true)
+			g_tudao.exit.msg = ft_strjoin_3("minishell: ", cmd_str, \
 			": No such file or directory");
-		else if (is_absolute_path == false)
-			g_tudao.exit.msg = ft_strjoin_3("minishell: ", command_str, \
+		else if (is_abs_path == false)
+			g_tudao.exit.msg = ft_strjoin_3("minishell: ", cmd_str, \
 			": command not found");
 		return (false);
 	}
@@ -74,7 +78,7 @@ char	*find_valid_combination(char **split_paths, char *command_str)
 	while (split_paths && split_paths[++i])
 	{
 		combination = ft_strjoin_3(split_paths[i], "/", command_str);
-		if (is_accessible(combination, false) == true)
+		if (is_accessible(command_str, false, combination) == true)
 			break ;
 		ft_free_ptr((void *)&combination);
 	}
@@ -87,7 +91,7 @@ char	*find_valid_combination(char **split_paths, char *command_str)
 		}
 	}
 	else
-		is_accessible(command_str, false);
+		is_accessible(command_str, false, combination);
 	ft_free_ptr((void *)&combination);
 	return (NULL);
 }
