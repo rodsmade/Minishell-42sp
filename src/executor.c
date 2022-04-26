@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:47:15 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/26 01:20:54 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,17 @@ void	send_to_execve(t_command *command)
 	char	**cmd_arr;
 	char	*cmd_path;
 	char	**hashtable_arr;
-	int		flag;
 
 	cmd_arr = assemble_cmd_array(command);
-	cmd_path = find_cmd_path(cmd_arr[0]);
+	cmd_path = find_cmd_path(cmd_arr);
 	hashtable_arr = hashtable_to_array();
-	flag = 0;
-	if (!cmd_path)
+	if (execve(cmd_path, cmd_arr, hashtable_arr) == -1)
 	{
-		g_tudao.exit.msg = \
-		ft_strjoin_3("minishell: ", cmd_arr[0], ": command not found");
-		g_tudao.exit.code = 127;
-		flag = 1;
+		ft_free_ptr((void *)&cmd_path);
+		ft_free_ptr((void *)&cmd_arr);
+		ft_free_arr((void *)&hashtable_arr);
+		free_and_exit_fork(NULL, EXIT_FAILURE);
 	}
-	if (!flag && execve(cmd_path, cmd_arr, hashtable_arr) == -1)
-		g_tudao.exit.code = 126;
-	ft_free_ptr((void *)&cmd_arr);
-	ft_close_pipe_fds(g_tudao.pipe_heredoc);
-	close_fds(command);
-	ft_free_arr((void *)&hashtable_arr);
-	free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
 }
 
 void	execute_built_in(t_command *command)
@@ -70,19 +61,13 @@ void	execute_command(t_command *cmd)
 		if (is_built_in(cmd->cmds_with_flags->content))
 		{
 			execute_built_in(cmd);
-			ft_close_pipe_fds(g_tudao.pipe_heredoc);
-			close_fds(cmd);
 			free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
 		}
 		else
 			send_to_execve(cmd);
 	}
 	else
-	{
-		ft_close_pipe_fds(g_tudao.pipe_heredoc);
-		close_fds(cmd);
 		free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
-	}
 	return ;
 }
 

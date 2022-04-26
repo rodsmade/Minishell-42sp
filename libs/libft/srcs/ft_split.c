@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 10:55:18 by roaraujo          #+#    #+#             */
-/*   Updated: 2021/10/06 10:55:19 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/25 21:29:42 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ char	**ft_split(char const *s, char delimiter)
 	char	**morsels;
 	size_t	words;
 
+	if (s == NULL)
+		return (NULL);
 	words = count_words(s, delimiter);
 	morsels = (char **) malloc((words + 1) * sizeof(char *));
 	if (morsels == NULL)

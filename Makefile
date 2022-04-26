@@ -13,7 +13,15 @@ LIBS			=	-lreadline -L $(PATH_LIBRARY) -lft
 
 DEBUG			=	-g3
 
-VALGRIND		=	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --tool=memcheck --suppressions=readline.supp --keep-debuginfo=yes --track-fds=yes
+VALGRIND		=	valgrind \
+					--leak-check=full \
+					--show-leak-kinds=all \
+					--track-origins=yes \
+					--quiet \
+					--tool=memcheck \
+					--suppressions=readline.supp \
+					--keep-debuginfo=yes \
+					--track-fds=yes
 
 FILES			=	builtin_cd.c \
 					builtin_echo.c \
@@ -39,6 +47,7 @@ FILES			=	builtin_cd.c \
 					utils_env_vars.c \
 					utils_executor_2.c \
 					utils_executor_3.c \
+					utils_executor_4.c \
 					utils_executor.c \
 					utils_expansor_2.c \
 					utils_expansor.c \
@@ -73,10 +82,13 @@ makedir:
 					$(MKDIR) $(PATH_OBJ)
 
 $(NAME):			$(addprefix $(PATH_OBJ),$(OBJS))
-					$(CC) $(addprefix $(PATH_OBJ),$(OBJS)) -o $(NAME) $(LIBS)
+					@$(CC) $(addprefix $(PATH_OBJ),$(OBJS)) -o $(NAME) $(LIBS)
+					@echo "\n\033[0;32mDone!"
+					@echo -n "\033[0m"					
 
 $(PATH_OBJ)%.o: 	$(PATH_SRC)%.c $(HEADERS)
-					$(CC) -c -o $@ $< $(LIBS)
+					@printf "\033[0;33mGenerating libft objects... %-33.33s\r" $@
+					@$(CC) -c -o $@ $< $(LIBS)
 
 run:				all
 					./$(NAME)
@@ -85,12 +97,15 @@ valgrind:			all
 					$(VALGRIND) ./$(NAME)
 
 clean:
-					$(RM) $(addprefix $(PATH_OBJ),$(OBJS))
+					@$(RM) $(addprefix $(PATH_OBJ),$(OBJS))
+					@echo "\033[0;32mObj. files cleaned!"
+					@echo -n "\033[0m"
 
 fclean:				clean
-					$(RM) $(NAME)
+					@$(RM) $(NAME)
+					@echo "\033[0;32mBinary Cleaned!"
+					@echo -n "\033[0m"
 
 re:					fclean all
 
-.PHONY:				all clean fclean re run 
-
+.PHONY:				all clean fclean re run valgrind

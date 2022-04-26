@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_file_check.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:15:16 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:13:04 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/25 18:44:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_file_exists(char *file_name)
 
 	if (access(file_name, F_OK) == -1)
 	{
-		err_msg = ft_strjoin_3("bash: ",
+		err_msg = ft_strjoin_3("minishell: ",
 				file_name,
 				": No such file or directory");
 		free_and_exit_fork(err_msg, 2);
@@ -32,7 +32,7 @@ void	check_file_has_permissions(char *file_name, int permissions)
 
 	if (access(file_name, permissions) == -1)
 	{
-		err_msg = ft_strjoin_3("bash: ",
+		err_msg = ft_strjoin_3("minishell: ",
 				file_name,
 				": Permission denied");
 		free_and_exit_fork(err_msg, EXIT_FAILURE);

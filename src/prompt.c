@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/25 18:44:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	assemble_line(char **line_read)
 	}
 	else if (!aux_str && g_tudao.is_ctrl_d)
 	{
-		ft_putendl_fd("bash: syntax error: unexpected end of file", 2);
+		ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);
 		ft_putendl_fd("exit", 2);
 		g_tudao.exit.code = 2;
 		g_tudao.exit.flag = true;
