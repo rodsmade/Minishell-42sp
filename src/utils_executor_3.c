@@ -6,7 +6,7 @@
 /*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:25:26 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/26 01:26:11 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/26 15:27:14 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ bool	alters_main_memory(char *built_in)
 bool	has_absolute_path(char *command_str)
 {
 	return (!ft_strncmp(command_str, "~", 1)
-		|| !ft_strncmp(command_str, "/", 1)
-		|| !ft_strncmp(command_str, "./", 2)
-		|| !ft_strncmp(command_str, "../", 3));
+		|| ft_strchr(command_str, '/'));
 }
 
 bool	is_built_in(char *str)
