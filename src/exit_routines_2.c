@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:55:38 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/26 00:47:04 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	free_and_exit_fork(char *err_msg, int err_code)
 		close_fds((t_command *) pivot->content);
 		pivot = pivot->next;
 	}
+	ft_close_pipe_fds(g_tudao.pipe_heredoc);
 	close_heredoc_pipe();
 	close_and_free_cmd_pipes();
 	free_g_tudao();

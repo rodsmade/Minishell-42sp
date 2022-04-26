@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 17:22:33 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/25 18:44:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_syntax_error_exit(char *token)
 	g_tudao.syntax_error = true;
 	g_tudao.exit.code = 2;
 	g_tudao.exit.msg = \
-	ft_strjoin_3("bash: syntax error near unexpected token `", token, "'");
+	ft_strjoin_3("minishell: syntax error near unexpected token `", token, "'");
 	ft_putendl_fd(g_tudao.exit.msg, 2);
 	ft_free_ptr((void *)&g_tudao.exit.msg);
 	return ;

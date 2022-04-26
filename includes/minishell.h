@@ -190,7 +190,7 @@ int				count_env_vars(void);
 // utils_executor.c
 char			**assemble_cmd_array(t_command *command);
 char			*find_cmd_in_path_var(char *command_str);
-char			*find_cmd_path(char *command_str);
+char			*find_cmd_path(char **cmd_arr);
 
 // utils_executor_2.c
 void			fork_and_execute_cmd(int total_pipes, int counter,
@@ -203,7 +203,14 @@ bool			alters_main_memory(char *built_in);
 bool			alters_main_memory(char *built_in);
 bool			is_built_in(char *str);
 bool			has_absolute_path(char *command_str);
+bool			is_valid_env_path(char *path, char *command_str);
 void			process_child_return_code(int wstatus);
+
+// utils_executor_4.c
+bool			is_directory(char *path);
+bool			is_accessible(char *cmd, int is_abs_path, char *combination);
+bool			is_executable(char *command_str);
+char			*find_valid_combination(char **split_paths, char *command_str);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 18:45:03 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 20:00:18 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/26 12:50:54 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,53 +37,49 @@ char	*find_cmd_in_path_var(char *command_str)
 {
 	char	*all_paths;
 	char	**split_paths;
-	char	*cmd_path;
-	int		i;
+	char	*combination;
 
 	if (command_str && command_str[0] != '\0')
 	{
 		all_paths = read_hashtable(g_tudao.hashtable[hash_string("PATH")],
 				"PATH");
-		split_paths = ft_split(all_paths, ':');
-		i = -1;
-		while (split_paths[++i])
+		if (is_valid_env_path(all_paths, command_str) == true)
 		{
-			cmd_path = ft_strjoin_3(split_paths[i], "/", command_str);
-			if (access(cmd_path, F_OK) == 0)
-			{
-				ft_free_arr((void *)&split_paths);
-				return (cmd_path);
-			}
-			else
-				ft_free_ptr((void *)&cmd_path);
+			split_paths = ft_split(all_paths, ':');
+			combination = find_valid_combination(split_paths, command_str);
+			ft_free_arr((void *)&split_paths);
+			if (combination == NULL)
+				return (NULL);
+			else if (combination)
+				return (combination);
 		}
-		ft_free_arr((void *)&split_paths);
 	}
 	return (NULL);
 }
 
-char	*find_cmd_path(char *command_str)
+char	*find_cmd_path(char **cmd_arr)
 {
-	if (has_absolute_path(command_str))
+	char	*command_str;
+
+	command_str = cmd_arr[0];
+	if (has_absolute_path(command_str) == true)
 	{
-		if (access(command_str, F_OK) == 0)
+		if (is_accessible(command_str, true, command_str) == true)
 		{
-			if (access(command_str, X_OK) == 0)
+			if (is_directory(command_str) == false)
 			{
-				g_tudao.exit.msg = ft_strjoin_3("bash: ", command_str, \
-				": Is a directory");
-				return (command_str);
-			}
-			else
-			{
-				g_tudao.exit.msg = ft_strjoin_3("bash: ", command_str,
-						": Permission denied");
-				g_tudao.exit.code = EXIT_FAILURE;
-				return (command_str);
+				if (is_executable(command_str) == true)
+					return (command_str);
 			}
 		}
-		else
-			return (NULL);
+		ft_free_ptr((void *)&cmd_arr);
+		free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
 	}
-	return (find_cmd_in_path_var(command_str));
+	command_str = find_cmd_in_path_var(command_str);
+	if (command_str == NULL)
+	{
+		ft_free_ptr((void *)&cmd_arr);
+		free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
+	}
+	return (command_str);
 }
