@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:25:26 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/26 15:27:14 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/26 21:48:52 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ bool	is_built_in(char *str)
 			|| (ft_strncmp(str, "env", 4) == 0)
 			|| (ft_strncmp(str, "exit", 5) == 0)
 			|| (ft_strncmp(str, "export", 7) == 0)
-			|| (ft_strncmp(str, "clear", 6) == 0)
 			|| (ft_strncmp(str, "unset", 6) == 0)))
 		return (true);
 	return (false);

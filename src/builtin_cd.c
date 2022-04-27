@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/26 16:31:58 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/26 21:55:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	go_to_pattern(char *key)
 }
 
 void	builtin_cd(t_list *cmd_lst)
-
 {
 	char	*path;
 
@@ -93,7 +92,8 @@ void	builtin_cd(t_list *cmd_lst)
 		else if (ft_strncmp(path, "-", 2) == 0)
 		{
 			go_to_pattern("OLDPWD");
-			builtin_pwd();
+			if (!g_tudao.exit.code)
+				builtin_pwd();
 		}
 		else
 			go_to_path(path);
