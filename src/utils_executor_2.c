@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/26 15:46:51 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/27 17:46:56 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,12 @@ void	create_outputs(t_command *cmd)
 	pivot = cmd->outputs;
 	while (pivot)
 	{
-		if (access((char *) pivot->content, F_OK) == -1)
-		{
-			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_TRUNC,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (pivot->next)
-				close(fd);
-			else
-				cmd->output_fd = fd;
-		}
+		fd = open((char *) pivot->content, O_CREAT | O_RDWR | O_TRUNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+		if (pivot->next)
+			close(fd);
+		else
+			cmd->output_fd = fd;
 		pivot = pivot->next;
 	}
 	return ;
@@ -89,15 +86,12 @@ void	create_o_concats(t_command *cmd)
 	pivot = cmd->o_concats;
 	while (pivot)
 	{
-		if (access((char *) pivot->content, F_OK) == -1)
-		{
-			fd = open((char *) pivot->content, O_CREAT | O_WRONLY | O_APPEND,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			if (pivot->next)
-				close(fd);
-			else
-				cmd->o_concat_fd = fd;
-		}
+		fd = open((char *) pivot->content, O_CREAT | O_RDWR | O_APPEND,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+		if (pivot->next)
+			close(fd);
+		else
+			cmd->o_concat_fd = fd;
 		pivot = pivot->next;
 	}
 	return ;
