@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 00:16:41 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/27 17:45:38 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	capture_inputs(t_command *cmd)
 void	capture_outputs(t_command *cmd)
 {
 	if (cmd->outputs)
+	{
 		dup2(cmd->output_fd, STDOUT_FILENO);
+	}
 	return ;
 }
 
