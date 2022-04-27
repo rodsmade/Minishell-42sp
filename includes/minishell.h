@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/26 20:40:52 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/27 04:12:02 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/wait.h>			// wait()
 # include <signal.h>			// sigaction()
 # include "libft.h"
+# include "ansi_color_codes.h"
 
 // ----------------------------------------------	DEFINES		----------------
 # define TABLE_SIZE	50

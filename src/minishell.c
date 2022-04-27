@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 20:21:43 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/27 04:26:24 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,27 @@
 #include <stdio.h>
 
 t_tudao	g_tudao;
+
+void	print_intro(void)
+{
+	int		fd;
+	int		chars_read;
+	char	buff[50];
+
+	fd = open("assets/intro.txt", O_RDONLY);
+	if (fd == -1)
+		return ;
+	chars_read = read(fd, buff, 49);
+	buff[chars_read] = '\0';
+	while (chars_read)
+	{
+		ft_putstr_fd(buff, 1);
+		chars_read = read(fd, buff, 49);
+		buff[chars_read] = '\0';
+	}
+	close(fd);
+	return ;
+}
 
 void	get_env_variables(char **envp)
 {
@@ -56,7 +77,7 @@ int	main(int argc, char *argv[], char **envp)
 	(void)envp;
 	if (argc != 1)
 		return (1);
-	write(1, "Hello World !\n", 14);
+	print_intro();
 	get_env_variables(envp);
 	repl();
 	free_g_tudao();

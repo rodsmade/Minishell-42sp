@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/25 18:44:34 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/27 04:42:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,25 @@ static void	assemble_line(char **line_read)
 	}
 }
 
-void	display_cmd_prompt(void)
+static void	print_prompt(void)
 {
 	char	*curr_path;
 	char	*prompt;
 
 	curr_path = getcwd(NULL, 0);
-	prompt = ft_strjoin(curr_path, " $ ");
+	prompt = ft_strjoin(curr_path, " $");
 	set_signal_hook(SIGINT, catch_signal_parent, &g_tudao.action);
 	dup2(g_tudao.backup_stdin, STDIN_FILENO);
-	g_tudao.prompt_input = readline(prompt);
+	printf(BHBLU "%s" COLOR_RESET, prompt);
+	printf(" ");
+	ft_free_ptr((void *)&curr_path);
+	ft_free_ptr((void *)&prompt);
+}
+
+void	display_cmd_prompt(void)
+{
+	print_prompt();
+	g_tudao.prompt_input = readline(NULL);
 	if (g_tudao.prompt_input)
 	{
 		g_tudao.line_count++;
@@ -73,6 +82,4 @@ void	display_cmd_prompt(void)
 		g_tudao.exit.flag = true;
 	}
 	disable_signal(SIGINT, &g_tudao.action);
-	ft_free_ptr((void *)&curr_path);
-	ft_free_ptr((void *)&prompt);
 }
