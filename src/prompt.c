@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/27 04:42:45 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/27 21:24:21 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,32 @@ static void	assemble_line(char **line_read)
 	}
 }
 
-static void	print_prompt(void)
+static char	*string_prompt(void)
 {
 	char	*curr_path;
+	char	*curr_path_f;
+	char	*dollar_sign_f;
 	char	*prompt;
 
 	curr_path = getcwd(NULL, 0);
-	prompt = ft_strjoin(curr_path, " $");
-	set_signal_hook(SIGINT, catch_signal_parent, &g_tudao.action);
-	dup2(g_tudao.backup_stdin, STDIN_FILENO);
-	printf(BHBLU "%s" COLOR_RESET, prompt);
-	printf(" ");
+	curr_path_f = ft_strjoin_3(BHBLU, curr_path, COLOR_RESET);
 	ft_free_ptr((void *)&curr_path);
-	ft_free_ptr((void *)&prompt);
+	dollar_sign_f = ft_strjoin_3(BWHT, " $ ", COLOR_RESET);
+	prompt = ft_strjoin(curr_path_f, dollar_sign_f);
+	ft_free_ptr((void *)&curr_path_f);
+	ft_free_ptr((void *)&dollar_sign_f);
+	return (prompt);
 }
 
 void	display_cmd_prompt(void)
 {
-	print_prompt();
-	g_tudao.prompt_input = readline(NULL);
+	char	*prompt;
+
+	dup2(g_tudao.backup_stdin, STDIN_FILENO);
+	set_signal_hook(SIGINT, catch_signal_parent, &g_tudao.action);
+	prompt = string_prompt();
+	g_tudao.prompt_input = readline(prompt);
+	ft_free_ptr((void *)&prompt);
 	if (g_tudao.prompt_input)
 	{
 		g_tudao.line_count++;
