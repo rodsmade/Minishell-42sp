@@ -83,11 +83,11 @@ makedir:
 
 $(NAME):			$(addprefix $(PATH_OBJ),$(OBJS))
 					@$(CC) $(addprefix $(PATH_OBJ),$(OBJS)) -o $(NAME) $(LIBS)
-					@echo "\n\033[0;32mDone!"
+					@echo "\n\033[0;32mCompilation done! No errors found"
 					@echo -n "\033[0m"					
 
 $(PATH_OBJ)%.o: 	$(PATH_SRC)%.c $(HEADERS)
-					@printf "\033[0;33mGenerating libft objects... %-33.33s\r" $@
+					@printf "\033[0;33mGenerating object files %-33.33s\r" $@
 					@$(CC) -c -o $@ $< $(LIBS)
 
 run:				all
@@ -97,13 +97,15 @@ valgrind:			all
 					$(VALGRIND) ./$(NAME)
 
 clean:
+					@echo "\033[0;33mCleaning up object files ..."
 					@$(RM) $(addprefix $(PATH_OBJ),$(OBJS))
-					@echo "\033[0;32mObj. files cleaned!"
+					@echo "\033[0;32mObject files cleaned up!"
 					@echo -n "\033[0m"
 
 fclean:				clean
+					@echo "\033[0;33mCleaning up binary files ..."
 					@$(RM) $(NAME)
-					@echo "\033[0;32mBinary Cleaned!"
+					@echo "\033[0;32mBinary files cleaned up!"
 					@echo -n "\033[0m"
 
 re:					fclean all
