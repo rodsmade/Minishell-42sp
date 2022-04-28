@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 19:11:12 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/07 17:38:32 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/28 23:32:52 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_list
 }					t_list;
 
 int			contains_nl(char *string);
+char		*ft_append_char(char *str, char c);
 long int	ft_atoli(const char *nptr);
 int			ft_atoi(const char *nptr);
 void		ft_bzero(void *s, size_t n);
@@ -39,6 +40,7 @@ int			ft_isascii(int c);
 int			ft_isdigit(int c);
 int			ft_isnumeric_s(char *str);
 int			ft_isprint(int c);
+int			ft_is_blankspace(char c);
 char		*ft_itoa(int n);
 void		ft_lst_add_back(t_list **lst, t_list *new);
 void		ft_lst_add_front(t_list **lst, t_list *new);

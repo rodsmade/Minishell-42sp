@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/22 01:14:26 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 23:32:52 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*get_token_content(char *line, int *index)
 	char	quote_type;
 
 	token_content = ft_strdup("");
-	while (line[*index] && line[*index] != ' ' && line[*index] != '\t'
+	while (line[*index] && !ft_is_blankspace(line[*index])
 		&& !count_redirect(&line[*index]))
 	{
 		if (line[*index] == '\'' || line[*index] == '\"')
@@ -62,7 +62,7 @@ void	create_token_list(char *line)
 	{
 		while (line[i])
 		{
-			while (line[i] && (line[i] == ' ' || line[i] == '\t'))
+			while (line[i] && ft_is_blankspace(line[i]))
 				i++;
 			redir = count_redirect(&line[i]);
 			if (redir > 0)

@@ -6,30 +6,38 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 15:08:58 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/12 17:06:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 23:25:36 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_append_char(char *str, char c)
+char	*treat_quotes(char *token_content)
 {
-	char	*new_str;
-	int		str_size;
 	int		i;
+	char	quote_type;
+	char	*new_content;
 
-	i = -1;
-	if (str)
-		str_size = ft_strlen(str);
-	else
-		str_size = 0;
-	new_str = malloc((str_size + 2) * sizeof(char));
-	while (++i < str_size)
-		new_str[i] = str[i];
-	new_str[str_size] = c;
-	new_str[str_size + 1] = '\0';
-	ft_free_ptr((void *)&str);
-	return (new_str);
+	i = 0;
+	new_content = ft_strdup("");
+	while (token_content[i])
+	{
+		if (token_content[i] == '\'' || token_content[i] == '\"')
+		{
+			quote_type = token_content[i];
+			i++;
+			while (token_content[i] && token_content[i] != quote_type)
+			{
+				new_content = ft_append_char(new_content, token_content[i]);
+				i++;
+			}
+		}
+		else
+			new_content = ft_append_char(new_content, token_content[i]);
+		if (token_content[i])
+			i++;
+	}
+	return (new_content);
 }
 
 int	is_valid_key_char(char c)
