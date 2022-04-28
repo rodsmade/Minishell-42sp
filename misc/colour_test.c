@@ -6,12 +6,13 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 00:07:54 by coder             #+#    #+#             */
-/*   Updated: 2022/04/28 18:25:58 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 18:30:59 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 int main()
 {
 	printf(BLACK "colour: BLACK\t" COLOUR_RESET);
@@ -123,3 +124,4 @@ int main()
 	printf(WHITEB "colour: WHITEB\t" COLOUR_RESET);
 	printf("\n");
 }
+*/

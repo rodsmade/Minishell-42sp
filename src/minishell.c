@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 17:12:43 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 18:52:15 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,27 @@ t_tudao	g_tudao;
 void	print_intro(void)
 {
 	int		fd;
-	int		chars_read;
-	char	buff[50];
+	char	buff[1];
 
 	fd = open("assets/intro.txt", O_RDONLY);
 	if (fd == -1)
 		return ;
-	chars_read = read(fd, buff, 49);
-	buff[chars_read] = '\0';
-	while (chars_read)
+	while (read(fd, buff, 1))
 	{
-		ft_putstr_fd(buff, 1);
-		chars_read = read(fd, buff, 49);
-		buff[chars_read] = '\0';
+		if (buff[0] == '1')
+			printf(BLUE "█" COLOUR_RESET);
+		else if (buff[0] == '2')
+			printf(LILAC "█" COLOUR_RESET);
+		else if (buff[0] == '3')
+			printf(MAGENTA "█" COLOUR_RESET);
+		else if (buff[0] == '4')
+			printf(PURPLE "█" COLOUR_RESET);
+		else if (buff[0] == 'y')
+			printf(LYELLOWB " " COLOUR_RESET);
+		else if (buff[0] == 'r')
+			printf(REDB " " COLOUR_RESET);
+		else
+			printf("%c", buff[0]);
 	}
 	close(fd);
 	return ;

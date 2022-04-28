@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 04:10:13 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 18:24:55 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 18:31:23 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@
 # define GRAYHB "\001\033[0;100m\002"
 # define LGRAYB "\001\033[47m\002"
 # define WHITEB "\001\033[0;107m\002"
-
 
 //Reset
 # define COLOUR_RESET "\001\033[0m\002"
