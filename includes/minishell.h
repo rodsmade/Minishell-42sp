@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 17:40:55 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 22:20:13 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,6 @@ void			builtin_pwd(void);
 
 // builtin_unset.c
 void			builtin_unset(t_list *cmd_with_args);
-
-// builtin_var_assignment.c
-void			assign_vars(t_command *command);
-bool			is_var_assignment(char *str);
 
 // executor.c
 void			execute_pipeline(t_list *pipeline);
