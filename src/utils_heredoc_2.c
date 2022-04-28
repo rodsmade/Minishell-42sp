@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/25 18:44:34 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:53:05 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	close_heredoc_prompt(char *hd_delimiter, int curr_line_count)
 {
 	char	*itoa;
 
+	/// TODO: formatar aqui
 	ft_putstr_fd("minishell: warning: here-document at line ", 2);
 	itoa = ft_itoa(curr_line_count);
 	ft_putstr_fd(itoa, 2);

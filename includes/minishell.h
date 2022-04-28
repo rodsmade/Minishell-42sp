@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/27 04:12:02 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 17:40:55 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // ---------------------------------------------	INCLUDES	----------------
 # include <readline/readline.h>	// readline(), etc.
 # include <readline/history.h>	// add_history()
+# include <stdio.h>				// printf()
 # include <unistd.h>			// write(), close(), access(), fork(), pipe()
 # include <stdlib.h>			// free()
 # include <stdbool.h>			// C99+ standard <bool> typedef
@@ -26,8 +27,8 @@
 # include <sys/types.h>			// <pid_t> typedef
 # include <sys/wait.h>			// wait()
 # include <signal.h>			// sigaction()
-# include "libft.h"
 # include "ansi_color_codes.h"
+# include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
 # define TABLE_SIZE	50

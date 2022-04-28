@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:25:26 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/26 21:48:52 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 17:40:25 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ bool	is_valid_env_path(char *path, char *command_str)
 		return (true);
 	else
 	{
-		g_tudao.exit.msg = ft_strjoin_3("minishell: ", command_str, \
-		": No such file or directory");
+		g_tudao.exit.msg = ft_strjoin(command_str,
+				": No such file or directory");
 		g_tudao.exit.code = 127;
 		return (false);
 	}

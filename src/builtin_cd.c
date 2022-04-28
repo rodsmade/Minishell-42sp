@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/26 21:55:34 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:52:07 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	go_to_path(char	*path)
 	new_pwd = ft_strdup(path);
 	if (chdir(new_pwd) != 0)
 	{
-		g_tudao.exit.msg = ft_strjoin_3("minishell: cd: ", \
+		g_tudao.exit.msg = ft_strjoin_3("cd: ", \
 		new_pwd, ": No such file or directory");
 		g_tudao.exit.code = EXIT_FAILURE;
 		ft_free_ptr((void *)&old_pwd);
@@ -62,7 +62,7 @@ void	go_to_pattern(char *key)
 	path = read_hashtable(g_tudao.hashtable[index], key);
 	if (path == NULL)
 	{
-		g_tudao.exit.msg = ft_strjoin_3("minishell: cd: ", \
+		g_tudao.exit.msg = ft_strjoin_3("cd: ", \
 		key, " not set");
 		g_tudao.exit.code = EXIT_FAILURE;
 		ft_free_ptr((void *)&path);
@@ -83,7 +83,7 @@ void	builtin_cd(t_list *cmd_lst)
 		if (cmd_lst->next && cmd_lst->next->next != NULL)
 		{
 			g_tudao.exit.msg = \
-			ft_strdup("minishell: cd: too many arguments");
+			ft_strdup("cd: too many arguments");
 			g_tudao.exit.code = EXIT_FAILURE;
 			return ;
 		}

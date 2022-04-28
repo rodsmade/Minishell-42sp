@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/27 21:24:21 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/28 17:35:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	assemble_line(char **line_read)
 	}
 	else if (!aux_str && g_tudao.is_ctrl_d)
 	{
-		ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);
+		ft_putendl_fd("syntax error: unexpected end of file", 2);
 		ft_putendl_fd("exit", 2);
 		g_tudao.exit.code = 2;
 		g_tudao.exit.flag = true;
@@ -54,15 +54,18 @@ static char	*string_prompt(void)
 	char	*curr_path_f;
 	char	*dollar_sign_f;
 	char	*prompt;
+	char	*prompt_wrpd;
 
 	curr_path = getcwd(NULL, 0);
-	curr_path_f = ft_strjoin_3(BHBLU, curr_path, COLOR_RESET);
+	curr_path_f = ft_strjoin_3(UMAG, curr_path, COLOUR_RESET);
 	ft_free_ptr((void *)&curr_path);
-	dollar_sign_f = ft_strjoin_3(BWHT, " $ ", COLOR_RESET);
+	dollar_sign_f = ft_strjoin_3(BWHT, " $ ", COLOUR_RESET);
 	prompt = ft_strjoin(curr_path_f, dollar_sign_f);
+	prompt_wrpd = ft_strjoin(prompt, COLOUR_RESET);
 	ft_free_ptr((void *)&curr_path_f);
 	ft_free_ptr((void *)&dollar_sign_f);
-	return (prompt);
+	ft_free_ptr((void *)&prompt);
+	return (prompt_wrpd);
 }
 
 void	display_cmd_prompt(void)

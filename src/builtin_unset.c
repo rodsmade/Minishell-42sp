@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:15:11 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 21:17:54 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/27 22:52:10 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	builtin_unset(t_list *cmd_with_args)
 		}
 		else
 		{
-			g_tudao.exit.msg = ft_strjoin_3("minishell: unset: `", var_name,
+			g_tudao.exit.msg = ft_strjoin_3("unset: `", var_name,
 					"': not a valid identifier");
 			g_tudao.exit.code = EXIT_FAILURE;
 			return ;
