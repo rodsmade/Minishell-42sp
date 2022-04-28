@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+         #
+#    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/04 19:44:22 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/07 17:38:46 by adrianofaus      ###   ########.fr        #
+#    Updated: 2022/04/27 03:59:29 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJS_PATH = ./objs/
 LIBS_PATH = ../
 
 # COMPILATION
-CC = gcc
+CC = gcc -g3
 FLAGS = -Wall -Wextra -Werror
 
 # BASH COMMANDS

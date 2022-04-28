@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 20:47:35 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/22 20:37:51 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/28 20:45:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	set_up_main_pipeline(void)
 
 void	set_up_command_table(void)
 {
-	if (!g_tudao.syntax_error)
+	if (g_tudao.prompt_input && !g_tudao.syntax_error)
 	{
 		set_up_main_pipeline();
 		g_tudao.command_table.main_pl_size = \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 22:38:02 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/26 15:44:55 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/27 22:54:17 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	is_directory(char *path)
 	if (is_dir != 0)
 	{
 		ft_free_ptr((void *)&g_tudao.exit.msg);
-		g_tudao.exit.msg = ft_strjoin_3("minishell: ", path, \
+		g_tudao.exit.msg = ft_strjoin(path, \
 		": Is a directory");
 		g_tudao.exit.code = 126;
 		return (true);
@@ -45,10 +45,10 @@ bool	is_accessible(char *cmd_str, int is_abs_path, char *combination)
 	{
 		g_tudao.exit.code = 127;
 		if (is_abs_path == true)
-			g_tudao.exit.msg = ft_strjoin_3("minishell: ", cmd_str, \
+			g_tudao.exit.msg = ft_strjoin(cmd_str, \
 			": No such file or directory");
 		else if (is_abs_path == false)
-			g_tudao.exit.msg = ft_strjoin_3("minishell: ", cmd_str, \
+			g_tudao.exit.msg = ft_strjoin(cmd_str, \
 			": command not found");
 		return (false);
 	}
@@ -61,7 +61,7 @@ bool	is_executable(char *command_str)
 	else
 	{
 		ft_free_ptr((void *)&g_tudao.exit.msg);
-		g_tudao.exit.msg = ft_strjoin_3("minishell: ", command_str, \
+		g_tudao.exit.msg = ft_strjoin(command_str, \
 		"Permission denied");
 		g_tudao.exit.code = 126;
 		return (false);

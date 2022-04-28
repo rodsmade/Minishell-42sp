@@ -3,17 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 20:21:43 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/28 18:52:15 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 t_tudao	g_tudao;
+
+void	print_intro(void)
+{
+	int		fd;
+	char	buff[1];
+
+	fd = open("assets/intro.txt", O_RDONLY);
+	if (fd == -1)
+		return ;
+	while (read(fd, buff, 1))
+	{
+		if (buff[0] == '1')
+			printf(BLUE "█" COLOUR_RESET);
+		else if (buff[0] == '2')
+			printf(LILAC "█" COLOUR_RESET);
+		else if (buff[0] == '3')
+			printf(MAGENTA "█" COLOUR_RESET);
+		else if (buff[0] == '4')
+			printf(PURPLE "█" COLOUR_RESET);
+		else if (buff[0] == 'y')
+			printf(LYELLOWB " " COLOUR_RESET);
+		else if (buff[0] == 'r')
+			printf(REDB " " COLOUR_RESET);
+		else
+			printf("%c", buff[0]);
+	}
+	close(fd);
+	return ;
+}
 
 void	get_env_variables(char **envp)
 {
@@ -56,7 +84,7 @@ int	main(int argc, char *argv[], char **envp)
 	(void)envp;
 	if (argc != 1)
 		return (1);
-	write(1, "Hello World !\n", 14);
+	print_intro();
 	get_env_variables(envp);
 	repl();
 	free_g_tudao();
