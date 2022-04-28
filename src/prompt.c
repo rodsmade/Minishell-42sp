@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 21:48:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 21:58:00 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*string_prompt(void)
 	curr_path[0] = getcwd_home_expanded();
 	curr_path[1] = ft_strjoin_3(LILACB, curr_path[0], COLOUR_RESET);
 	ft_free_ptr((void *)&curr_path[0]);
-	brackets[0] = ft_strjoin_3(BWHITE, "[ ", COLOUR_RESET);
+	brackets[0] = ft_strjoin_3(BWHITE, "[ 📁 ", COLOUR_RESET);
 	curr_path[2] = ft_strjoin(brackets[0], curr_path[1]);
 	ft_free_ptr((void *)&curr_path[1]);
 	ft_free_ptr((void *)&brackets[0]);
