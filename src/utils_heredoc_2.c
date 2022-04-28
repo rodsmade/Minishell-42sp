@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/27 22:53:05 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/28 20:08:49 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,18 @@ void	close_heredoc_prompt(char *hd_delimiter, int curr_line_count)
 {
 	char	*itoa;
 
-	/// TODO: formatar aqui
-	ft_putstr_fd("minishell: warning: here-document at line ", 2);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(BORANGE, 2);
+	ft_putstr_fd("warning: ", 2);
+	ft_putstr_fd(COLOUR_RESET, 2);
+	ft_putstr_fd("here-document at line ", 2);
 	itoa = ft_itoa(curr_line_count);
 	ft_putstr_fd(itoa, 2);
 	ft_free_ptr((void *)&itoa);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(BORANGE, 2);
 	ft_putstr_fd(hd_delimiter, 2);
+	ft_putstr_fd(COLOUR_RESET, 2);
 	ft_putendl_fd("')", 2);
 	return ;
 }

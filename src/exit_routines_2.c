@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 17:35:31 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 20:17:50 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_and_exit_fork(char *err_msg, int err_code)
 	g_tudao.exit.code = err_code;
 	if (err_msg)
 	{
-		err_msg_f = ft_strjoin_3(BRED, "minishell: ", COLOUR_RESET);
+		err_msg_f = ft_strjoin_3(BRED, "✘ minishell: ", COLOUR_RESET);
 		ft_putstr_fd(err_msg_f, 2);
 		ft_putendl_fd(err_msg, 2);
 		ft_free_ptr((void *)&err_msg_f);

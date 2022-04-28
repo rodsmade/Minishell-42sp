@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 17:35:31 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 21:48:49 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,51 @@ static void	assemble_line(char **line_read)
 	}
 }
 
+static char	*getcwd_home_expanded(void)
+{
+	char	*cwd;
+	char	*home_var;
+	char	*cwd_home_expanded;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		g_tudao.exit.flag = true;
+		return (NULL);
+	}
+	home_var = read_hashtable(g_tudao.hashtable[hash_string("HOME")], "HOME");
+	if (home_var && ft_strncmp(cwd, home_var, ft_strlen(home_var)) == 0)
+	{
+		cwd_home_expanded = ft_strjoin("~", &cwd[ft_strlen(home_var)]);
+		ft_free_ptr((void *)&cwd);
+		return (cwd_home_expanded);
+	}
+	return (cwd);
+}
+
 static char	*string_prompt(void)
 {
-	char	*curr_path;
-	char	*curr_path_f;
-	char	*dollar_sign_f;
-	char	*prompt;
-	char	*prompt_wrpd;
+	char	*arrow;
+	char	*curr_path[3];
+	char	*brackets[2];
+	char	*prompt[2];
 
-	curr_path = getcwd(NULL, 0);
-	curr_path_f = ft_strjoin_3(UMAG, curr_path, COLOUR_RESET);
-	ft_free_ptr((void *)&curr_path);
-	dollar_sign_f = ft_strjoin_3(BWHT, " $ ", COLOUR_RESET);
-	prompt = ft_strjoin(curr_path_f, dollar_sign_f);
-	prompt_wrpd = ft_strjoin(prompt, COLOUR_RESET);
-	ft_free_ptr((void *)&curr_path_f);
-	ft_free_ptr((void *)&dollar_sign_f);
-	ft_free_ptr((void *)&prompt);
-	return (prompt_wrpd);
+	curr_path[0] = getcwd_home_expanded();
+	curr_path[1] = ft_strjoin_3(LILACB, curr_path[0], COLOUR_RESET);
+	ft_free_ptr((void *)&curr_path[0]);
+	brackets[0] = ft_strjoin_3(BWHITE, "[ ", COLOUR_RESET);
+	curr_path[2] = ft_strjoin(brackets[0], curr_path[1]);
+	ft_free_ptr((void *)&curr_path[1]);
+	ft_free_ptr((void *)&brackets[0]);
+	brackets[1] = ft_strjoin_3(BWHITE, " ]", COLOUR_RESET);
+	arrow = ft_strjoin_3(BMAGENTA, " ➳  ", COLOUR_RESET);
+	prompt[0] = ft_strjoin_3(curr_path[2], brackets[1], arrow);
+	ft_free_ptr((void *)&curr_path[2]);
+	ft_free_ptr((void *)&brackets[1]);
+	ft_free_ptr((void *)&arrow);
+	prompt[1] = ft_strjoin(prompt[0], COLOUR_RESET);
+	ft_free_ptr((void *)&prompt[0]);
+	return (prompt[1]);
 }
 
 void	display_cmd_prompt(void)
