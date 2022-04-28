@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/18 14:44:49 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/28 23:32:52 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static t_list	*create_sublist(char *string)
 	i = -1;
 	while (string[++i])
 	{
-		if (string[i] && (string[i] != ' ' && string[i] != '\t'))
+		if (string[i] && !ft_is_blankspace(string[i]))
 			token_content = ft_append_char(token_content, string[i]);
-		else if (string[i] == ' ' || string[i] == '\t')
+		else if (ft_is_blankspace(string[i]))
 		{
 			if (token_content)
 				ft_lst_add_back(&sublist, ft_lst_new((void *) token_content));
@@ -94,32 +94,4 @@ bool	is_expansible(char *token_content)
 			i++;
 	}
 	return (false);
-}
-
-char	*treat_quotes(char *token_content)
-{
-	int		i;
-	char	quote_type;
-	char	*new_content;
-
-	i = 0;
-	new_content = ft_strdup("");
-	while (token_content[i])
-	{
-		if (token_content[i] == '\'' || token_content[i] == '\"')
-		{
-			quote_type = token_content[i];
-			i++;
-			while (token_content[i] && token_content[i] != quote_type)
-			{
-				new_content = ft_append_char(new_content, token_content[i]);
-				i++;
-			}
-		}
-		else
-			new_content = ft_append_char(new_content, token_content[i]);
-		if (token_content[i])
-			i++;
-	}
-	return (new_content);
 }

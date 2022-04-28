@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 22:20:13 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 23:22:42 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,6 @@ char			*find_valid_combination(char **split_paths, char *command_str);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);
-char			*ft_append_char(char *str, char c);
 int				is_valid_key_char(char c);
 void			expand_wildcards(void);
 void			append_single_quotes(char *token_str, char **expanded_cont,

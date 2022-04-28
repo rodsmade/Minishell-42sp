@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 18:52:15 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/28 23:40:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ void	get_env_variables(char **envp)
 	return ;
 }
 
+void	add_to_history(char *string)
+{
+	int	i;
+
+	i = -1;
+	if (!string)
+		return ;
+	while (string[++i])
+	{
+		if (!ft_is_blankspace(string[i]))
+		{
+			add_history(string);
+			return ;
+		}
+	}
+	return ;
+}
+
 void	repl(void)
 {
 	g_tudao.exit.flag = false;
@@ -70,7 +88,7 @@ void	repl(void)
 			&& !g_tudao.exit.flag && !g_tudao.skip_execution)
 			execute_pipeline(g_tudao.command_table.main_pipeline);
 		add_heredocs_to_history();
-		add_history(g_tudao.prompt_input);
+		add_to_history(g_tudao.prompt_input);
 		free_lexer();
 		free_main_pipeline(&g_tudao.command_table.main_pipeline);
 		ft_free_ptr((void *)&g_tudao.prompt_input);
