@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 22:21:35 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/28 23:02:01 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/28 23:11:39 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ RM				=	rm -rf
 # COMPILATION
 CC				=	gcc $(CFLAGS)
 CFLAGS			=	-Wall -Wextra -Werror -I $(PATH_INCLUDES) $(DEBUG)
-LIBS			=	-lreadline -L $(PATH_LIBRARY) -lft
+LIBS			=	-lreadline -L $(PATH_LIBRARIES) -lft
 DEBUG			=	-g3
 VALGRIND		=	valgrind \
 					--leak-check=full \
@@ -42,7 +42,7 @@ HEADERS			=	$(PATH_INCLUDES)minishell.h \
 # PATHS
 PATH_SRC		=	./src/
 PATH_OBJ		=	obj/
-PATH_LIBRARY	=	./libs/
+PATH_LIBRARIES	=	./libs/
 PATH_INCLUDES	=	./includes/
 PATH_BUILTINS	=	builtins/
 PATH_EXECUTOR	=	executor/
@@ -72,7 +72,7 @@ SOURCES			=	minishell.c \
 					$(PATH_EXIT)exit_routines.c \
 					$(PATH_EXPANSOR)expansor.c \
 					$(PATH_HASHTABLE)hashtable.c \
-					$(init_routines)init_routines.c \
+					$(PATH_INIT)init_routines.c \
 					$(PATH_LEXER)lexer.c \
 					$(PATH_PARSER)parser.c \
 					$(PATH_EXECUTOR)command_table.c \
@@ -105,10 +105,10 @@ all:				libft makedir $(NAME)
 
 # -> compiles libft all over
 libft:
-					cd $(PATH_LIBRARY)libft && $(MAKE)
+					@$(MAKE) -C $(PATH_LIBRARIES)libft
 
 makedir:			
-					$(MKDIR) $(PATH_OBJ) $(PATH_OBJ)$(PATH_BUILTINS) $(PATH_OBJ)$(PATH_EXECUTOR) $(PATH_OBJ)$(PATH_EXIT) $(PATH_OBJ)$(PATH_EXPANSOR) $(PATH_OBJ)$(PATH_HASHTABLE) $(PATH_OBJ)$(PATH_INIT) $(PATH_OBJ)$(PATH_LEXER) $(PATH_OBJ)$(PATH_PARSER) $(PATH_OBJ)$(PATH_PROMPT) $(PATH_OBJ)$(PATH_REDIRECTS) $(PATH_OBJ)$(PATH_SIGNALS) $(PATH_OBJ)$(PATH_TESTS)
+					@$(MKDIR) $(PATH_OBJ) $(PATH_OBJ)$(PATH_BUILTINS) $(PATH_OBJ)$(PATH_EXECUTOR) $(PATH_OBJ)$(PATH_EXIT) $(PATH_OBJ)$(PATH_EXPANSOR) $(PATH_OBJ)$(PATH_HASHTABLE) $(PATH_OBJ)$(PATH_INIT) $(PATH_OBJ)$(PATH_LEXER) $(PATH_OBJ)$(PATH_PARSER) $(PATH_OBJ)$(PATH_PROMPT) $(PATH_OBJ)$(PATH_REDIRECTS) $(PATH_OBJ)$(PATH_SIGNALS) $(PATH_OBJ)$(PATH_TESTS)
 
 $(NAME):			$(addprefix $(PATH_OBJ),$(OBJS))
 					@$(CC) $(addprefix $(PATH_OBJ),$(OBJS)) -o $(NAME) $(LIBS)
@@ -126,13 +126,15 @@ valgrind:			all
 					$(VALGRIND) ./$(NAME)
 
 clean:
-					@echo "\033[0;33mCleaning up object files ..."
+					@$(MAKE) -C $(PATH_LIBRARIES)libft clean
+					@echo "\033[0;33mCleaning up $(NAME) object files ..."
 					@$(RM) $(addprefix $(PATH_OBJ),$(OBJS))
 					@echo "\033[0;32mObject files cleaned up!"
 					@echo -n "\033[0m"
 
 fclean:				clean
-					@echo "\033[0;33mCleaning up binary files ..."
+					@$(MAKE) -C $(PATH_LIBRARIES)libft fclean
+					@echo "\033[0;33mCleaning up $(NAME) binary files ..."
 					@$(RM) $(NAME)
 					@echo "\033[0;32mBinary files cleaned up!"
 					@echo -n "\033[0m"
