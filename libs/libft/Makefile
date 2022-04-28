@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/04 19:44:22 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/27 03:59:29 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/28 23:32:52 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ MKDIR = mkdir -p
 
 # FILES
 LIBNAME = libft.a
-SRC_FILES =	ft_atoi.c \
+SRC_FILES =	ft_append_char.c \
+			ft_atoi.c \
 			ft_atoli.c \
 			ft_bzero.c \
 			ft_calloc.c \
@@ -41,6 +42,7 @@ SRC_FILES =	ft_atoi.c \
 			ft_isdigit.c \
 			ft_isnumeric_s.c \
 			ft_isprint.c \
+			ft_is_blankspace.c \
 			ft_itoa.c \
 			ft_lst_add_back.c \
 			ft_lst_add_front.c \
