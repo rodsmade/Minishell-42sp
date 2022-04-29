@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 01:30:39 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/29 12:26:44 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ typedef struct s_env_var
 	char				*value;
 	int					is_env_var;
 }				t_env_var;
+
+typedef struct s_pid_cmd
+{
+	pid_t	pid;
+	t_list	*cmd;
+}				t_pid_cmd;
 
 typedef struct s_ext_routine
 {

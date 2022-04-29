@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 11:48:17 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/29 12:38:59 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,11 @@ void	execute_pipeline(t_list *pipeline)
 	int			counter;
 	int			total_pipes;
 
-	pid_t		pid;
+	t_pid_cmd	pid_cmd[3];
 	int			wstatus;
 	int			i;
 	int			j;
+	int			k;
 
 	create_new_files(pipeline);
 	cmd_pivot = pipeline;
@@ -123,24 +124,29 @@ void	execute_pipeline(t_list *pipeline)
 		counter = -1;
 		total_pipes = ft_lst_size(pipeline) - 1;
 		g_tudao.cmd_pipes = ft_make_pipes(total_pipes);
+		k = 0;
 		while (cmd_pivot)
 		{
-			pid = fork();
+			pid_cmd[k].pid = fork();
+			pid_cmd[k].cmd = cmd_pivot;
 			cmd = (t_command *) cmd_pivot->content;
-			fork_and_execute_cmd(pid, total_pipes, ++counter, cmd);
+			fork_and_execute_cmd(pid_cmd[k].pid, total_pipes, ++counter, cmd);
 			close_fds(cmd);
 			cmd_pivot = cmd_pivot->next;
+			k++;
+		}
+		j = -1;
+		while (++j < total_pipes)
+		{
+			close(g_tudao.cmd_pipes[j][1]);
+			close(g_tudao.cmd_pipes[j][0]);
 		}
 		i = -1;
-		j = -1;
 		while (++i < (total_pipes + 1))
 		{
-			waitpid(-1, &wstatus, 0);
-			while (++j < total_pipes)
-			{
-				close(g_tudao.cmd_pipes[j][1]);
-				close(g_tudao.cmd_pipes[j][0]);
-			}
+			waitpid(pid_cmd[i].pid, &wstatus, 0);
+			if (pid_cmd[i].cmd == ft_lst_last(pipeline))
+				process_child_return_code(wstatus);
 		}
 		// waitpid(-1, &wstatus, 0);
 		// close(g_tudao.cmd_pipes[0][1]);
@@ -148,7 +154,6 @@ void	execute_pipeline(t_list *pipeline)
 		// waitpid(-1, &wstatus, 0);
 		// if (counter != total_pipes)
 		// 	close(g_tudao.cmd_pipes[counter][1]);
-		process_child_return_code(wstatus);
 		close_and_free_cmd_pipes();
 	}
 }
