@@ -6,12 +6,13 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 22:49:38 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 23:38:32 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define _GNU_SOURCE
 
 // ---------------------------------------------	INCLUDES	----------------
 # include <readline/readline.h>	// readline(), etc.
@@ -93,13 +94,14 @@ typedef struct s_tudao
 	bool				syntax_error;
 	bool				skip_execution;
 	bool				is_ctrl_d;
+	bool				heredoc_stopped;
 	int					backup_stdin;
 }				t_tudao;
 
 typedef struct s_data_hd
 {
 	int		total_pipes;
-	int		**aux_pipes;
+	int		**pipes_per_eof;
 	t_list	*cursor;
 	char	*str;
 	int		counter;
@@ -129,6 +131,9 @@ void			builtin_pwd(void);
 
 // builtin_unset.c
 void			builtin_unset(t_list *cmd_with_args);
+
+// command_table.c
+void			set_up_command_table(void);
 
 // executor.c
 void			execute_pipeline(t_list *pipeline);
@@ -180,13 +185,10 @@ void			parse_tokens(void);
 // prompt.c
 void			display_cmd_prompt(void);
 
-// command_table.c
-void			set_up_command_table(void);
-
-// prompt.c
-void			catch_signal_parent(int signal);
-void			catch_signals_child(int signal);
-void			catch_signal_parent_extra_input(int signal);
+// signal_handlers.c
+void			sighandler_parent(int signal);
+void			sighandler_child(int signal);
+void			sighandler_parent_extra_input(int signal);
 void			disable_signal(int signal, struct sigaction *act);
 void			set_signal_hook(int sig, void handler(int),
 					struct sigaction *act);
@@ -269,7 +271,7 @@ void			get_input_line(t_data_hd *hd, int *pipe_fds);
 char			*get_pipe_content(int fd);
 char			*concat_pipe_content(int *pipe, char *str);
 int				pipe_and_fork(int (*pipe_fds)[2]);
-void			close_heredoc_prompt(char *hd_delimiter, int curr_line_count);
+void			close_heredoc_prompt(t_data_hd *hd, int curr_line_count);
 
 // utils_lexer.c
 void			skip_quotes(char *line_read, int *index, int *token_len);
@@ -296,6 +298,9 @@ void			capture_inputs(t_command *cmd);
 void			capture_outputs(t_command *cmd);
 void			capture_heredocs(t_command *cmd, int cmd_count);
 void			capture_o_concats(t_command *cmd);
+
+// utils_signals.c
+void			sighandler_within_hd_prompt(int signal);
 
 // utils_test.c
 void			print_hashtable(t_list *(*hashtable)[TABLE_SIZE]);

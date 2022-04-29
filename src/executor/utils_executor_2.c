@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/29 17:30:32 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/29 23:07:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	fork_and_execute_cmd(pid_t **pids, t_list *pipeline)
 			print_error_and_exit(1, ft_strdup("Error: forking executor"));
 		else if ((*pids)[i] == 0)
 		{
-			set_signal_hook(SIGQUIT, catch_signals_child, &g_tudao.action);
-			set_signal_hook(SIGINT, catch_signals_child, &g_tudao.action);
+			set_signal_hook(SIGQUIT, sighandler_child, &g_tudao.action);
+			set_signal_hook(SIGINT, sighandler_child, &g_tudao.action);
 			capture_redirections(i, cmd);
 			execute_command(cmd);
 		}

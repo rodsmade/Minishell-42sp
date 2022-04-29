@@ -12,16 +12,21 @@
 
 #include "minishell.h"
 
-void	set_signal_hook(int signal, void handler(int), struct sigaction *act)
+void	sighandler_within_hd_prompt(int signal)
 {
-	act->sa_handler = handler;
-	act->sa_flags = SA_RESTART;
-	sigemptyset(&(act->sa_mask));
-	sigaction(signal, act, NULL);
+	if (signal == SIGINT)
+	{
+		g_tudao.heredoc_stopped = true;
+		g_tudao.exit.code = 130;
+		ft_putendl_fd("", 1);
+		rl_replace_line("", 0);
+		rl_done = true;
+		close(rl_instream->_fileno);
+	}
 	return ;
 }
 
-void	catch_signal_parent(int signal)
+void	sighandler_parent(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -34,7 +39,7 @@ void	catch_signal_parent(int signal)
 	return ;
 }
 
-void	catch_signals_child(int signal)
+void	sighandler_child(int signal)
 {
 	if (signal == SIGQUIT)
 		free_and_exit_fork(ft_strdup("Quit (core dumped)"), 131);
@@ -43,24 +48,17 @@ void	catch_signals_child(int signal)
 	return ;
 }
 
-void	catch_signal_parent_extra_input(int signal)
+void	sighandler_parent_extra_input(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_tudao.exit.code = 130;
 		g_tudao.skip_execution = true;
-		ft_putendl_fd("", 1);
 		g_tudao.is_ctrl_d = false;
+		g_tudao.exit.code = 130;
+		ft_putendl_fd("", 1);
 		rl_replace_line("", 0);
 		rl_done = true;
 		close(rl_instream->_fileno);
 	}
-	return ;
-}
-
-void	disable_signal(int signal, struct sigaction *act)
-{
-	act->sa_handler = SIG_IGN;
-	sigaction(signal, act, NULL);
 	return ;
 }

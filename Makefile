@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 22:21:35 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/29 17:28:33 by afaustin         ###   ########.fr        #
+#    Updated: 2022/04/29 23:18:52 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,11 @@ DEBUG			=	-g3
 VALGRIND		=	valgrind \
 					--leak-check=full \
 					--show-leak-kinds=all \
-					--track-origins=yes \
 					--quiet \
-					--tool=memcheck \
 					--suppressions=readline.supp \
 					--keep-debuginfo=yes \
-					--track-fds=yes \
 					--trace-children=yes
+# --track-fds=yes
 
 # HEADERS
 HEADERS			=	$(PATH_INCLUDES)minishell.h \
@@ -77,7 +75,7 @@ SOURCES			=	minishell.c \
 					$(PATH_PARSER)parser.c \
 					$(PATH_EXECUTOR)command_table.c \
 					$(PATH_PROMPT)prompt.c \
-					$(PATH_SIGNALS)signal_handler.c \
+					$(PATH_SIGNALS)signal_handlers.c \
 					$(PATH_HASHTABLE)utils_env_vars.c \
 					$(PATH_EXECUTOR)utils_executor_2.c \
 					$(PATH_EXECUTOR)utils_executor_3.c \
@@ -96,6 +94,7 @@ SOURCES			=	minishell.c \
 					$(PATH_PARSER)utils_parser_2.c \
 					$(PATH_PARSER)utils_parser.c \
 					$(PATH_REDIRECTS)utils_redirections.c \
+					$(PATH_SIGNALS)utils_signals.c \
 					$(PATH_TESTS)utils_test.c
 OBJS			=	$(SOURCES:%.c=%.o)
 

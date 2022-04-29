@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:27:16 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/25 19:45:09 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 23:44:23 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_heredoc_data(t_data_hd *hd, t_command *cmd, int cmd_count)
 {
 	hd->total_pipes = ft_lst_size(cmd->heredocs);
-	hd->aux_pipes = ft_make_pipes(hd->total_pipes);
+	hd->pipes_per_eof = ft_make_pipes(hd->total_pipes);
 	hd->cursor = cmd->heredocs;
 	if (cmd_count == 0)
 		hd->str = ft_strdup("\n");
@@ -66,25 +66,25 @@ void	get_heredoc_content(t_data_hd *hd, int *pipe_fds, int hd_line_nbr)
 
 	line_read = readline("> ");
 	if (!line_read)
-		close_heredoc_prompt((char *) hd->cursor->content, hd_line_nbr);
-	else
+		close_heredoc_prompt(hd, hd_line_nbr);
+	else if (line_read)
 	{
 		while (ft_strncmp(line_read, (char *) hd->cursor->content,
 				ft_strlen((char *) hd->cursor->content) + 1) != 0)
 		{
 			g_tudao.line_count++;
 			ft_putendl_fd(line_read, pipe_fds[1]);
-			ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
+			ft_putendl_fd(line_read, hd->pipes_per_eof[hd->counter][1]);
 			ft_free_ptr((void *)&line_read);
 			line_read = readline("> ");
 			if (!line_read)
 			{
-				close_heredoc_prompt((char *) hd->cursor->content, hd_line_nbr);
+				close_heredoc_prompt(hd, hd_line_nbr);
 				break ;
 			}
 		}
 		if (line_read)
-			ft_putendl_fd(line_read, hd->aux_pipes[hd->counter][1]);
+			ft_putendl_fd(line_read, hd->pipes_per_eof[hd->counter][1]);
 		ft_free_ptr((void *)&line_read);
 	}
 }
@@ -94,9 +94,10 @@ void	get_input_line(t_data_hd *hd, int *pipe_fds)
 	int		hd_line_nbr;
 
 	hd_line_nbr = g_tudao.line_count;
+	set_signal_hook(SIGINT, sighandler_within_hd_prompt, &g_tudao.action);
 	get_heredoc_content(hd, pipe_fds, hd_line_nbr);
 	ft_close_pipe_fds(pipe_fds);
 	ft_free_ptr((void *)&(hd->str));
-	ft_free_pipe_arr(&(hd->aux_pipes), hd->total_pipes);
+	ft_free_pipe_arr(&(hd->pipes_per_eof), hd->total_pipes);
 	free_and_exit_fork(NULL, EXIT_SUCCESS);
 }

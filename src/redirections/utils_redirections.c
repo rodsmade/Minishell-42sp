@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 17:08:55 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/29 22:50:41 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ void	capture_heredocs(t_command *cmd, int cmd_count)
 		waitpid(pid, &wstatus, 0);
 		process_child_return_code(wstatus);
 		close(pipe_fds[1]);
-		hd.str = concat_pipe_content(hd.aux_pipes[hd.counter], hd.str);
+		hd.str = concat_pipe_content(hd.pipes_per_eof[hd.counter], hd.str);
 		process_heredoc_position(&hd, pipe_fds[0]);
 	}
 	write(g_tudao.pipe_heredoc[1], hd.str, ft_strlen(hd.str));
 	ft_free_ptr((void *)&(hd.str));
 	i = -1;
 	while (++i < hd.total_pipes)
-		ft_free_ptr((void *)&hd.aux_pipes[i]);
-	ft_free_ptr((void *)&(hd.aux_pipes));
+		ft_free_ptr((void *)&hd.pipes_per_eof[i]);
+	ft_free_ptr((void *)&(hd.pipes_per_eof));
 	return ;
 }
 

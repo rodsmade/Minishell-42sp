@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 02:55:00 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 23:25:25 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	init_g_tudao(void)
 	g_tudao.syntax_error = false;
 	g_tudao.exit.flag = false;
 	g_tudao.skip_execution = false;
+	g_tudao.heredoc_stopped = false;
 	g_tudao.is_ctrl_d = true;
 	g_tudao.pipe_heredoc[0] = -1;
 	g_tudao.pipe_heredoc[1] = -1;

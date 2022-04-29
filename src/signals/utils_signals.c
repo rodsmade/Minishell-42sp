@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_close_pipe_fds.c                                :+:      :+:    :+:   */
+/*   utils_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/07 22:10:34 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 23:43:11 by roaraujo         ###   ########.fr       */
+/*   Created: 2022/04/29 23:01:15 by roaraujo          #+#    #+#             */
+/*   Updated: 2022/04/29 23:20:59 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_close_pipe_fds(int *pipe)
+void	set_signal_hook(int signal, void handler(int), struct sigaction *act)
 {
-	if (pipe)
-	{
-		if (pipe[0] != -1)
-			close(pipe[0]);
-		if (pipe[1] != -1)
-			close(pipe[1]);
-	}
+	act->sa_handler = handler;
+	act->sa_flags = SA_RESTART;
+	sigemptyset(&(act->sa_mask));
+	sigaction(signal, act, NULL);
+	return ;
+}
+
+void	disable_signal(int signal, struct sigaction *act)
+{
+	act->sa_handler = SIG_IGN;
+	sigaction(signal, act, NULL);
 	return ;
 }
