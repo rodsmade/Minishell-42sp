@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 20:17:50 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 16:50:02 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	free_and_exit_fork(char *err_msg, int err_code)
 		close_fds((t_command *) pivot->content);
 		pivot = pivot->next;
 	}
+	ft_free_ptr((void *)&g_tudao.command_table.main_pl_pids);
 	ft_close_pipe_fds(g_tudao.pipe_heredoc);
 	close_heredoc_pipe();
 	close_and_free_cmd_pipes();
