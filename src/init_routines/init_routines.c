@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/25 19:28:10 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 02:55:00 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 	return ;
 }
 
-void	init_tudao(void)
+void	init_g_tudao(void)
 {
 	g_tudao.prompt_input = NULL;
 	g_tudao.token_list = NULL;
@@ -53,4 +53,16 @@ void	init_command(t_command *command)
 	command->o_concat_fd = 0;
 	command->err_fd = 0;
 	return ;
+}
+
+void	init_core_variables(void)
+{
+	g_tudao.exit.flag = false;
+	g_tudao.exit.code = 0;
+	g_tudao.line_count = 0;
+	g_tudao.backup_stdin = dup(STDIN_FILENO);
+	g_tudao.home_at_start = ft_strdup(
+			read_hashtable(g_tudao.hashtable[hash_string("HOME")], "HOME"));
+	disable_signal(SIGQUIT, &g_tudao.action);
+	disable_signal(SIGINT, &g_tudao.action);
 }
