@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 12:26:44 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/29 21:18:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ typedef struct s_cmd_table
 {
 	t_list	*main_pipeline;
 	int		main_pl_size;
+	int		main_pl_total_pipes;
+	pid_t	*main_pl_pids;
 	t_list	*secondary_pipeline;
 }				t_cmd_table;
 
@@ -198,8 +200,7 @@ char			*find_cmd_in_path_var(char *command_str);
 char			*find_cmd_path(char **cmd_arr);
 
 // utils_executor_2.c
-void			fork_and_execute_cmd(pid_t pid, int total_pipes, int counter,
-					t_command *cmd);
+void			fork_and_execute_cmd(pid_t **pids, t_list *pipeline);
 bool			execute_only_one_cmd(t_list *pipeline);
 void			create_new_files(t_list *pipeline);
 bool			alters_main_memory(char *built_in);
