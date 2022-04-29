@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 02:03:59 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 02:38:53 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,15 @@ void	expand_tilde(t_list *token)
 {
 	char	*home_to_you;
 
-	home_to_you = read_hashtable(g_tudao.hashtable[hash_string("HOME")],
-			"HOME");
-	ft_free_ptr((void *)&token->content);
-	if (home_to_you)
-		token->content = (void *) ft_strdup(home_to_you);
-	else
-		token->content = (void *) ft_strdup(g_tudao.home_at_start);
+	if (ft_strncmp((char *) token->content, "~", 2) == 0)
+	{
+		home_to_you = read_hashtable(g_tudao.hashtable[hash_string("HOME")],
+				"HOME");
+		ft_free_ptr((void *)&token->content);
+		if (home_to_you)
+			token->content = (void *) ft_strdup(home_to_you);
+		else
+			token->content = (void *) ft_strdup(g_tudao.home_at_start);
+	}
 	return ;
 }

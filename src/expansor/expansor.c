@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 01:37:51 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 02:15:40 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void	expand_tokens(t_list *token_list)
 	{
 		if (is_expandable((char *) pivot->content) == true)
 		{
-			expand_dollar_sign(pivot);
 			expand_tilde(pivot);
+			expand_dollar_sign(pivot);
 			expand_wildcards();
 		}
 		else
