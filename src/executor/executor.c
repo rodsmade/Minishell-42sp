@@ -6,7 +6,7 @@
 /*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 01:52:42 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/29 11:48:17 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	execute_pipeline(t_list *pipeline)
 
 	pid_t		pid;
 	int			wstatus;
+	int			i;
+	int			j;
 
 	create_new_files(pipeline);
 	cmd_pivot = pipeline;
@@ -129,13 +131,23 @@ void	execute_pipeline(t_list *pipeline)
 			close_fds(cmd);
 			cmd_pivot = cmd_pivot->next;
 		}
-		waitpid(pid, &wstatus, 0);		
-		waitpid(pid, &wstatus, 0);
+		i = -1;
+		j = -1;
+		while (++i < (total_pipes + 1))
+		{
+			waitpid(-1, &wstatus, 0);
+			while (++j < total_pipes)
+			{
+				close(g_tudao.cmd_pipes[j][1]);
+				close(g_tudao.cmd_pipes[j][0]);
+			}
+		}
+		// waitpid(-1, &wstatus, 0);
+		// close(g_tudao.cmd_pipes[0][1]);
+		// close(g_tudao.cmd_pipes[0][0]);
+		// waitpid(-1, &wstatus, 0);
 		// if (counter != total_pipes)
 		// 	close(g_tudao.cmd_pipes[counter][1]);
-		// close(g_tudao.cmd_pipes[0][1]);
-		// close(g_tudao.cmd_pipes[1][0]);
-		// close(g_tudao.cmd_pipes[1][1]);
 		process_child_return_code(wstatus);
 		close_and_free_cmd_pipes();
 	}
