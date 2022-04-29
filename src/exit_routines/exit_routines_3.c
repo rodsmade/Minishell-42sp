@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 17:22:33 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/27 22:52:16 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/29 01:43:10 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	free_g_tudao(void)
 	free_lexer();
 	free_main_pipeline(&g_tudao.command_table.main_pipeline);
 	close_std_fds();
+	ft_free_ptr((void *)&g_tudao.home_at_start);
 	return ;
 }
 

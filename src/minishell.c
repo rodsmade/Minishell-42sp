@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 23:40:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 02:02:11 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	repl(void)
 	g_tudao.exit.code = 0;
 	g_tudao.line_count = 0;
 	g_tudao.backup_stdin = dup(STDIN_FILENO);
+	g_tudao.home_at_start = ft_strdup(
+			read_hashtable(g_tudao.hashtable[hash_string("HOME")], "HOME"));
 	while (!g_tudao.exit.flag)
 	{
 		init_tudao();
