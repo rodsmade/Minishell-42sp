@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 01:55:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 01:30:39 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ char			*find_cmd_in_path_var(char *command_str);
 char			*find_cmd_path(char **cmd_arr);
 
 // utils_executor_2.c
-void			fork_and_execute_cmd(int total_pipes, int counter,
+void			fork_and_execute_cmd(pid_t pid, int total_pipes, int counter,
 					t_command *cmd);
 bool			execute_only_one_cmd(t_list *pipeline);
 void			create_new_files(t_list *pipeline);

@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/27 17:46:56 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/29 01:30:06 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fork_and_execute_cmd(int total_pipes, int counter, t_command *cmd)
+void	fork_and_execute_cmd(pid_t pid, int total_pipes, int counter, t_command *cmd)
 {
-	int	pid;
-	int	wstatus;
+	// int	pid;
+	// int	wstatus;
 
+	(void)total_pipes;
 	disable_signal(SIGQUIT, &g_tudao.action);
 	disable_signal(SIGINT, &g_tudao.action);
-	pid = fork();
+	// pid = fork();
 	if (pid == -1)
 		print_error_and_exit(1, ft_strdup("Error: forking executor"));
 	else if (pid == 0)
@@ -29,13 +30,13 @@ void	fork_and_execute_cmd(int total_pipes, int counter, t_command *cmd)
 		capture_redirections(counter, cmd);
 		execute_command(cmd);
 	}
-	else
-	{
-		waitpid(-1, &wstatus, 0);
-		process_child_return_code(wstatus);
-		if (counter != total_pipes)
-			close(g_tudao.cmd_pipes[counter][1]);
-	}
+	// else
+	// {
+	// 	waitpid(-1, &wstatus, 0);
+	// 	process_child_return_code(wstatus);
+	// 	if (counter != total_pipes)
+	// 		close(g_tudao.cmd_pipes[counter][1]);
+	// }
 }
 
 bool	execute_only_one_cmd(t_list *pipeline)

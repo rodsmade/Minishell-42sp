@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 22:21:35 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/28 23:11:39 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/29 00:37:37 by afaustin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
