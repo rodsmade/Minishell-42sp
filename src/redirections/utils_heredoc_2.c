@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/28 20:08:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 17:14:00 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ char	*concat_pipe_content(int *pipe, char *str)
 	return (new_str);
 }
 
-int	pipe_and_fork(int *pipe_fds)
+int	pipe_and_fork(int (*pipe_fds)[2])
 {
 	int	pid;
 
-	if (pipe(pipe_fds) == -1)
+	if (pipe(*pipe_fds) == -1)
 		free_and_exit_fork(ft_strdup("Error creating pipe for heredoc"), \
 			EXIT_FAILURE);
 	pid = fork();

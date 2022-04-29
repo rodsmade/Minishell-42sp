@@ -3,38 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/27 17:46:56 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/29 17:30:32 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fork_and_execute_cmd(int total_pipes, int counter, t_command *cmd)
+void	fork_and_execute_cmd(pid_t **pids, t_list *pipeline)
 {
-	int	pid;
-	int	wstatus;
+	t_list		*cmd_pivot;
+	t_command	*cmd;
+	int			i;
 
+	cmd_pivot = pipeline;
 	disable_signal(SIGQUIT, &g_tudao.action);
 	disable_signal(SIGINT, &g_tudao.action);
-	pid = fork();
-	if (pid == -1)
-		print_error_and_exit(1, ft_strdup("Error: forking executor"));
-	else if (pid == 0)
+	*pids = malloc (g_tudao.command_table.main_pl_size * sizeof(**pids));
+	i = -1;
+	while (cmd_pivot)
 	{
-		set_signal_hook(SIGQUIT, catch_signals_child, &g_tudao.action);
-		set_signal_hook(SIGINT, catch_signals_child, &g_tudao.action);
-		capture_redirections(counter, cmd);
-		execute_command(cmd);
-	}
-	else
-	{
-		waitpid(-1, &wstatus, 0);
-		process_child_return_code(wstatus);
-		if (counter != total_pipes)
-			close(g_tudao.cmd_pipes[counter][1]);
+		cmd = (t_command *) cmd_pivot->content;
+		(*pids)[++i] = fork();
+		if ((*pids)[i] == -1)
+			print_error_and_exit(1, ft_strdup("Error: forking executor"));
+		else if ((*pids)[i] == 0)
+		{
+			set_signal_hook(SIGQUIT, catch_signals_child, &g_tudao.action);
+			set_signal_hook(SIGINT, catch_signals_child, &g_tudao.action);
+			capture_redirections(i, cmd);
+			execute_command(cmd);
+		}
+		close_fds(cmd);
+		cmd_pivot = cmd_pivot->next;
 	}
 }
 

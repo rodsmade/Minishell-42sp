@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 22:38:02 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/27 22:54:17 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/29 17:34:52 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,33 @@ char	*find_valid_combination(char **split_paths, char *command_str)
 		is_accessible(command_str, false, combination);
 	ft_free_ptr((void *)&combination);
 	return (NULL);
+}
+
+void	capture_redirections(int cmd_counter, t_command *cmd)
+{
+	int	total_pipes;
+	int	i;
+
+	total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
+	if (!cmd->heredocs)
+	{
+		if (cmd_counter)
+			dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
+		close(g_tudao.pipe_heredoc[0]);
+		close(g_tudao.pipe_heredoc[1]);
+	}
+	else
+		capture_heredocs(cmd, cmd_counter);
+	if (cmd_counter != total_pipes && total_pipes)
+		dup2(g_tudao.cmd_pipes[cmd_counter][1], STDOUT_FILENO);
+	capture_inputs(cmd);
+	capture_outputs(cmd);
+	capture_o_concats(cmd);
+	close(g_tudao.backup_stdin);
+	i = -1;
+	while (++i < total_pipes)
+	{
+		close(g_tudao.cmd_pipes[i][0]);
+		close(g_tudao.cmd_pipes[i][1]);
+	}
 }

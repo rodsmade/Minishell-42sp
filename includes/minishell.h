@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 02:51:45 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 22:49:38 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef struct s_env_var
 	int					is_env_var;
 }				t_env_var;
 
+typedef struct s_pid_cmd
+{
+	pid_t	pid;
+	t_list	*cmd;
+}				t_pid_cmd;
+
 typedef struct s_ext_routine
 {
 	bool	flag;
@@ -67,6 +73,8 @@ typedef struct s_cmd_table
 {
 	t_list	*main_pipeline;
 	int		main_pl_size;
+	int		main_pl_total_pipes;
+	pid_t	*main_pl_pids;
 	t_list	*secondary_pipeline;
 }				t_cmd_table;
 
@@ -193,8 +201,7 @@ char			*find_cmd_in_path_var(char *command_str);
 char			*find_cmd_path(char **cmd_arr);
 
 // utils_executor_2.c
-void			fork_and_execute_cmd(int total_pipes, int counter,
-					t_command *cmd);
+void			fork_and_execute_cmd(pid_t **pids, t_list *pipeline);
 bool			execute_only_one_cmd(t_list *pipeline);
 void			create_new_files(t_list *pipeline);
 bool			alters_main_memory(char *built_in);
@@ -211,6 +218,7 @@ bool			is_directory(char *path);
 bool			is_accessible(char *cmd, int is_abs_path, char *combination);
 bool			is_executable(char *command_str);
 char			*find_valid_combination(char **split_paths, char *command_str);
+void			capture_redirections(int cmd_counter, t_command *cmd);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);
@@ -260,7 +268,7 @@ void			get_input_line(t_data_hd *hd, int *pipe_fds);
 // utils_heredoc_2.c
 char			*get_pipe_content(int fd);
 char			*concat_pipe_content(int *pipe, char *str);
-int				pipe_and_fork(int *pipe_fds);
+int				pipe_and_fork(int (*pipe_fds)[2]);
 void			close_heredoc_prompt(char *hd_delimiter, int curr_line_count);
 
 // utils_lexer.c
