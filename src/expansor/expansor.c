@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/22 19:07:48 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/29 02:15:40 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,9 @@ void	expand_tokens(t_list *token_list)
 	new_content = NULL;
 	while (pivot)
 	{
-		if (is_expansible((char *) pivot->content) == true)
+		if (is_expandable((char *) pivot->content) == true)
 		{
+			expand_tilde(pivot);
 			expand_dollar_sign(pivot);
 			expand_wildcards();
 		}

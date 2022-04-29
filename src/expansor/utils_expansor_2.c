@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 23:32:52 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 02:38:53 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	substitute_token_by_sublist(char *expanded_str, t_list **token_address)
 	ft_free_ptr((void *)&new_token_sublist);
 }
 
-bool	is_expansible(char *token_content)
+bool	is_expandable(char *token_content)
 {
 	int		i;
 
@@ -88,10 +88,28 @@ bool	is_expansible(char *token_content)
 				if (token_content[i++] == '$')
 					return (true);
 		}
-		else if (token_content[i] && token_content[i] == '$')
+		else if (token_content[i] && (token_content[i] == '$'
+				|| ft_strncmp(token_content, "~", 2) == 0))
 			return (true);
 		if (token_content[i])
 			i++;
 	}
 	return (false);
+}
+
+void	expand_tilde(t_list *token)
+{
+	char	*home_to_you;
+
+	if (ft_strncmp((char *) token->content, "~", 2) == 0)
+	{
+		home_to_you = read_hashtable(g_tudao.hashtable[hash_string("HOME")],
+				"HOME");
+		ft_free_ptr((void *)&token->content);
+		if (home_to_you)
+			token->content = (void *) ft_strdup(home_to_you);
+		else
+			token->content = (void *) ft_strdup(g_tudao.home_at_start);
+	}
+	return ;
 }

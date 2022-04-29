@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 23:22:42 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 01:55:04 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_cmd_table
 typedef struct s_tudao
 {
 	char				*prompt_input;
+	char				*home_at_start;
 	size_t				line_count;
 	t_list				*hashtable[TABLE_SIZE];
 	t_list				*token_list;
@@ -220,8 +221,9 @@ void			append_single_quotes(char *token_str, char **expanded_cont,
 // utils_expansor_2.c
 void			substitute_token_by_sublist(char *expanded_str,
 					t_list **token_address);
-bool			is_expansible(char *token_content);
+bool			is_expandable(char *token_content);
 char			*treat_quotes(char *token_content);
+void			expand_tilde(t_list *token);
 
 // utils_export.c
 int				value_len(char *line_read);

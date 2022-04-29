@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/27 22:52:09 by coder            ###   ########.fr       */
+/*   Updated: 2022/04/29 02:08:01 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,16 @@ int	generate_pair(char *line_read, char **pair)
 
 void	iterate_lst_to_export(t_list *lst)
 {
-	t_list	*tmp;
+	t_list	*pivot;
 	char	*pair;
 
-	tmp = lst->next;
+	pivot = lst->next;
 	pair = NULL;
-	while (tmp != NULL)
+	while (pivot != NULL)
 	{
-		if (is_valid_identifier((char *)tmp->content))
+		if (is_valid_identifier((char *)pivot->content))
 		{
-			if (generate_pair((char *)tmp->content, &pair))
+			if (generate_pair((char *)pivot->content, &pair))
 				insert_or_update_hashtable(pair, 1, &g_tudao.hashtable);
 			else
 				insert_or_update_hashtable(pair, -1, &g_tudao.hashtable);
@@ -107,10 +107,10 @@ void	iterate_lst_to_export(t_list *lst)
 		{
 			g_tudao.exit.code = 1;
 			g_tudao.exit.msg = ft_strjoin_3("export: `",
-					(char *)tmp->content, "': not a valid identifier");
+					(char *)pivot->content, "': not a valid identifier");
 			ft_free_ptr((void *)&pair);
 		}
-		tmp = tmp->next;
+		pivot = pivot->next;
 	}
 }
 

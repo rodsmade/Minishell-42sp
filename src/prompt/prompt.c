@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 21:58:00 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 02:10:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*getcwd_home_expanded(void)
 		g_tudao.exit.flag = true;
 		return (NULL);
 	}
-	home_var = read_hashtable(g_tudao.hashtable[hash_string("HOME")], "HOME");
+	home_var = g_tudao.home_at_start;
 	if (home_var && ft_strncmp(cwd, home_var, ft_strlen(home_var)) == 0)
 	{
 		cwd_home_expanded = ft_strjoin("~", &cwd[ft_strlen(home_var)]);
