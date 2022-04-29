@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/29 17:14:00 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/29 23:38:01 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	pipe_and_fork(int (*pipe_fds)[2])
 	if (pipe(*pipe_fds) == -1)
 		free_and_exit_fork(ft_strdup("Error creating pipe for heredoc"), \
 			EXIT_FAILURE);
+	disable_signal(SIGQUIT, &g_tudao.action);
+	disable_signal(SIGINT, &g_tudao.action);
 	pid = fork();
 	if (pid == -1)
 		free_and_exit_fork(ft_strdup("Error forking process for heredoc"), \
@@ -62,22 +64,34 @@ int	pipe_and_fork(int (*pipe_fds)[2])
 	return (pid);
 }
 
-void	close_heredoc_prompt(char *hd_delimiter, int curr_line_count)
+static void	free_hd(t_data_hd *hd)
+{
+	ft_free_ptr((void *)&hd->str);
+	ft_free_pipe_arr(&hd->pipes_per_eof, hd->total_pipes);
+	return ;
+}
+
+void	close_heredoc_prompt(t_data_hd *hd, int curr_line_count)
 {
 	char	*itoa;
 
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(BORANGE, 2);
-	ft_putstr_fd("warning: ", 2);
-	ft_putstr_fd(COLOUR_RESET, 2);
-	ft_putstr_fd("here-document at line ", 2);
-	itoa = ft_itoa(curr_line_count);
-	ft_putstr_fd(itoa, 2);
-	ft_free_ptr((void *)&itoa);
-	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
-	ft_putstr_fd(BORANGE, 2);
-	ft_putstr_fd(hd_delimiter, 2);
-	ft_putstr_fd(COLOUR_RESET, 2);
-	ft_putendl_fd("')", 2);
+	if (!g_tudao.heredoc_stopped)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(BORANGE, 2);
+		ft_putstr_fd("warning: ", 2);
+		ft_putstr_fd(COLOUR_RESET, 2);
+		ft_putstr_fd("here-document at line ", 2);
+		itoa = ft_itoa(curr_line_count);
+		ft_putstr_fd(itoa, 2);
+		ft_free_ptr((void *)&itoa);
+		ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+		ft_putstr_fd(BORANGE, 2);
+		ft_putstr_fd((char *) hd->cursor->content, 2);
+		ft_putstr_fd(COLOUR_RESET, 2);
+		ft_putendl_fd("')", 2);
+	}
+	else
+		free_hd(hd);
 	return ;
 }

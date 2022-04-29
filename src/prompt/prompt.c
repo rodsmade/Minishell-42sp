@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 02:10:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 23:09:17 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	assemble_line(char **line_read)
 	char	*aux_str;
 	char	*temp;
 
-	set_signal_hook(SIGINT, catch_signal_parent_extra_input, &g_tudao.action);
+	set_signal_hook(SIGINT, sighandler_parent_extra_input, &g_tudao.action);
 	aux_str = readline("> ");
 	if (aux_str && !g_tudao.skip_execution)
 	{
@@ -100,7 +100,7 @@ void	display_cmd_prompt(void)
 	char	*prompt;
 
 	dup2(g_tudao.backup_stdin, STDIN_FILENO);
-	set_signal_hook(SIGINT, catch_signal_parent, &g_tudao.action);
+	set_signal_hook(SIGINT, sighandler_parent, &g_tudao.action);
 	prompt = string_prompt();
 	g_tudao.prompt_input = readline(prompt);
 	ft_free_ptr((void *)&prompt);
