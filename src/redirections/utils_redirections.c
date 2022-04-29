@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:10:21 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/27 17:45:38 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/04/29 17:08:55 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	capture_heredocs(t_command *cmd, int cmd_count)
 	init_heredoc_data(&hd, cmd, cmd_count);
 	while (hd.cursor)
 	{
-		pid = pipe_and_fork(pipe_fds);
+		pid = pipe_and_fork(&pipe_fds);
 		if (pid == 0)
 			get_input_line(&hd, pipe_fds);
 		waitpid(pid, &wstatus, 0);

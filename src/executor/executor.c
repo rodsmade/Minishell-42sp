@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 21:28:24 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 17:33:44 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,33 +71,6 @@ void	execute_command(t_command *cmd)
 	return ;
 }
 
-void	capture_redirections(int cmd_counter, t_command *cmd)
-{
-	int	total_pipes;
-	int	i;
-
-	total_pipes = ft_lst_size(g_tudao.command_table.main_pipeline) - 1;
-	if (!cmd->heredocs)
-	{
-		if (cmd_counter)
-			dup2(g_tudao.cmd_pipes[cmd_counter - 1][0], STDIN_FILENO);
-	}
-	else
-		capture_heredocs(cmd, cmd_counter);
-	if (cmd_counter != total_pipes && total_pipes)
-		dup2(g_tudao.cmd_pipes[cmd_counter][1], STDOUT_FILENO);
-	capture_inputs(cmd);
-	capture_outputs(cmd);
-	capture_o_concats(cmd);
-	close(g_tudao.backup_stdin);
-	i = -1;
-	while (++i < total_pipes)
-	{
-		close(g_tudao.cmd_pipes[i][0]);
-		close(g_tudao.cmd_pipes[i][1]);
-	}
-}
-
 void	await_all_children(int children_count, pid_t *cmd_pids)
 {
 	int	i;
@@ -120,22 +93,17 @@ void	await_all_children(int children_count, pid_t *cmd_pids)
 void	execute_pipeline(t_list *pipeline)
 {
 	int			total_pipes;
-	// pid_t		*pids;
 
-	// if (cmd->heredocs)
-	// {
-	// 	if (pipe(g_tudao.pipe_heredoc) == -1)
-	// 		print_error_and_exit(1, ft_strdup("Error: pipe heredoc"));	
-	// }
-
+	if (pipe(g_tudao.pipe_heredoc) == -1)
+		print_error_and_exit(1, ft_strdup("Error: pipe heredoc"));
 	create_new_files(pipeline);
 	if (!execute_only_one_cmd(pipeline))
 	{
 		total_pipes = ft_lst_size(pipeline) - 1;
 		g_tudao.cmd_pipes = ft_make_pipes(total_pipes);
-		// TODO: criar um struct com todos os pids, todos os pipes, os tamanhos etc.
 		fork_and_execute_cmd(&g_tudao.command_table.main_pl_pids, pipeline);
 		close_and_free_cmd_pipes();
-		await_all_children(g_tudao.command_table.main_pl_size, g_tudao.command_table.main_pl_pids);
+		await_all_children(g_tudao.command_table.main_pl_size, \
+		g_tudao.command_table.main_pl_pids);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/29 21:08:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 17:30:32 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	fork_and_execute_cmd(pid_t **pids, t_list *pipeline)
 	t_list		*cmd_pivot;
 	t_command	*cmd;
 	int			i;
-	
+
 	cmd_pivot = pipeline;
 	disable_signal(SIGQUIT, &g_tudao.action);
 	disable_signal(SIGINT, &g_tudao.action);

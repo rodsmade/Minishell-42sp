@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 21:18:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/29 17:34:30 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ bool			is_directory(char *path);
 bool			is_accessible(char *cmd, int is_abs_path, char *combination);
 bool			is_executable(char *command_str);
 char			*find_valid_combination(char **split_paths, char *command_str);
+void			capture_redirections(int cmd_counter, t_command *cmd);
 
 // utils_expansor.c
 void			remove_null_nodes_from_token_list(void);
@@ -266,7 +267,7 @@ void			get_input_line(t_data_hd *hd, int *pipe_fds);
 // utils_heredoc_2.c
 char			*get_pipe_content(int fd);
 char			*concat_pipe_content(int *pipe, char *str);
-int				pipe_and_fork(int *pipe_fds);
+int				pipe_and_fork(int (*pipe_fds)[2]);
 void			close_heredoc_prompt(char *hd_delimiter, int curr_line_count);
 
 // utils_lexer.c
