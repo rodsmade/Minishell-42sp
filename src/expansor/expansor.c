@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 02:15:40 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/30 01:52:53 by afaustin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,31 @@ void	expand_dollar_sign(t_list *token)
 	ft_free_ptr((void *)&expanded_cont);
 }
 
+void	convert_special_token(char **special_token)
+{
+	char	*new_token;
+	
+	if (*special_token != NULL && *special_token[0] != '\0')
+	{
+		if (!ft_strncmp(*special_token, "<<", 3))
+			new_token = ft_strdup("DOUBLE_LESSER_THAN");
+		else if (!ft_strncmp(*special_token, "<", 2))
+			new_token = ft_strdup("LESSER_THAN");
+		else if (!ft_strncmp(*special_token, ">>", 3))
+			new_token = ft_strdup("DOUBLE_GREATER_THAN");
+		else if (!ft_strncmp(*special_token, ">", 2))
+			new_token = ft_strdup("GREATER_THAN");
+		else if (!ft_strncmp(*special_token, "|", 2))
+			new_token = ft_strdup("PIPE");
+		else if (!ft_strncmp(*special_token, "&&", 3))
+			new_token = ft_strdup("AND_AND");
+		else if (!ft_strncmp(*special_token, "||", 3))
+			new_token = ft_strdup("OR_OR");
+		ft_free_ptr((void *)&(*special_token));
+		*special_token = new_token;
+	}
+}
+
 void	expand_tokens(t_list *token_list)
 {
 	t_list	*pivot;
@@ -124,6 +149,10 @@ void	expand_tokens(t_list *token_list)
 			expand_tilde(pivot);
 			expand_dollar_sign(pivot);
 			expand_wildcards();
+		}
+		else if (is_special_token((char *) pivot->content) == true)
+		{
+			convert_special_token((char **) &pivot->content);
 		}
 		else
 		{
