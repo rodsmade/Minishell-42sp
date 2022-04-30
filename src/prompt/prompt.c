@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/30 00:54:34 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/04/30 17:31:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 void	process_input(char *string)
 {
 	create_token_list(string);
-	printf("#TOKEN_LIST  ");
-	print_token_lst(g_tudao.token_list);
 	expand_tokens(g_tudao.token_list);
-	printf("#EXPAND_TOKENS  ");
-	print_token_lst(g_tudao.token_list);
 	parse_tokens();
 	return ;
 }
