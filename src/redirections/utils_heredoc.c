@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:27:16 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 23:44:23 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/30 02:47:11 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ void	get_input_line(t_data_hd *hd, int *pipe_fds)
 	ft_close_pipe_fds(pipe_fds);
 	ft_free_ptr((void *)&(hd->str));
 	ft_free_pipe_arr(&(hd->pipes_per_eof), hd->total_pipes);
-	free_and_exit_fork(NULL, EXIT_SUCCESS);
+	free_and_exit_fork(NULL, g_tudao.exit.code);
 }
