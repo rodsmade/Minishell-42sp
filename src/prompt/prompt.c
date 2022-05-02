@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/30 17:31:30 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/03 00:17:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,7 @@ static void	assemble_line(char **line_read)
 		ft_free_ptr((void *)&temp);
 	}
 	else if (!aux_str && g_tudao.is_ctrl_d)
-	{
-		ft_putendl_fd("syntax error: unexpected end of file", 2);
-		ft_putendl_fd("exit", 2);
-		g_tudao.exit.code = 2;
-		g_tudao.exit.flag = true;
-	}
+		print_syntax_error_exit();
 }
 
 static char	*getcwd_home_expanded(void)

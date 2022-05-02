@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/30 17:30:54 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/03 00:47:43 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void			free_env_var(void *element);
 void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
 // exit_routines_3.c
-void			print_syntax_error_exit(char *token);
+void			print_syntax_error(char *token);
 void			free_g_tudao(void);
 void			print_error_and_exit(int ext_code, char *msg);
 void			free_list(t_list *list);
@@ -304,6 +304,10 @@ bool			is_input(t_list *token);
 bool			is_output(t_list *token);
 bool			is_heredoc(t_list *token);
 bool			is_o_concat(t_list *token);
+char			*special_token_to_string(char *token);
+
+// utils_parser_2.c
+void			print_syntax_error_exit(void);
 
 // utils_redirections.c
 void			capture_inputs(t_command *cmd);
