@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:25:13 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/30 17:25:26 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/02 23:48:49 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	convert_special_token(char **special_token)
 {
 	char	*new_token;
-	
+
 	if (*special_token != NULL && *special_token[0] != '\0')
 	{
 		if (!ft_strncmp(*special_token, "<<", 3))
