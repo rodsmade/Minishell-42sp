@@ -6,20 +6,26 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 17:22:33 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 01:43:10 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/03 00:46:22 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_syntax_error_exit(char *token)
+void	print_syntax_error(char *token)
 {
+	char	*minishell_f;
+	char	*aux;
+
 	g_tudao.syntax_error = true;
 	g_tudao.exit.code = 2;
-	g_tudao.exit.msg = \
-	ft_strjoin_3("syntax error near unexpected token `", token, "'");
+	minishell_f = ft_strjoin_3(BRED, "✘ minishell: ", COLOUR_RESET);
+	aux = ft_strjoin(minishell_f, "syntax error near unexpected token `");
+	g_tudao.exit.msg = ft_strjoin_3(aux, special_token_to_string(token), "'");
 	ft_putendl_fd(g_tudao.exit.msg, 2);
 	ft_free_ptr((void *)&g_tudao.exit.msg);
+	ft_free_ptr((void *)&minishell_f);
+	ft_free_ptr((void *)&aux);
 	return ;
 }
 

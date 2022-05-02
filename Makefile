@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 22:21:35 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/30 17:29:52 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/05/03 00:22:45 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,6 +94,7 @@ SOURCES			=	minishell.c \
 					$(PATH_LEXER)utils_lexer.c \
 					$(PATH_PARSER)utils_parser_1.c \
 					$(PATH_PARSER)utils_parser_2.c \
+					$(PATH_PROMPT)utils_prompt.c \
 					$(PATH_REDIRECTS)utils_redirections.c \
 					$(PATH_SIGNALS)utils_signals.c \
 					$(PATH_TESTS)utils_test.c

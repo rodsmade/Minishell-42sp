@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 17:25:13 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/02 23:48:49 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/03 00:39:00 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ void	convert_special_token(char **special_token)
 
 	if (*special_token != NULL && *special_token[0] != '\0')
 	{
-		if (!ft_strncmp(*special_token, "<<", 3))
-			new_token = ft_strdup(DOUBLE_LESS_THAN);
-		else if (!ft_strncmp(*special_token, "<", 2))
+		if (!ft_strncmp(*special_token, "<", 2))
 			new_token = ft_strdup(LESS_THAN);
-		else if (!ft_strncmp(*special_token, ">>", 3))
-			new_token = ft_strdup(DOUBLE_GREATER_THAN);
 		else if (!ft_strncmp(*special_token, ">", 2))
 			new_token = ft_strdup(GREATER_THAN);
 		else if (!ft_strncmp(*special_token, "|", 2))
 			new_token = ft_strdup(PIPE);
 		else if (!ft_strncmp(*special_token, "&", 2))
 			new_token = ft_strdup(AMPERSAND);
+		else if (!ft_strncmp(*special_token, "<<", 3))
+			new_token = ft_strdup(DOUBLE_LESS_THAN);
+		else if (!ft_strncmp(*special_token, ">>", 3))
+			new_token = ft_strdup(DOUBLE_GREATER_THAN);
 		else if (!ft_strncmp(*special_token, "&&", 3))
 			new_token = ft_strdup(LOGIC_AND);
 		else if (!ft_strncmp(*special_token, "||", 3))
