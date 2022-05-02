@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 23:38:32 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/04/30 17:30:54 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@
 # include "libft.h"
 
 // ----------------------------------------------	DEFINES		----------------
+# define AMPERSAND "<AMPERSAND>"
+# define DOUBLE_GREATER_THAN "<DOUBLE_GREATER_THAN>"
+# define DOUBLE_LESS_THAN "<DOUBLE_LESS_THAN>"
+# define GREATER_THAN "<GREATER_THAN>"
+# define LESS_THAN "<LESS_THAN>"
+# define LOGIC_AND "<LOGIC_AND>"
+# define LOGIC_OR "<LOGIC_OR>"
+# define PIPE "<PIPE>"
 # define TABLE_SIZE	50
 
 // ----------------------------------------------	STRUCTS		----------------
@@ -141,7 +149,7 @@ void			execute_command(t_command *cmd);
 void			capture_redirections(int cmd_counter, t_command *cmd);
 void			execute_built_in(t_command *command);
 
-// exit_routines.c
+// exit_routines_1.c
 void			close_std_fds(void);
 void			close_fds(t_command *command);
 void			close_heredoc_pipe(void);
@@ -197,7 +205,7 @@ void			set_signal_hook(int sig, void handler(int),
 char			*env_var_to_string(t_env_var *env_var);
 int				count_env_vars(void);
 
-// utils_executor.c
+// utils_executor_1.c
 char			**assemble_cmd_array(t_command *command);
 char			*find_cmd_in_path_var(char *command_str);
 char			*find_cmd_path(char **cmd_arr);
@@ -222,7 +230,7 @@ bool			is_executable(char *command_str);
 char			*find_valid_combination(char **split_paths, char *command_str);
 void			capture_redirections(int cmd_counter, t_command *cmd);
 
-// utils_expansor.c
+// utils_expansor_1.c
 void			remove_null_nodes_from_token_list(void);
 int				is_valid_key_char(char c);
 void			expand_wildcards(void);
@@ -236,7 +244,11 @@ bool			is_expandable(char *token_content);
 char			*treat_quotes(char *token_content);
 void			expand_tilde(t_list *token);
 
-// utils_export.c
+// utils_expansor_3.c
+void			convert_special_token(char **special_token);
+bool			is_special_chars(char *token_str);
+
+// utils_export_1.c
 int				value_len(char *line_read);
 int				is_valid_identifier(char *key_value);
 int				key_len(char *key_value);
@@ -250,7 +262,7 @@ void			iter_quoted_value(char *line_read, int *i, char *value, int *j);
 void			check_file_exists(char *file_name);
 void			check_file_has_permissions(char *file_name, int permissions);
 
-// utils_hashtable.c
+// utils_hashtable_1.c
 void			update_hashtable(char *key, char *new_value, int new_env_var);
 char			*read_hashtable(t_list *head, char *key);
 t_list			*find_node_in_hashtable(char *var_name);
@@ -259,7 +271,7 @@ char			**hashtable_to_array(void);
 // utils_hashtable_2.c
 char			**split_key_and_value(char *string);
 
-// utils_heredoc.c
+// utils_heredoc_1.c
 void			init_heredoc_data(t_data_hd *hd, t_command *cmd, int cmd_count);
 void			process_heredoc_position(t_data_hd *hd, int pipe_fd);
 void			add_heredocs_to_history(void);
@@ -280,7 +292,7 @@ int				count_redirect(char *line_read);
 char			*redirect_gen(char *line_read);
 void			free_lexer(void);
 
-// utils_parser.c
+// utils_parser_1.c
 bool			is_special_token(char *token);
 bool			is_redirect(char *token);
 bool			is_pipe(char *token);

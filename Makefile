@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 22:21:35 by roaraujo          #+#    #+#              #
-#    Updated: 2022/04/29 23:18:52 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/04/30 17:29:52 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,9 +65,9 @@ SOURCES			=	minishell.c \
 					$(PATH_BUILTINS)builtin_pwd.c \
 					$(PATH_BUILTINS)builtin_unset.c \
 					$(PATH_EXECUTOR)executor.c \
+					$(PATH_EXIT)exit_routines_1.c \
 					$(PATH_EXIT)exit_routines_2.c \
 					$(PATH_EXIT)exit_routines_3.c \
-					$(PATH_EXIT)exit_routines.c \
 					$(PATH_EXPANSOR)expansor.c \
 					$(PATH_HASHTABLE)hashtable.c \
 					$(PATH_INIT)init_routines.c \
@@ -77,22 +77,23 @@ SOURCES			=	minishell.c \
 					$(PATH_PROMPT)prompt.c \
 					$(PATH_SIGNALS)signal_handlers.c \
 					$(PATH_HASHTABLE)utils_env_vars.c \
+					$(PATH_EXECUTOR)utils_executor_1.c \
 					$(PATH_EXECUTOR)utils_executor_2.c \
 					$(PATH_EXECUTOR)utils_executor_3.c \
 					$(PATH_EXECUTOR)utils_executor_4.c \
-					$(PATH_EXECUTOR)utils_executor.c \
+					$(PATH_EXPANSOR)utils_expansor_1.c \
 					$(PATH_EXPANSOR)utils_expansor_2.c \
-					$(PATH_EXPANSOR)utils_expansor.c \
+					$(PATH_EXPANSOR)utils_expansor_3.c \
+					$(PATH_BUILTINS)utils_export_1.c \
 					$(PATH_BUILTINS)utils_export_2.c \
-					$(PATH_BUILTINS)utils_export.c \
 					$(PATH_REDIRECTS)utils_file_check.c \
+					$(PATH_HASHTABLE)utils_hashtable_1.c \
 					$(PATH_HASHTABLE)utils_hashtable_2.c \
-					$(PATH_HASHTABLE)utils_hashtable.c \
+					$(PATH_REDIRECTS)utils_heredoc_1.c \
 					$(PATH_REDIRECTS)utils_heredoc_2.c \
-					$(PATH_REDIRECTS)utils_heredoc.c \
 					$(PATH_LEXER)utils_lexer.c \
+					$(PATH_PARSER)utils_parser_1.c \
 					$(PATH_PARSER)utils_parser_2.c \
-					$(PATH_PARSER)utils_parser.c \
 					$(PATH_REDIRECTS)utils_redirections.c \
 					$(PATH_SIGNALS)utils_signals.c \
 					$(PATH_TESTS)utils_test.c
