@@ -4,41 +4,41 @@
 #include "minishell.h"
 
 // cenário 1: kdasdhajskhd*
-// bool	matches_pattern_cenario1(char *str, char *pattern)
-// {
-// 	int	i;
+bool	matches_pattern_head(char *str, char *pattern)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (pattern[i] && pattern[i] != '*')
-// 		i++;
-// 	if (ft_strncmp(str, pattern, i) == 0)
-// 		return (true);
-// 	else
-// 		return (false);
-// }
+	i = 0;
+	while (pattern[i] && pattern[i] != '*')
+		i++;
+	if (ft_strncmp(str, pattern, i) == 0)
+		return (true);
+	else
+		return (false);
+}
 
 // cenário 2: *kdasdhajskhd
-// bool	matches_pattern_cenario2(char *str, char *pattern)
-// {
-// 	int	i;
-// 	int	x;
-// 	int	n;
+bool	matches_pattern_tail(char *str, char *pattern)
+{
+	int	i;
+	int	x;
+	int	n;
 
-// 	i = 0;
-// 	while (pattern[i] == '*')
-// 		i++;
-// 	x = i;
-// 	n = 0;
-// 	while (pattern[i] && pattern[i] != '*')
-// 	{
-// 		n++;
-// 		i++;
-// 	}
-// 	if (ft_strlen(str) >= n && ft_strncmp(&str[ft_strlen(str) - n], &pattern[x], n) == 0)
-// 			return true;
-// 	else
-// 		return (false);
-// }
+	i = 0;
+	while (pattern[i] == '*')
+		i++;
+	x = i;
+	n = 0;
+	while (pattern[i] && pattern[i] != '*')
+	{
+		n++;
+		i++;
+	}
+	if (ft_strlen(str) >= n && ft_strncmp(&str[ft_strlen(str) - n], &pattern[x], n) == 0)
+			return true;
+	else
+		return (false);
+}
 
 // bool	sweep_and_search(char *word, char *pattern, int n)
 // {
@@ -54,84 +54,70 @@
 // 	return (false);
 // }
 
-// cenário 3: *kasjdkasjd*
-bool	matches_pattern_cenario3(char *str, char *pattern)
+bool	sweep_and_search(char *word, char *pattern, int n, int *offset)
 {
-	/**
-	 * W I P, NOT FINISHED, NOT EVEN STARTED LOL HELP.
-	 * 
-	 */
-	static bool	free_prefix;
-	static bool	free_suffix;
-	int			i;
-	int			n;
-	char		*sub_pattern;
+	int	i;
 
-	free_prefix = false;
-	free_suffix = false;
 	i = 0;
-	if (pattern[0] == '*')
+	if (!word || !pattern)
+		return (false);
+	while (word[i] && ft_strlen(&word[i]) >= n)
 	{
-		free_prefix = true;
+		if (ft_strncmp(&word[i], pattern, n) == 0)
+		{
+			*offset += (i + n);
+			return (true);
+		}
 		i++;
 	}
-	if (pattern[ft_strlen(pattern) - 1] == '*')
-		free_suffix = true;
-	// premissa: vai ter só um asterisco.
-	n = 0;
-	sub_pattern = NULL;
-	while (pattern[i] && pattern[i++] != '*')
-	{
-		n++;
-		sub_pattern = ft_append_char(sub_pattern, pattern[i - 1]);
-	}
-	while()
-	{
-
-	}
+	return (false);
 }
 
-char	*shrink_asterisks(char *pattern)
-/**
- * @brief TESTS:
- * 	./a.out '******'ne'******'na'*'
- * 		shrunk pattern: *ne*na*
- * 	./a.out '*'ne'******'na'*'
- * 		shrunk pattern: *ne*na*
- * 	./a.out '****'ne'*'na'*'
- * 		shrunk pattern: *ne*na*
- * 	./a.out '*'ne'*'na'*'
- * 		shrunk pattern: *ne*na*
- * 	./a.out ne'*'na'*'
- * 		shrunk pattern: ne*na*
- * 	./a.out ne'*'na
- * 		shrunk pattern: ne*na
- * 	./a.out nena
- * 		shrunk pattern: nena
- */
+// cenário 3: *kasj*dk*as*dafjjd*
+// cenário 3: kasj*dk*as*dafjjd*
+// cenário 3: *kasj*dk*as*dafjjd
+// cenário 3: kasj*dk*as*dafjjd
+bool	matches_pattern(char *str, char *pattern)
 {
 	int		i;
-	char	*shrunk_pattern;
+	int		str_offset;
+	int		pattern_offset;
+	int		search_size;
+	char	*substring;
 
-	if (!pattern)
-		return (NULL);
-	shrunk_pattern = NULL;
 	i = 0;
+	str_offset = 0;
+	pattern_offset = 0;
+	if (pattern[i] != '*')	// tem que começar exatamente igual ao primeiro pattern
+	{
+		pattern_offset = i;
+		search_size = 0;
+		while (pattern[i++] != '*')
+			search_size++;
+		substring = ft_substr(pattern, pattern_offset, search_size);
+		if (ft_strncmp(&str[str_offset], substring, search_size) != 0)
+			return (false);	// falta dar free no substring
+		str_offset += search_size;
+	}
 	while (pattern[i])
 	{
+		// trocar pra colocar a função matches_pattern_head
 		if (pattern[i] == '*')
-		{
-			while (pattern [i] && pattern[i] == '*')
-				i++;
-			shrunk_pattern = ft_append_char(shrunk_pattern, '*');
-		}
-		while (pattern[i] && pattern[i] != '*')
-			shrunk_pattern = ft_append_char(shrunk_pattern, pattern[i++]);
-		if (!pattern[i])
-			break ;
+			i++;
+		pattern_offset = i;
+		while (pattern[i++] != '*')
+			search_size++;
+		substring = ft_substr(pattern, pattern_offset, search_size);
+		if (!sweep_and_search(&str[str_offset], substring, search_size, &str_offset))
+			return (false);
 	}
-	printf("shrunk pattern: %s\n", shrunk_pattern);
-	return (shrunk_pattern);
+	if (pattern[ft_strlen(pattern) - 1] != '*')	// tem que terminar exatamente igual ao segundo pattern
+	{
+		// tem que ajustar a posição do pattern q vai pra dentro da função
+		if (!matches_pattern_tail(str, pattern))
+			return (false);
+	}
+	return (true);
 }
 
 int	main(int argc, char *argv[])
@@ -153,7 +139,7 @@ int	main(int argc, char *argv[])
 		while (dir != NULL)
 		{
 			dir_name = dir->d_name;
-			if (matches_pattern_cenario1(dir_name, pattern))
+			if (matches_pattern_head(dir_name, pattern))
 				printf(GREEN"  is  "COLOUR_RESET" a match => %s\n", dir->d_name);
 			else
 				printf(BRED"is not"COLOUR_RESET" a match => %sn", dir->d_name);
