@@ -9,7 +9,7 @@
 // 	int	i;
 
 // 	i = 0;
-// 	while (pattern[i] != '*')
+// 	while (pattern[i] && pattern[i] != '*')
 // 		i++;
 // 	if (ft_strncmp(str, pattern, i) == 0)
 // 		return (true);
@@ -40,6 +40,20 @@
 // 		return (false);
 // }
 
+// bool	sweep_and_search(char *word, char *pattern, int n)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (word[i] && ft_strlen(word[i]) >= n)
+// 	{
+// 		if (ft_strncmp(&word[i], pattern, n) == 0)
+// 			return (true);
+// 		i++;
+// 	}
+// 	return (false);
+// }
+
 // cenário 3: *kasjdkasjd*
 bool	matches_pattern_cenario3(char *str, char *pattern)
 {
@@ -47,17 +61,34 @@ bool	matches_pattern_cenario3(char *str, char *pattern)
 	 * W I P, NOT FINISHED, NOT EVEN STARTED LOL HELP.
 	 * 
 	 */
-	static bool	pre_asterisk;
-	static bool	post_asterisk;
+	static bool	free_prefix;
+	static bool	free_suffix;
 	int			i;
+	int			n;
+	char		*sub_pattern;
 
+	free_prefix = false;
+	free_suffix = false;
+	i = 0;
 	if (pattern[0] == '*')
-		pre_asterisk == false;
-	i = -1;
+	{
+		free_prefix = true;
+		i++;
+	}
+	if (pattern[ft_strlen(pattern) - 1] == '*')
+		free_suffix = true;
 	// premissa: vai ter só um asterisco.
-	while (pattern[++i] == '*')
-		continue ;
-	
+	n = 0;
+	sub_pattern = NULL;
+	while (pattern[i] && pattern[i++] != '*')
+	{
+		n++;
+		sub_pattern = ft_append_char(sub_pattern, pattern[i - 1]);
+	}
+	while()
+	{
+
+	}
 }
 
 char	*shrink_asterisks(char *pattern)
@@ -77,7 +108,6 @@ char	*shrink_asterisks(char *pattern)
  * 		shrunk pattern: ne*na
  * 	./a.out nena
  * 		shrunk pattern: nena
- *
  */
 {
 	int		i;
@@ -115,21 +145,21 @@ int	main(int argc, char *argv[])
 		return (-1);
 	pattern = shrink_asterisks(argv[1]);
 
-	// // opens current directory's contents
-	// d = opendir(".");
-	// if (d)
-	// {
-	// 	dir = readdir(d);
-	// 	while (dir != NULL)
-	// 	{
-	// 		dir_name = dir->d_name;
-	// 		if (matches_pattern_cenario2(dir_name, pattern))
-	// 			printf("%s is a match\n", dir->d_name);
-	// 		else
-	// 			printf("%s is not a match\n", dir->d_name);
-	// 		dir = readdir(d);
-	// 	}
-	// 	closedir(d);
-	// }
+	// opens current directory's contents
+	d = opendir(".");
+	if (d)
+	{
+		dir = readdir(d);
+		while (dir != NULL)
+		{
+			dir_name = dir->d_name;
+			if (matches_pattern_cenario1(dir_name, pattern))
+				printf(GREEN"  is  "COLOUR_RESET" a match => %s\n", dir->d_name);
+			else
+				printf(BRED"is not"COLOUR_RESET" a match => %sn", dir->d_name);
+			dir = readdir(d);
+		}
+		closedir(d);
+	}
 	return (0);
 } 
