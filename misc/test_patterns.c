@@ -95,6 +95,7 @@ bool	matches_pattern(char *str, char *pattern)
 	}
 	while (pattern[i])
 	{
+		search_size = 0;
 		if (pattern[i] == '*')
 			i++;
 		pattern_offset = i;
