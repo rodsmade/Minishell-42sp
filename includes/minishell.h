@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/04 22:41:59 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/04 23:14:52 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ void			capture_redirections(int cmd_counter, t_command *cmd);
 // utils_expansor_1.c
 void			remove_null_nodes_from_token_list(void);
 int				is_valid_key_char(char c);
-void			expand_wildcards(void);
+void			expand_wildcards(t_list **token);
 void			append_single_quotes(char *token_str, char **expanded_cont,
 					int *index);
 
@@ -248,6 +248,16 @@ bool			has_wildcard(char* token_content);
 // utils_expansor_3.c
 void			convert_special_token(char **special_token);
 bool			is_special_chars(char *token_str);
+
+// utils_expansor_4.c
+
+// utils_wildcard_expansion.c
+bool			matches_pattern_head(char *str, char *pattern);
+bool			matches_pattern_tail(char *str, char *pattern);
+bool			sweep_and_search(char *word, char *pattern, size_t n,
+					int *offset);
+bool			matches_pattern(char *str, char *pattern);
+char			*shrink_asterisks(char *pattern);
 
 // utils_export_1.c
 int				value_len(char *line_read);

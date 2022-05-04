@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/04 22:41:59 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/04 22:53:56 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,36 +66,6 @@ void	substitute_token_by_sublist(char *expanded_str, t_list **token_address)
 	(*token_address)->next = new_token_sublist->next;
 	ft_lst_last(*token_address)->next = temp_next;
 	ft_free_ptr((void *)&new_token_sublist);
-}
-
-bool	has_wildcard(char* token_content)
-{
-	int	i;
-
-	i = 0;
-	while (token_content[i])
-	{
-		if (token_content[i] == '\'')
-		{
-			while (token_content[++i] && token_content[i] != '\'')
-				continue ;
-			if (token_content[i])
-				i++;
-		}
-		if (token_content[i] == '\"')
-		{
-			while (token_content[++i] && token_content[i] != '\"')
-				continue ;
-			if (token_content[i])
-				i++;
-		}
-		if (token_content[i] == '*')
-			return (true);
-		if (!token_content[i])
-			break ;
-		i++;
-	}
-	return (false);
 }
 
 bool	is_expandable(char *token_content)

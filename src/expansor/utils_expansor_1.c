@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_expansor.c                                   :+:      :+:    :+:   */
+/*   utils_expansor_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 15:08:58 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/28 23:25:36 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/04 22:53:10 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ int	is_valid_key_char(char c)
 	if (ft_isalnum(c) || c == '_')
 		return (true);
 	return (false);
-}
-
-void	expand_wildcards(void)
-{
-	return ;
 }
 
 void	remove_null_nodes_from_token_list(void)
