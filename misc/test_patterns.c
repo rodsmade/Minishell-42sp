@@ -20,22 +20,17 @@ bool	matches_pattern_head(char *str, char *pattern)
 // cenário 2: *kdasdhajskhd
 bool	matches_pattern_tail(char *str, char *pattern)
 {
-	int	i;
-	int	x;
+	int	pattern_end;
 	int	n;
 
-	i = 0;
-	while (pattern[i] == '*')
-		i++;
-	x = i;
+	if (!pattern)
+		return (false);
 	n = 0;
-	while (pattern[i] && pattern[i] != '*')
-	{
+	pattern_end = ft_strlen(pattern);
+	while (pattern[--pattern_end] != '*' && pattern_end >= 0)
 		n++;
-		i++;
-	}
-	if (ft_strlen(str) >= n && ft_strncmp(&str[ft_strlen(str) - n], &pattern[x], n) == 0)
-			return true;
+	if (ft_strncmp(&str[ft_strlen(str) - n], &pattern[pattern_end + 1], n) == 0)
+		return (true);
 	else
 		return (false);
 }
@@ -85,23 +80,21 @@ bool	matches_pattern(char *str, char *pattern)
 	int		search_size;
 	char	*substring;
 
-	i = 0;
+	i = 0; // talez o i podssa ser inteiramente substituido pelo patter offset
 	str_offset = 0;
 	pattern_offset = 0;
 	if (pattern[i] != '*')	// tem que começar exatamente igual ao primeiro pattern
 	{
-		pattern_offset = i;
 		search_size = 0;
 		while (pattern[i++] != '*')
 			search_size++;
-		substring = ft_substr(pattern, pattern_offset, search_size);
-		if (ft_strncmp(&str[str_offset], substring, search_size) != 0)
-			return (false);	// falta dar free no substring
+		if (!matches_pattern_head(str, pattern))
+			return (false);
 		str_offset += search_size;
+		pattern_offset += search_size;
 	}
 	while (pattern[i])
 	{
-		// trocar pra colocar a função matches_pattern_head
 		if (pattern[i] == '*')
 			i++;
 		pattern_offset = i;
@@ -118,6 +111,49 @@ bool	matches_pattern(char *str, char *pattern)
 			return (false);
 	}
 	return (true);
+}
+
+char	*shrink_asterisks(char *pattern)
+/**
+ * @brief TESTS:
+ * 	./a.out '******'ne'******'na'*'
+ * 		shrunk pattern: *ne*na*
+ * 	./a.out '*'ne'******'na'*'
+ * 		shrunk pattern: *ne*na*
+ * 	./a.out '****'ne'*'na'*'
+ * 		shrunk pattern: *ne*na*
+ * 	./a.out '*'ne'*'na'*'
+ * 		shrunk pattern: *ne*na*
+ * 	./a.out ne'*'na'*'
+ * 		shrunk pattern: ne*na*
+ * 	./a.out ne'*'na
+ * 		shrunk pattern: ne*na
+ * 	./a.out nena
+ * 		shrunk pattern: nena
+ */
+{
+	int		i;
+	char	*shrunk_pattern;
+
+	if (!pattern)
+		return (NULL);
+	shrunk_pattern = NULL;
+	i = 0;
+	while (pattern[i])
+	{
+		if (pattern[i] == '*')
+		{
+			while (pattern [i] && pattern[i] == '*')
+				i++;
+			shrunk_pattern = ft_append_char(shrunk_pattern, '*');
+		}
+		while (pattern[i] && pattern[i] != '*')
+			shrunk_pattern = ft_append_char(shrunk_pattern, pattern[i++]);
+		if (!pattern[i])
+			break ;
+	}
+	printf("shrunk pattern: %s\n", shrunk_pattern);
+	return (shrunk_pattern);
 }
 
 int	main(int argc, char *argv[])
@@ -139,10 +175,10 @@ int	main(int argc, char *argv[])
 		while (dir != NULL)
 		{
 			dir_name = dir->d_name;
-			if (matches_pattern_head(dir_name, pattern))
+			if (matches_pattern_tail(dir_name, pattern))
 				printf(GREEN"  is  "COLOUR_RESET" a match => %s\n", dir->d_name);
 			else
-				printf(BRED"is not"COLOUR_RESET" a match => %sn", dir->d_name);
+				printf(BRED"is not"COLOUR_RESET" a match => %s\n", dir->d_name);
 			dir = readdir(d);
 		}
 		closedir(d);
