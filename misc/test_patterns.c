@@ -83,10 +83,10 @@ bool	matches_pattern(char *str, char *pattern)
 	i = 0; // talez o i podssa ser inteiramente substituido pelo patter offset
 	str_offset = 0;
 	pattern_offset = 0;
+	search_size = 0;
 	if (pattern[i] != '*')	// tem que começar exatamente igual ao primeiro pattern
 	{
-		search_size = 0;
-		while (pattern[i++] != '*')
+		while (pattern[i] && pattern[i++] != '*')
 			search_size++;
 		if (!matches_pattern_head(str, pattern))
 			return (false);
@@ -98,7 +98,7 @@ bool	matches_pattern(char *str, char *pattern)
 		if (pattern[i] == '*')
 			i++;
 		pattern_offset = i;
-		while (pattern[i++] != '*')
+		while (pattern[i] && pattern[i++] != '*')
 			search_size++;
 		substring = ft_substr(pattern, pattern_offset, search_size);
 		if (!sweep_and_search(&str[str_offset], substring, search_size, &str_offset))
@@ -175,7 +175,7 @@ int	main(int argc, char *argv[])
 		while (dir != NULL)
 		{
 			dir_name = dir->d_name;
-			if (matches_pattern_tail(dir_name, pattern))
+			if (matches_pattern(dir_name, pattern))
 				printf(GREEN"  is  "COLOUR_RESET" a match => %s\n", dir->d_name);
 			else
 				printf(BRED"is not"COLOUR_RESET" a match => %s\n", dir->d_name);
