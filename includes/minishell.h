@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/03 00:47:43 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/04 22:41:59 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void			substitute_token_by_sublist(char *expanded_str,
 bool			is_expandable(char *token_content);
 char			*treat_quotes(char *token_content);
 void			expand_tilde(t_list *token);
+bool			has_wildcard(char* token_content);
 
 // utils_expansor_3.c
 void			convert_special_token(char **special_token);
