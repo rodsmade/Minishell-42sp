@@ -6,60 +6,49 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 22:53:19 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/05 00:03:35 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:26:16 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*create_wildcard_sublist(char *pattern)
+void	unmask_asterisks_in_list(t_list *list)
 {
-	char			*shrunk_pattern;
-	t_list			*wildcard_expansion_sublist;
-	DIR				*d;
-	struct dirent	*dir;
+	t_list	*pivot;
 
-	wildcard_expansion_sublist = NULL;
-	shrunk_pattern = shrink_asterisks(pattern);
-	d = opendir(".");
-	if (d)
+	pivot = list;
+	while (pivot)
 	{
-		dir = readdir(d);
-		while (dir != NULL)
-		{
-			if (ft_strncmp(dir->d_name, ".", 1) != 0)
-				if (matches_pattern(dir->d_name, shrunk_pattern))
-					ft_lst_add_back(&wildcard_expansion_sublist,
-						ft_lst_new((void *) ft_strdup(dir->d_name)));
-			dir = readdir(d);
-		}
-		closedir(d);
+		unmask_asterisks((char *)pivot->content);
+		pivot = pivot->next;
 	}
-	return (wildcard_expansion_sublist);
 }
 
 void	expand_wildcards(t_list **token)
 {
 	t_list	*curr_next;
 	t_list	*substitutions;
+	t_list	*subst_last_element;
 
 	curr_next = (*token)->next;
-	substitutions = create_wildcard_sublist((char *)  (*token)->content);
+	substitutions = create_wildcard_sublist((char *)(*token)->content);
 	if (!substitutions)
+	{
+		unmask_asterisks((char *)(*token)->content);
 		return ;
-	ft_lst_last(substitutions)->next = curr_next;
+	}
+	unmask_asterisks_in_list(substitutions);
+	subst_last_element = ft_lst_last(substitutions);
+	subst_last_element->next = curr_next;
 	ft_free_ptr((void *)&((*token)->content));
 	(*token)->content = substitutions->content;
 	(*token)->next = substitutions->next;
 	ft_free_ptr((void *)&substitutions);
-	// ft_free_ptr((void *)&((*token)->content));
-	// ft_free_ptr((void *)&(*token));
-	// ft_free_ptr((void *)&(*token));
-	// (*token) = substitutions;
+	*token = subst_last_element;
 	return ;
 }
 
-bool	has_wildcard(char* token_content)
+bool	has_wildcard(char *token_content)
 {
 	int	i;
 

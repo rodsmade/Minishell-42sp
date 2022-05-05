@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 15:08:58 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/05/04 22:53:10 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:58:08 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*treat_quotes(char *token_content)
 	char	quote_type;
 	char	*new_content;
 
+	unmask_asterisks(token_content);
 	i = 0;
 	new_content = ft_strdup("");
 	while (token_content[i])

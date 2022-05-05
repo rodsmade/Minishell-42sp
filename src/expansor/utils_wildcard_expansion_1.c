@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_wildcard_expansion.c                         :+:      :+:    :+:   */
+/*   utils_wildcard_expansion_1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 23:02:06 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/05 00:15:04 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:30:40 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,32 +66,33 @@ bool	matches_pattern(char *str, char *pattern)
 	int			i;
 	int			str_offset;
 	int			pattern_offset;
-	size_t		search_size;
-	char		*substring;
+	size_t		srch_size;
+	char		*substr;
 
+	mask_asterisks(str);
 	i = 0;
 	str_offset = 0;
 	pattern_offset = 0;
-	search_size = 0;
+	srch_size = 0;
 	if (pattern[i] != '*')
 	{
 		while (pattern[i] && pattern[i++] != '*')
-			search_size++;
+			srch_size++;
 		if (!matches_pattern_head(str, pattern))
 			return (false);
-		str_offset += search_size;
-		pattern_offset += search_size;
+		str_offset += srch_size;
+		pattern_offset += srch_size;
 	}
 	while (pattern[i])
 	{
-		search_size = 0;
+		srch_size = 0;
 		if (pattern[i] == '*')
 			i++;
 		pattern_offset = i;
 		while (pattern[i] && pattern[i++] != '*')
-			search_size++;
-		substring = ft_substr(pattern, pattern_offset, search_size);
-		if (!sweep_and_search(&str[str_offset], substring, search_size, &str_offset))
+			srch_size++;
+		substr = ft_substr(pattern, pattern_offset, srch_size);
+		if (!sweep_and_search(&str[str_offset], substr, srch_size, &str_offset))
 			return (false);
 	}
 	if (pattern[ft_strlen(pattern) - 1] != '*')
@@ -99,6 +100,7 @@ bool	matches_pattern(char *str, char *pattern)
 		if (!matches_pattern_tail(str, pattern))
 			return (false);
 	}
+	unmask_asterisks(str);
 	return (true);
 }
 

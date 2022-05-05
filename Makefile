@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 22:21:35 by roaraujo          #+#    #+#              #
-#    Updated: 2022/05/04 23:12:59 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/05/05 04:17:48 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,8 @@ SOURCES			=	minishell.c \
 					$(PATH_REDIRECTS)utils_redirections.c \
 					$(PATH_SIGNALS)utils_signals.c \
 					$(PATH_TESTS)utils_test.c \
-					$(PATH_EXPANSOR)utils_wildcard_expansion.c
+					$(PATH_EXPANSOR)utils_wildcard_expansion_1.c \
+					$(PATH_EXPANSOR)utils_wildcard_expansion_2.c
 OBJS			=	$(SOURCES:%.c=%.o)
 
 
