@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_wildcard_expansion_1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 23:02:06 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/05 15:30:40 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/06 20:37:11 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ bool	sweep_and_search(char *word, char *pattern, size_t n, int *offset)
 		}
 		i++;
 	}
+	ft_free_ptr((void *)&pattern);1	
 	return (false);
 }
 
