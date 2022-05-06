@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_wildcard_expansion_2.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:13:01 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/05 15:26:56 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/06 20:29:17 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ t_list	*create_wildcard_sublist(char *pattern)
 		}
 		closedir(d);
 	}
+	ft_free_ptr((void *)&shrunk_pattern);
 	return (wildcard_expansion_sublist);
 }
