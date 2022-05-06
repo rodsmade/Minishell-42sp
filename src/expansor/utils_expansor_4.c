@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansor_4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 22:53:19 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/05 15:26:16 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/06 22:19:41 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	expand_wildcards(t_list **token)
 	ft_free_ptr((void *)&((*token)->content));
 	(*token)->content = substitutions->content;
 	(*token)->next = substitutions->next;
+	token = &subst_last_element;
 	ft_free_ptr((void *)&substitutions);
-	*token = subst_last_element;
 	return ;
 }
 
