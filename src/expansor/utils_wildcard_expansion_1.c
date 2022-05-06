@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 23:02:06 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/06 20:37:50 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/06 20:41:04 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ bool	sweep_and_search(char *word, char *pattern, size_t n, int *offset)
 		if (ft_strncmp(&word[i], pattern, n) == 0)
 		{
 			*offset += (i + n);
+			ft_free_ptr((void *)&pattern);
 			return (true);
 		}
 		i++;
