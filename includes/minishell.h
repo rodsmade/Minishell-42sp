@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/03 00:47:43 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/09 03:32:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ void			capture_redirections(int cmd_counter, t_command *cmd);
 // utils_expansor_1.c
 void			remove_null_nodes_from_token_list(void);
 int				is_valid_key_char(char c);
-void			expand_wildcards(void);
+t_list			*expand_wildcards(t_list **token);
 void			append_single_quotes(char *token_str, char **expanded_cont,
 					int *index);
 
@@ -243,10 +243,33 @@ void			substitute_token_by_sublist(char *expanded_str,
 bool			is_expandable(char *token_content);
 char			*treat_quotes(char *token_content);
 void			expand_tilde(t_list *token);
+bool			has_wildcard(char *token_content);
 
 // utils_expansor_3.c
 void			convert_special_token(char **special_token);
 bool			is_special_chars(char *token_str);
+
+// utils_expansor_4.c
+void			mask_asterisks(char *str);
+
+// utils_wildcard_expansion_1.c
+bool			sweep_and_search(char *word, char *pattern, size_t n,
+					int *offset);
+bool			matches_pattern(char *str, char *pattern);
+char			*shrink_asterisks(char *pattern);
+
+// utils_wildcard_expansion_2.c
+int				unmask_asterisks(char *str);
+void			mask_asterisks(char *str);
+void			mask_asterisks_in_quotes(char *pattern);
+t_list			*create_wildcard_sublist(char *pattern);
+
+// utils_wildcard_expansion_3.c
+bool			matches_pattern_head(char *str, char *pattern);
+bool			matches_pattern_tail(char *str, char *pattern);
+bool			begins_with_asterisk(char *pattern);
+bool			ends_in_asterisk(char *pattern);
+bool			matches_pattern_head_and_tail(char *str, char *pattern);
 
 // utils_export_1.c
 int				value_len(char *line_read);

@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 02:38:53 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/09 03:57:35 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ bool	is_expandable(char *token_content)
 		if (token_content[i])
 			i++;
 	}
-	return (false);
+	return (false || has_wildcard(token_content));
 }
 
 void	expand_tilde(t_list *token)

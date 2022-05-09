@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 22:21:35 by roaraujo          #+#    #+#              #
-#    Updated: 2022/05/03 00:22:45 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/05/09 03:32:52 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ VALGRIND		=	valgrind \
 					--suppressions=readline.supp \
 					--keep-debuginfo=yes \
 					--trace-children=yes
+# --track-origins=yes
 # --track-fds=yes
 
 # HEADERS
@@ -84,6 +85,7 @@ SOURCES			=	minishell.c \
 					$(PATH_EXPANSOR)utils_expansor_1.c \
 					$(PATH_EXPANSOR)utils_expansor_2.c \
 					$(PATH_EXPANSOR)utils_expansor_3.c \
+					$(PATH_EXPANSOR)utils_expansor_4.c \
 					$(PATH_BUILTINS)utils_export_1.c \
 					$(PATH_BUILTINS)utils_export_2.c \
 					$(PATH_REDIRECTS)utils_file_check.c \
@@ -97,7 +99,10 @@ SOURCES			=	minishell.c \
 					$(PATH_PROMPT)utils_prompt.c \
 					$(PATH_REDIRECTS)utils_redirections.c \
 					$(PATH_SIGNALS)utils_signals.c \
-					$(PATH_TESTS)utils_test.c
+					$(PATH_TESTS)utils_test.c \
+					$(PATH_EXPANSOR)utils_wildcard_expansion_1.c \
+					$(PATH_EXPANSOR)utils_wildcard_expansion_2.c \
+					$(PATH_EXPANSOR)utils_wildcard_expansion_3.c
 OBJS			=	$(SOURCES:%.c=%.o)
 
 

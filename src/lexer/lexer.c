@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/28 23:32:52 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:41:05 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	add_to_token_list(char **token_content)
 {
 	if (*token_content)
 	{
+		mask_asterisks_in_quotes(*token_content);
 		ft_lst_add_back(&g_tudao.token_list, ft_lst_new(*token_content));
 		*token_content = NULL;
 	}
