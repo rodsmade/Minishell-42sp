@@ -6,13 +6,13 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:13:01 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/06 20:29:17 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/07 00:31:09 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unmask_asterisks(char *str)
+int	unmask_asterisks(char *str)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ void	unmask_asterisks(char *str)
 		if (str[i] == '@')
 			str[i] = '*';
 	}
-	return ;
+	return (1);
 }
 
 void	mask_asterisks(char *str)

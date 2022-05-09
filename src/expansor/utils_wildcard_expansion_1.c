@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_wildcard_expansion_1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 23:02:06 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/06 20:41:04 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/09 01:54:27 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ bool	sweep_and_search(char *word, char *pattern, size_t n, int *offset)
 {
 	int	i;
 
+	dprintf(2, "sweep, pattern: >%s<\n", pattern);
 	i = 0;
 	if (!word || !pattern)
 		return (false);
@@ -63,6 +64,25 @@ bool	sweep_and_search(char *word, char *pattern, size_t n, int *offset)
 	return (false);
 }
 
+bool	begins_with_asterisk(char *pattern)
+{
+	return (pattern[0] == '*');
+}
+
+bool	ends_in_asterisk(char *pattern)
+{
+	return (pattern[ft_strlen(pattern) - 1] == '*');
+}
+
+bool	matches_pattern_head_and_tail(char *str, char *pattern)
+{
+	if (!begins_with_asterisk(pattern) && !matches_pattern_head(str, pattern))
+		return (false && unmask_asterisks(str));
+	if (!ends_in_asterisk(pattern) && !matches_pattern_tail(str, pattern))
+		return (false && unmask_asterisks(str));
+	return (true);
+}
+
 bool	matches_pattern(char *str, char *pattern)
 {
 	int			i;
@@ -72,19 +92,12 @@ bool	matches_pattern(char *str, char *pattern)
 	char		*substr;
 
 	mask_asterisks(str);
+	dprintf(2, "matches, pattern: >%s<, string: >%s<\n", pattern, str);
+	if (ft_strncmp(pattern, "*", 2) == 0)
+		return (true);
+	if (!matches_pattern_head_and_tail(str, pattern))
+		return (false);
 	i = 0;
-	str_offset = 0;
-	pattern_offset = 0;
-	srch_size = 0;
-	if (pattern[i] != '*')
-	{
-		while (pattern[i] && pattern[i++] != '*')
-			srch_size++;
-		if (!matches_pattern_head(str, pattern))
-			return (false);
-		str_offset += srch_size;
-		pattern_offset += srch_size;
-	}
 	while (pattern[i])
 	{
 		srch_size = 0;
@@ -97,13 +110,7 @@ bool	matches_pattern(char *str, char *pattern)
 		if (!sweep_and_search(&str[str_offset], substr, srch_size, &str_offset))
 			return (false);
 	}
-	if (pattern[ft_strlen(pattern) - 1] != '*')
-	{
-		if (!matches_pattern_tail(str, pattern))
-			return (false);
-	}
-	unmask_asterisks(str);
-	return (true);
+	return (true && unmask_asterisks(str));
 }
 
 char	*shrink_asterisks(char *pattern)

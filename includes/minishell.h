@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/05 15:25:41 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/07 00:31:54 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ bool			matches_pattern(char *str, char *pattern);
 char			*shrink_asterisks(char *pattern);
 
 // utils_wildcard_expansion_2.c
-void			unmask_asterisks(char *str);
+int				unmask_asterisks(char *str);
 void			mask_asterisks(char *str);
 void			mask_asterisks_in_quotes(char *pattern);
 t_list			*create_wildcard_sublist(char *pattern);
