@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 22:53:19 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 03:23:43 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/09 03:30:28 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ bool	has_wildcard(char *token_content)
 {
 	int	i;
 
-	i = 0;
-	while (token_content[i])
+	i = -1;
+	while (token_content[++i])
 	{
 		if (token_content[i] == '\'')
 		{
@@ -78,7 +78,6 @@ bool	has_wildcard(char *token_content)
 			return (true);
 		if (!token_content[i])
 			break ;
-		i++;
 	}
 	return (false);
 }

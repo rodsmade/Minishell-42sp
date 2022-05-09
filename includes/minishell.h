@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 02:49:23 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/09 03:32:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,8 +253,6 @@ bool			is_special_chars(char *token_str);
 void			mask_asterisks(char *str);
 
 // utils_wildcard_expansion_1.c
-bool			matches_pattern_head(char *str, char *pattern);
-bool			matches_pattern_tail(char *str, char *pattern);
 bool			sweep_and_search(char *word, char *pattern, size_t n,
 					int *offset);
 bool			matches_pattern(char *str, char *pattern);
@@ -265,6 +263,13 @@ int				unmask_asterisks(char *str);
 void			mask_asterisks(char *str);
 void			mask_asterisks_in_quotes(char *pattern);
 t_list			*create_wildcard_sublist(char *pattern);
+
+// utils_wildcard_expansion_3.c
+bool			matches_pattern_head(char *str, char *pattern);
+bool			matches_pattern_tail(char *str, char *pattern);
+bool			begins_with_asterisk(char *pattern);
+bool			ends_in_asterisk(char *pattern);
+bool			matches_pattern_head_and_tail(char *str, char *pattern);
 
 // utils_export_1.c
 int				value_len(char *line_read);

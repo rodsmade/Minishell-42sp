@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_wildcard_expansion_2.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:13:01 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/07 00:31:09 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/09 03:38:08 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	unmask_asterisks(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == '@')
+		if (str[i] == 1)
 			str[i] = '*';
 	}
 	return (1);
@@ -33,7 +33,7 @@ void	mask_asterisks(char *str)
 	while (str[++i])
 	{
 		if (str[i] == '*')
-			str[i] = '@';
+			str[i] = 1;
 	}
 	return ;
 }
@@ -50,7 +50,7 @@ void	mask_asterisks_in_quotes(char *pattern)
 			while (pattern[++i] && pattern[i] != '\'')
 			{
 				if (pattern[i] == '*')
-					pattern[i] = '@';
+					pattern[i] = 1;
 			}
 		}
 		if (pattern[i] == '\"')
@@ -58,7 +58,7 @@ void	mask_asterisks_in_quotes(char *pattern)
 			while (pattern[++i] && pattern[i] != '\"')
 			{
 				if (pattern[i] == '*')
-					pattern[i] = '@';
+					pattern[i] = 1;
 			}
 		}
 		if (!pattern[i])
