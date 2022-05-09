@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/07 00:31:54 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/09 02:49:23 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ void			capture_redirections(int cmd_counter, t_command *cmd);
 // utils_expansor_1.c
 void			remove_null_nodes_from_token_list(void);
 int				is_valid_key_char(char c);
-void			expand_wildcards(t_list **token);
+t_list			*expand_wildcards(t_list **token);
 void			append_single_quotes(char *token_str, char **expanded_cont,
 					int *index);
 

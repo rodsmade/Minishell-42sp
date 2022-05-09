@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansor_4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 22:53:19 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/06 22:19:41 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/09 03:23:43 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	unmask_asterisks_in_list(t_list *list)
 	}
 }
 
-void	expand_wildcards(t_list **token)
+t_list	*expand_wildcards(t_list **token)
 {
 	t_list	*curr_next;
 	t_list	*substitutions;
@@ -32,20 +32,25 @@ void	expand_wildcards(t_list **token)
 
 	curr_next = (*token)->next;
 	substitutions = create_wildcard_sublist((char *)(*token)->content);
+	unmask_asterisks((char *)(*token)->content);
 	if (!substitutions)
-	{
-		unmask_asterisks((char *)(*token)->content);
-		return ;
-	}
+		return (*token);
 	unmask_asterisks_in_list(substitutions);
 	subst_last_element = ft_lst_last(substitutions);
 	subst_last_element->next = curr_next;
 	ft_free_ptr((void *)&((*token)->content));
 	(*token)->content = substitutions->content;
 	(*token)->next = substitutions->next;
-	token = &subst_last_element;
-	ft_free_ptr((void *)&substitutions);
-	return ;
+	if (substitutions->next)
+	{
+		ft_free_ptr((void *)&substitutions);
+		return (subst_last_element);
+	}
+	else
+	{
+		ft_free_ptr((void *)&substitutions);
+		return (*token);
+	}
 }
 
 bool	has_wildcard(char *token_content)

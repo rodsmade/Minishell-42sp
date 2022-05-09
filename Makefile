@@ -6,7 +6,7 @@
 #    By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 22:21:35 by roaraujo          #+#    #+#              #
-#    Updated: 2022/05/05 04:17:48 by roaraujo         ###   ########.fr        #
+#    Updated: 2022/05/09 03:20:29 by roaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ VALGRIND		=	valgrind \
 					--suppressions=readline.supp \
 					--keep-debuginfo=yes \
 					--trace-children=yes
+# --track-origins=yes
 # --track-fds=yes
 
 # HEADERS

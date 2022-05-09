@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 23:02:06 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 01:54:27 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/09 03:19:29 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ bool	sweep_and_search(char *word, char *pattern, size_t n, int *offset)
 {
 	int	i;
 
-	dprintf(2, "sweep, pattern: >%s<\n", pattern);
 	i = 0;
 	if (!word || !pattern)
 		return (false);
@@ -86,28 +85,27 @@ bool	matches_pattern_head_and_tail(char *str, char *pattern)
 bool	matches_pattern(char *str, char *pattern)
 {
 	int			i;
-	int			str_offset;
-	int			pattern_offset;
+	int			offsets[2];
 	size_t		srch_size;
 	char		*substr;
 
 	mask_asterisks(str);
-	dprintf(2, "matches, pattern: >%s<, string: >%s<\n", pattern, str);
 	if (ft_strncmp(pattern, "*", 2) == 0)
 		return (true);
 	if (!matches_pattern_head_and_tail(str, pattern))
 		return (false);
 	i = 0;
+	offsets[1] = 0;
 	while (pattern[i])
 	{
 		srch_size = 0;
 		if (pattern[i] == '*')
 			i++;
-		pattern_offset = i;
+		offsets[0] = i;
 		while (pattern[i] && pattern[i++] != '*')
 			srch_size++;
-		substr = ft_substr(pattern, pattern_offset, srch_size);
-		if (!sweep_and_search(&str[str_offset], substr, srch_size, &str_offset))
+		substr = ft_substr(pattern, offsets[0], srch_size);
+		if (!sweep_and_search(&str[offsets[1]], substr, srch_size, &offsets[1]))
 			return (false);
 	}
 	return (true && unmask_asterisks(str));
