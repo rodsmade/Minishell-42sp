@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:13:01 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 03:38:08 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/09 03:50:31 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	mask_asterisks_in_quotes(char *pattern)
 	int	i;
 
 	i = -1;
-	while (pattern[++i])
+	while (pattern && pattern[++i])
 	{
 		if (pattern[i] == '\'')
 		{

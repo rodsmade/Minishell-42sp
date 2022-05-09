@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 02:49:08 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/09 03:57:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ void	expand_tokens(t_list *token_list)
 		{
 			expand_tilde(pivot);
 			expand_dollar_sign(pivot);
-			pivot = expand_wildcards(&pivot);
+			if (pivot->content)
+				pivot = expand_wildcards(&pivot);
 		}
 		else if (is_special_chars((char *) pivot->content))
 			convert_special_token((char **) &pivot->content);
