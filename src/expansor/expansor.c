@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 03:57:45 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exp_common_var(char **exp_content, char *var_to_expand, int size)
 	{
 		key = ft_substr(var_to_expand, 0, size);
 		env_var_value = \
-		read_hashtable(g_tudao.hashtable[hash_string(key)], key);
+		read_hashtable(g_data.hashtable[hash_string(key)], key);
 		if (env_var_value != NULL && env_var_value[0] != '\0')
 		{
 			if (*exp_content == NULL)
@@ -47,13 +47,13 @@ int	expand_variable(char **expanded_content, char *variable_to_expand)
 	size = 0;
 	if (variable_to_expand[0] == '?')
 	{
-		env_var_value = ft_itoa(g_tudao.exit.code);
+		env_var_value = ft_itoa(g_data.exit.code);
 		temp = *expanded_content;
 		*expanded_content = ft_strjoin(temp, env_var_value);
 		ft_free_ptr((void *)&temp);
 		ft_free_ptr((void *)&env_var_value);
-		g_tudao.exit.code = 0;
-		g_tudao.exit.msg = NULL;
+		g_data.exit.code = 0;
+		g_data.exit.msg = NULL;
 		return (1);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_vars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 18:47:46 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/08 18:48:02 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_env_vars(void)
 	count = 0;
 	while (++i < TABLE_SIZE)
 	{
-		pivot = g_tudao.hashtable[i];
+		pivot = g_data.hashtable[i];
 		while (pivot)
 		{
 			count++;

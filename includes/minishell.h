@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 03:32:31 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:40 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ typedef struct s_tudao
 	bool				is_ctrl_d;
 	bool				heredoc_stopped;
 	int					backup_stdin;
-}				t_tudao;
+}				t_data;
 
 typedef struct s_data_hd
 {
@@ -116,7 +116,7 @@ typedef struct s_data_hd
 }				t_data_hd;
 
 // ----------------------------------------------	GLOBAL VAR	----------------
-extern t_tudao		g_tudao;
+extern t_data		g_data;
 
 // ----------------------------------------------	PROTOTYPES	----------------
 // builtin_cd.c
@@ -164,7 +164,7 @@ void			free_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
 
 // exit_routines_3.c
 void			print_syntax_error(char *token);
-void			free_g_tudao(void);
+void			free_g_data(void);
 void			print_error_and_exit(int ext_code, char *msg);
 void			free_list(t_list *list);
 
@@ -180,7 +180,7 @@ void			insert_or_update_hashtable(char *string, int is_env_var,
 
 // init_routines.c
 void			init_hashtable(t_list *(*hashtable)[TABLE_SIZE]);
-void			init_g_tudao(void);
+void			init_g_data(void);
 void			init_command(t_command *command);
 void			init_core_variables(void);
 

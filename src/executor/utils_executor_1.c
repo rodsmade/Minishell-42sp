@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_executor.c                                   :+:      :+:    :+:   */
+/*   utils_executor_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 18:45:03 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/26 12:50:54 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*find_cmd_in_path_var(char *command_str)
 
 	if (command_str && command_str[0] != '\0')
 	{
-		all_paths = read_hashtable(g_tudao.hashtable[hash_string("PATH")],
+		all_paths = read_hashtable(g_data.hashtable[hash_string("PATH")],
 				"PATH");
 		if (is_valid_env_path(all_paths, command_str) == true)
 		{
@@ -73,13 +73,13 @@ char	*find_cmd_path(char **cmd_arr)
 			}
 		}
 		ft_free_ptr((void *)&cmd_arr);
-		free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
+		free_and_exit_fork(g_data.exit.msg, g_data.exit.code);
 	}
 	command_str = find_cmd_in_path_var(command_str);
 	if (command_str == NULL)
 	{
 		ft_free_ptr((void *)&cmd_arr);
-		free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
+		free_and_exit_fork(g_data.exit.msg, g_data.exit.code);
 	}
 	return (command_str);
 }

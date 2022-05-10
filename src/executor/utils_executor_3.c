@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:25:26 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/10 16:16:14 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ bool	is_built_in(char *str)
 void	process_child_return_code(int wstatus)
 {
 	if (WIFEXITED(wstatus))
-		g_tudao.exit.code = WEXITSTATUS(wstatus);
+		g_data.exit.code = WEXITSTATUS(wstatus);
 	else if (WIFSIGNALED(wstatus))
 	{
-		g_tudao.exit.code = WTERMSIG(wstatus) + 128;
-		if (g_tudao.exit.code == 130)
+		g_data.exit.code = WTERMSIG(wstatus) + 128;
+		if (g_data.exit.code == 130)
 			ft_putendl_fd("", 2);
-		else if (g_tudao.exit.code == 131)
+		else if (g_data.exit.code == 131)
 			ft_putendl_fd(BRED "Quit (core dumped)" COLOUR_RESET, 2);
 	}
 	else
-		g_tudao.exit.code = -42;
+		g_data.exit.code = -42;
 	return ;
 }
 
@@ -66,9 +66,9 @@ bool	is_valid_env_path(char *path, char *command_str)
 		return (true);
 	else
 	{
-		g_tudao.exit.msg = ft_strjoin(command_str,
+		g_data.exit.msg = ft_strjoin(command_str,
 				": No such file or directory");
-		g_tudao.exit.code = 127;
+		g_data.exit.code = 127;
 		return (false);
 	}
 }

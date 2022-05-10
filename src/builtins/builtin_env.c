@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:53:54 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/22 18:58:55 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	builtin_env(t_list	*cmd_with_flags)
 	i = -1;
 	while (++i < TABLE_SIZE)
 	{
-		env_var = g_tudao.hashtable[i];
+		env_var = g_data.hashtable[i];
 		while (env_var != NULL)
 		{
 			if (((t_env_var *)(env_var->content))->is_env_var == true)

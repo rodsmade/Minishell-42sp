@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 21:30:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 02:47:20 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:40 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tudao	g_tudao;
+t_data	g_data;
 
 void	print_intro(void)
 {
@@ -48,9 +48,9 @@ void	get_env_variables(char **envp)
 	int			i;
 
 	i = -1;
-	init_hashtable(&g_tudao.hashtable);
+	init_hashtable(&g_data.hashtable);
 	while (envp[++i])
-		insert_in_hashtable(envp[i], 1, &g_tudao.hashtable);
+		insert_in_hashtable(envp[i], 1, &g_data.hashtable);
 	return ;
 }
 
@@ -75,20 +75,20 @@ void	add_to_history(char *string)
 void	repl(void)
 {
 	init_core_variables();
-	while (!g_tudao.exit.flag)
+	while (!g_data.exit.flag)
 	{
-		init_g_tudao();
+		init_g_data();
 		display_cmd_prompt();
 		set_up_command_table();
-		if (g_tudao.prompt_input && g_tudao.token_list
-			&& g_tudao.token_list->content && !g_tudao.syntax_error
-			&& !g_tudao.exit.flag && !g_tudao.skip_execution)
-			execute_pipeline(g_tudao.command_table.main_pipeline);
+		if (g_data.prompt_input && g_data.token_list
+			&& g_data.token_list->content && !g_data.syntax_error
+			&& !g_data.exit.flag && !g_data.skip_execution)
+			execute_pipeline(g_data.command_table.main_pipeline);
 		add_heredocs_to_history();
-		add_to_history(g_tudao.prompt_input);
+		add_to_history(g_data.prompt_input);
 		free_lexer();
-		free_main_pipeline(&g_tudao.command_table.main_pipeline);
-		ft_free_ptr((void *)&g_tudao.prompt_input);
+		free_main_pipeline(&g_data.command_table.main_pipeline);
+		ft_free_ptr((void *)&g_data.prompt_input);
 	}
 	return ;
 }
@@ -102,6 +102,6 @@ int	main(int argc, char *argv[], char **envp)
 	print_intro();
 	get_env_variables(envp);
 	repl();
-	free_g_tudao();
-	return (g_tudao.exit.code);
+	free_g_data();
+	return (g_data.exit.code);
 }

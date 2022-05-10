@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:00:45 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/05/05 14:41:05 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	add_to_token_list(char **token_content)
 	if (*token_content)
 	{
 		mask_asterisks_in_quotes(*token_content);
-		ft_lst_add_back(&g_tudao.token_list, ft_lst_new(*token_content));
+		ft_lst_add_back(&g_data.token_list, ft_lst_new(*token_content));
 		*token_content = NULL;
 	}
 	return ;

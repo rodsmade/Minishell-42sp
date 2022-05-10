@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 20:15:11 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/27 22:52:10 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	delete_node(t_list *hashtable_pvt, t_list *node_to_delete,
 {
 	if (hashtable_pvt == node_to_delete)
 	{
-		g_tudao.hashtable[hash_string(var_name)] = \
-				g_tudao.hashtable[hash_string(var_name)]->next;
+		g_data.hashtable[hash_string(var_name)] = \
+				g_data.hashtable[hash_string(var_name)]->next;
 		ft_lst_free_node(node_to_delete);
 		return ;
 	}
@@ -59,14 +59,14 @@ void	builtin_unset(t_list *cmd_with_args)
 		if (is_valid_identifier(var_name))
 		{
 			if (find_node_in_hashtable(var_name))
-				delete_node(g_tudao.hashtable[hash_string(var_name)],
+				delete_node(g_data.hashtable[hash_string(var_name)],
 					find_node_in_hashtable(var_name), var_name);
 		}
 		else
 		{
-			g_tudao.exit.msg = ft_strjoin_3("unset: `", var_name,
+			g_data.exit.msg = ft_strjoin_3("unset: `", var_name,
 					"': not a valid identifier");
-			g_tudao.exit.code = EXIT_FAILURE;
+			g_data.exit.code = EXIT_FAILURE;
 			return ;
 		}
 		pivot = pivot->next;

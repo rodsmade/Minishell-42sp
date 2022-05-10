@@ -16,8 +16,8 @@ void	sighandler_within_hd_prompt(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_tudao.heredoc_stopped = true;
-		g_tudao.exit.code = 130;
+		g_data.heredoc_stopped = true;
+		g_data.exit.code = 130;
 		ft_putendl_fd("", 1);
 		rl_replace_line("", 0);
 		rl_done = true;
@@ -30,7 +30,7 @@ void	sighandler_parent(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_tudao.exit.code = 130;
+		g_data.exit.code = 130;
 		ft_putendl_fd("", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -53,9 +53,9 @@ void	sighandler_parent_extra_input(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_tudao.skip_execution = true;
-		g_tudao.is_ctrl_d = false;
-		g_tudao.exit.code = 130;
+		g_data.skip_execution = true;
+		g_data.is_ctrl_d = false;
+		g_data.exit.code = 130;
 		ft_putendl_fd("", 1);
 		rl_replace_line("", 0);
 		rl_done = true;

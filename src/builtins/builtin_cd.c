@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/27 22:52:07 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_old_pwd(void)
 	curr_path = getcwd(buffer, 0);
 	if (!curr_path)
 	{
-		g_tudao.exit.code = EXIT_FAILURE;
+		g_data.exit.code = EXIT_FAILURE;
 		free(buffer);
 		ft_putendl_fd("builtin_cd: Error getting current working directory", 2);
 		return (NULL);
@@ -40,9 +40,9 @@ void	go_to_path(char	*path)
 	new_pwd = ft_strdup(path);
 	if (chdir(new_pwd) != 0)
 	{
-		g_tudao.exit.msg = ft_strjoin_3("cd: ", \
+		g_data.exit.msg = ft_strjoin_3("cd: ", \
 		new_pwd, ": No such file or directory");
-		g_tudao.exit.code = EXIT_FAILURE;
+		g_data.exit.code = EXIT_FAILURE;
 		ft_free_ptr((void *)&old_pwd);
 		ft_free_ptr((void *)&new_pwd);
 		return ;
@@ -59,12 +59,12 @@ void	go_to_pattern(char *key)
 	char	*path;
 
 	index = hash_string(key);
-	path = read_hashtable(g_tudao.hashtable[index], key);
+	path = read_hashtable(g_data.hashtable[index], key);
 	if (path == NULL)
 	{
-		g_tudao.exit.msg = ft_strjoin_3("cd: ", \
+		g_data.exit.msg = ft_strjoin_3("cd: ", \
 		key, " not set");
-		g_tudao.exit.code = EXIT_FAILURE;
+		g_data.exit.code = EXIT_FAILURE;
 		ft_free_ptr((void *)&path);
 		return ;
 	}
@@ -82,9 +82,9 @@ void	builtin_cd(t_list *cmd_lst)
 		path = (char *) cmd_lst->next->content;
 		if (cmd_lst->next && cmd_lst->next->next != NULL)
 		{
-			g_tudao.exit.msg = \
+			g_data.exit.msg = \
 			ft_strdup("cd: too many arguments");
-			g_tudao.exit.code = EXIT_FAILURE;
+			g_data.exit.code = EXIT_FAILURE;
 			return ;
 		}
 		else if (ft_strncmp(path, "~", 2) == 0)
@@ -92,7 +92,7 @@ void	builtin_cd(t_list *cmd_lst)
 		else if (ft_strncmp(path, "-", 2) == 0)
 		{
 			go_to_pattern("OLDPWD");
-			if (!g_tudao.exit.code)
+			if (!g_data.exit.code)
 				builtin_pwd();
 		}
 		else
