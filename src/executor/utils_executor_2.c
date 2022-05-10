@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/29 23:07:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:46:14 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ bool	execute_only_one_cmd(t_list *pipeline)
 		close_fds(cmd);
 		if (g_tudao.exit.msg)
 		{
+			ft_putstr_fd(BRED "✘ minishell: " COLOUR_RESET, 2);
 			ft_putendl_fd(g_tudao.exit.msg, 2);
 			ft_free_ptr((void *)&g_tudao.exit.msg);
 		}

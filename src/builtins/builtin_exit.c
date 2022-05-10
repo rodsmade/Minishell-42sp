@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:22:12 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/10 16:13:27 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:48:30 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ void	builtin_exit(t_command *command)
 		}
 		if (args_list->next)
 		{
-			ft_putendl_fd(BRED "✘ minishell: " COLOUR_RESET
-				"exit: too many arguments", 2);
-			g_tudao.exit.code = EXIT_FAILURE;
+			g_tudao.exit.msg = ft_strdup("exit: too many arguments");
+			g_tudao.exit.code = 2;
 			g_tudao.exit.flag = false;
 			return ;
 		}
