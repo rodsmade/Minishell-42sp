@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 13:52:44 by afaustin          #+#    #+#             */
-/*   Updated: 2022/04/29 02:08:01 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:25:38 by adrianofaus      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,33 @@ void	generate_key(char *line_read, char *key, int *mid_point)
 	key[j] = '\0';
 }
 
-void	generate_value(char *line_read, char *value)
+char	*generate_value(char *value)
 {
 	int		i;
-	int		j;
+	char	*result;
+	char	quote_type;
 
 	i = 0;
-	j = 0;
-	while (line_read[i] && line_read[i] != '=')
+	result = ft_strdup("");
+	while (value[i] && value[i] != '=')
 	{
-		if (line_read[i] == '\'' || line_read[i] == '\"')
+		if (value[i] == '\'' && value[i] == '\"')
 		{
-			iter_quoted_value(line_read, &i, value, &j);
+			result = ft_append_char(result, value[i]);
+			quote_type = value[i];
+			i++;
+			while (value[i] && value[i] != quote_type)
+			{
+				result = ft_append_char(result, value[i]);
+				i++;
+			}
 		}
 		else
-		{
-			value[j] = line_read[i];
+			result = ft_append_char(result, value[i]);
+		if (value[i])
 			i++;
-			j++;
-		}
 	}
-	value[j] = '\0';
+	return (result);
 }
 
 int	generate_pair(char *line_read, char **pair)
@@ -70,9 +76,7 @@ int	generate_pair(char *line_read, char **pair)
 	{
 		if (line_read[mid_point + 1])
 		{
-			value = (char *)malloc(sizeof(char) * \
-			(value_len(&line_read[mid_point + 1]) + 1));
-			generate_value(&line_read[mid_point + 1], value);
+			value = generate_value(&line_read[mid_point + 1]);
 			concat_and_free(pair, key, ft_strdup("="), value);
 		}
 		else
