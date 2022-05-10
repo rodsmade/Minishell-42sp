@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 22:53:19 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 03:30:28 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 18:20:47 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ t_list	*expand_wildcards(t_list **token)
 		return (*token);
 	unmask_asterisks_in_list(substitutions);
 	subst_last_element = ft_lst_last(substitutions);
-	subst_last_element->next = curr_next;
 	ft_free_ptr((void *)&((*token)->content));
 	(*token)->content = substitutions->content;
-	(*token)->next = substitutions->next;
 	if (substitutions->next)
 	{
+		subst_last_element->next = curr_next;
+		(*token)->next = substitutions->next;
 		ft_free_ptr((void *)&substitutions);
 		return (subst_last_element);
 	}
