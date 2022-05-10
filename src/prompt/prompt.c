@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 20:47:40 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/05 15:23:07 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	process_input(char *string)
 {
 	create_token_list(string);
-	expand_tokens(g_tudao.token_list);
+	expand_tokens(g_data.token_list);
 	parse_tokens();
 	return ;
 }
@@ -25,11 +25,11 @@ static void	assemble_line(char **line_read)
 	char	*aux_str;
 	char	*temp;
 
-	set_signal_hook(SIGINT, sighandler_parent_extra_input, &g_tudao.action);
+	set_signal_hook(SIGINT, sighandler_parent_extra_input, &g_data.action);
 	aux_str = readline("> ");
-	if (aux_str && !g_tudao.skip_execution)
+	if (aux_str && !g_data.skip_execution)
 	{
-		g_tudao.line_count++;
+		g_data.line_count++;
 		temp = aux_str;
 		aux_str = ft_strjoin(" ", aux_str);
 		ft_free_ptr((void *)&temp);
@@ -39,7 +39,7 @@ static void	assemble_line(char **line_read)
 		ft_free_ptr((void *)&aux_str);
 		ft_free_ptr((void *)&temp);
 	}
-	else if (!aux_str && g_tudao.is_ctrl_d)
+	else if (!aux_str && g_data.is_ctrl_d)
 		print_syntax_error_exit();
 }
 
@@ -52,10 +52,10 @@ static char	*getcwd_home_expanded(void)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		g_tudao.exit.flag = true;
+		g_data.exit.flag = true;
 		return (NULL);
 	}
-	home_var = g_tudao.home_at_start;
+	home_var = g_data.home_at_start;
 	if (home_var && ft_strncmp(cwd, home_var, ft_strlen(home_var)) == 0)
 	{
 		cwd_home_expanded = ft_strjoin("~", &cwd[ft_strlen(home_var)]);
@@ -94,24 +94,24 @@ void	display_cmd_prompt(void)
 {
 	char	*prompt;
 
-	dup2(g_tudao.backup_stdin, STDIN_FILENO);
-	set_signal_hook(SIGINT, sighandler_parent, &g_tudao.action);
+	dup2(g_data.backup_stdin, STDIN_FILENO);
+	set_signal_hook(SIGINT, sighandler_parent, &g_data.action);
 	prompt = string_prompt();
-	g_tudao.prompt_input = readline(prompt);
+	g_data.prompt_input = readline(prompt);
 	ft_free_ptr((void *)&prompt);
-	if (g_tudao.prompt_input)
+	if (g_data.prompt_input)
 	{
-		g_tudao.line_count++;
-		process_input(g_tudao.prompt_input);
-		while (g_tudao.token_list && !g_tudao.exit.flag && !g_tudao.syntax_error
-			&& !g_tudao.skip_execution
-			&& is_pipe_and_or((char *)ft_lst_last(g_tudao.token_list)->content))
-			assemble_line(&g_tudao.prompt_input);
+		g_data.line_count++;
+		process_input(g_data.prompt_input);
+		while (g_data.token_list && !g_data.exit.flag && !g_data.syntax_error
+			&& !g_data.skip_execution
+			&& is_pipe_and_or((char *)ft_lst_last(g_data.token_list)->content))
+			assemble_line(&g_data.prompt_input);
 	}
 	else
 	{
 		ft_putendl_fd("exit", 2);
-		g_tudao.exit.flag = true;
+		g_data.exit.flag = true;
 	}
-	disable_signal(SIGINT, &g_tudao.action);
+	disable_signal(SIGINT, &g_data.action);
 }

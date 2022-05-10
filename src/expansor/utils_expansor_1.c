@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansor_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 15:08:58 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/05/05 14:58:08 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ void	remove_null_nodes_from_token_list(void)
 	t_list	*pivot;
 	t_list	*tmp;
 
-	pivot = g_tudao.token_list;
+	pivot = g_data.token_list;
 	while (pivot)
 	{
 		if (pivot->content == NULL)
 		{
 			tmp = pivot->next;
-			ft_lst_remove_node(&g_tudao.token_list, pivot);
+			ft_lst_remove_node(&g_data.token_list, pivot);
 			pivot = tmp;
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:25:06 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/29 23:38:01 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	pipe_and_fork(int (*pipe_fds)[2])
 	if (pipe(*pipe_fds) == -1)
 		free_and_exit_fork(ft_strdup("Error creating pipe for heredoc"), \
 			EXIT_FAILURE);
-	disable_signal(SIGQUIT, &g_tudao.action);
-	disable_signal(SIGINT, &g_tudao.action);
+	disable_signal(SIGQUIT, &g_data.action);
+	disable_signal(SIGINT, &g_data.action);
 	pid = fork();
 	if (pid == -1)
 		free_and_exit_fork(ft_strdup("Error forking process for heredoc"), \
@@ -75,7 +75,7 @@ void	close_heredoc_prompt(t_data_hd *hd, int curr_line_count)
 {
 	char	*itoa;
 
-	if (!g_tudao.heredoc_stopped)
+	if (!g_data.heredoc_stopped)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(BORANGE, 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 22:53:25 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 17:33:44 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ void	execute_command(t_command *cmd)
 		if (is_built_in(cmd->cmds_with_flags->content))
 		{
 			execute_built_in(cmd);
-			free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
+			free_and_exit_fork(g_data.exit.msg, g_data.exit.code);
 		}
 		else
 			send_to_execve(cmd);
 	}
 	else
-		free_and_exit_fork(g_tudao.exit.msg, g_tudao.exit.code);
+		free_and_exit_fork(g_data.exit.msg, g_data.exit.code);
 	return ;
 }
 
@@ -94,16 +94,16 @@ void	execute_pipeline(t_list *pipeline)
 {
 	int			total_pipes;
 
-	if (pipe(g_tudao.pipe_heredoc) == -1)
+	if (pipe(g_data.pipe_heredoc) == -1)
 		print_error_and_exit(1, ft_strdup("Error: pipe heredoc"));
 	create_new_files(pipeline);
 	if (!execute_only_one_cmd(pipeline))
 	{
 		total_pipes = ft_lst_size(pipeline) - 1;
-		g_tudao.cmd_pipes = ft_make_pipes(total_pipes);
-		fork_and_execute_cmd(&g_tudao.command_table.main_pl_pids, pipeline);
+		g_data.cmd_pipes = ft_make_pipes(total_pipes);
+		fork_and_execute_cmd(&g_data.command_table.main_pl_pids, pipeline);
 		close_and_free_cmd_pipes();
-		await_all_children(g_tudao.command_table.main_pl_size, \
-		g_tudao.command_table.main_pl_pids);
+		await_all_children(g_data.command_table.main_pl_size, \
+		g_data.command_table.main_pl_pids);
 	}
 }

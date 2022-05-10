@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 22:15:02 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 22:18:54 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_commands_and_redirects(void)
 	t_command	*cmd;
 	int			i;
 
-	pivot_cmd = g_tudao.command_table.main_pipeline;
+	pivot_cmd = g_data.command_table.main_pipeline;
 	i = -1;
 	while (pivot_cmd)
 	{

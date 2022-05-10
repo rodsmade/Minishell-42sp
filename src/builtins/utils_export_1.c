@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_export.c                                     :+:      :+:    :+:   */
+/*   utils_export_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 12:12:26 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/26 17:43:27 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	print_exported_vars(void)
 	i = -1;
 	while (++i < TABLE_SIZE)
 	{
-		aux = g_tudao.hashtable[i];
+		aux = g_data.hashtable[i];
 		while (aux != NULL)
 		{
 			ft_putstr_fd("declare -x ", STDOUT_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 16:58:27 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/03 00:12:05 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	check_tokens_consistency(void)
 {
 	t_list	*pivot;
 
-	pivot = g_tudao.token_list;
+	pivot = g_data.token_list;
 	if (is_pipe_and_or((char *) pivot->content) && !pivot->next)
 		print_syntax_error((char *) pivot->content);
-	while (pivot && pivot->next && !g_tudao.syntax_error)
+	while (pivot && pivot->next && !g_data.syntax_error)
 	{
 		if (is_pipe((char *) pivot->content)
 			&& (is_pipe_and_or((char *) pivot->next->content)))
@@ -32,7 +32,7 @@ void	check_tokens_consistency(void)
 			print_syntax_error((char *) pivot->next->content);
 		pivot = pivot->next;
 	}
-	if (!g_tudao.syntax_error && pivot && !pivot->next
+	if (!g_data.syntax_error && pivot && !pivot->next
 		&& is_redirect((char *) pivot->content))
 		print_syntax_error("newline");
 	return ;
@@ -40,7 +40,7 @@ void	check_tokens_consistency(void)
 
 void	parse_tokens(void)
 {
-	if (g_tudao.token_list)
+	if (g_data.token_list)
 		check_tokens_consistency();
 	return ;
 }

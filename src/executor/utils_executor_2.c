@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 17:25:38 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/29 23:07:39 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	fork_and_execute_cmd(pid_t **pids, t_list *pipeline)
 	int			i;
 
 	cmd_pivot = pipeline;
-	disable_signal(SIGQUIT, &g_tudao.action);
-	disable_signal(SIGINT, &g_tudao.action);
-	*pids = malloc (g_tudao.command_table.main_pl_size * sizeof(**pids));
+	disable_signal(SIGQUIT, &g_data.action);
+	disable_signal(SIGINT, &g_data.action);
+	*pids = malloc (g_data.command_table.main_pl_size * sizeof(**pids));
 	i = -1;
 	while (cmd_pivot)
 	{
@@ -31,8 +31,8 @@ void	fork_and_execute_cmd(pid_t **pids, t_list *pipeline)
 			print_error_and_exit(1, ft_strdup("Error: forking executor"));
 		else if ((*pids)[i] == 0)
 		{
-			set_signal_hook(SIGQUIT, sighandler_child, &g_tudao.action);
-			set_signal_hook(SIGINT, sighandler_child, &g_tudao.action);
+			set_signal_hook(SIGQUIT, sighandler_child, &g_data.action);
+			set_signal_hook(SIGINT, sighandler_child, &g_data.action);
 			capture_redirections(i, cmd);
 			execute_command(cmd);
 		}
@@ -52,10 +52,11 @@ bool	execute_only_one_cmd(t_list *pipeline)
 	{
 		execute_built_in(cmd);
 		close_fds(cmd);
-		if (g_tudao.exit.msg)
+		if (g_data.exit.msg)
 		{
-			ft_putendl_fd(g_tudao.exit.msg, 2);
-			ft_free_ptr((void *)&g_tudao.exit.msg);
+			ft_putstr_fd(BRED "✘ minishell: " COLOUR_RESET, 2);
+			ft_putendl_fd(g_data.exit.msg, 2);
+			ft_free_ptr((void *)&g_data.exit.msg);
 		}
 		return (true);
 	}	

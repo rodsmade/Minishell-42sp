@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_routines_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afaustin <afaustin@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:21:28 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 16:50:02 by afaustin         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	free_and_exit_fork(char *err_msg, int err_code)
 	t_list	*pivot;
 	char	*err_msg_f;
 
-	g_tudao.exit.code = err_code;
+	g_data.exit.code = err_code;
 	if (err_msg)
 	{
 		err_msg_f = ft_strjoin_3(BRED, "✘ minishell: ", COLOUR_RESET);
@@ -63,18 +63,18 @@ void	free_and_exit_fork(char *err_msg, int err_code)
 		ft_free_ptr((void *)&err_msg_f);
 		ft_free_ptr((void *)&err_msg);
 	}
-	pivot = g_tudao.command_table.main_pipeline;
+	pivot = g_data.command_table.main_pipeline;
 	while (pivot)
 	{
 		close_fds((t_command *) pivot->content);
 		pivot = pivot->next;
 	}
-	ft_free_ptr((void *)&g_tudao.command_table.main_pl_pids);
-	ft_close_pipe_fds(g_tudao.pipe_heredoc);
+	ft_free_ptr((void *)&g_data.command_table.main_pl_pids);
+	ft_close_pipe_fds(g_data.pipe_heredoc);
 	close_heredoc_pipe();
 	close_and_free_cmd_pipes();
-	free_g_tudao();
-	exit(g_tudao.exit.code);
+	free_g_data();
+	exit(g_data.exit.code);
 }
 
 void	free_env_var(void *element)

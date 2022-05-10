@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrianofaus <adrianofaus@student.42.fr>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:13:48 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/04/21 12:44:45 by adrianofaus      ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	free_lexer(void)
 {
 	t_list	*tmp;
 
-	while (g_tudao.token_list != NULL)
+	while (g_data.token_list != NULL)
 	{
-		tmp = g_tudao.token_list->next;
-		ft_free_ptr((void *)&g_tudao.token_list->content);
-		ft_free_ptr((void *)&g_tudao.token_list);
-		g_tudao.token_list = tmp;
+		tmp = g_data.token_list->next;
+		ft_free_ptr((void *)&g_data.token_list->content);
+		ft_free_ptr((void *)&g_data.token_list);
+		g_data.token_list = tmp;
 	}
 }
 

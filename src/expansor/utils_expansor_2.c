@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 03:57:35 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	jump_whitespaces(char *string)
 	int	i;
 
 	i = -1;
-	while (string [++i] && (string[i] == ' ' || string[i] == 't'))
+	while (string [++i] && ft_is_blankspace(string[i]))
 		continue ;
 	return (i - 1);
 }
@@ -103,13 +103,13 @@ void	expand_tilde(t_list *token)
 
 	if (ft_strncmp((char *) token->content, "~", 2) == 0)
 	{
-		home_to_you = read_hashtable(g_tudao.hashtable[hash_string("HOME")],
+		home_to_you = read_hashtable(g_data.hashtable[hash_string("HOME")],
 				"HOME");
 		ft_free_ptr((void *)&token->content);
 		if (home_to_you)
 			token->content = (void *) ft_strdup(home_to_you);
 		else
-			token->content = (void *) ft_strdup(g_tudao.home_at_start);
+			token->content = (void *) ft_strdup(g_data.home_at_start);
 	}
 	return ;
 }

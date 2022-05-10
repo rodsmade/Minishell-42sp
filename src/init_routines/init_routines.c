@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_routines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:08:00 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/29 23:25:25 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	init_hashtable(t_list *(*hashtable)[TABLE_SIZE])
 	return ;
 }
 
-void	init_g_tudao(void)
+void	init_g_data(void)
 {
-	g_tudao.prompt_input = NULL;
-	g_tudao.token_list = NULL;
-	g_tudao.command_table.main_pipeline = NULL;
-	g_tudao.command_table.secondary_pipeline = NULL;
-	g_tudao.syntax_error = false;
-	g_tudao.exit.flag = false;
-	g_tudao.skip_execution = false;
-	g_tudao.heredoc_stopped = false;
-	g_tudao.is_ctrl_d = true;
-	g_tudao.pipe_heredoc[0] = -1;
-	g_tudao.pipe_heredoc[1] = -1;
+	g_data.prompt_input = NULL;
+	g_data.token_list = NULL;
+	g_data.command_table.main_pipeline = NULL;
+	g_data.command_table.secondary_pipeline = NULL;
+	g_data.syntax_error = false;
+	g_data.exit.flag = false;
+	g_data.skip_execution = false;
+	g_data.heredoc_stopped = false;
+	g_data.is_ctrl_d = true;
+	g_data.pipe_heredoc[0] = -1;
+	g_data.pipe_heredoc[1] = -1;
 	return ;
 }
 
@@ -58,12 +58,12 @@ void	init_command(t_command *command)
 
 void	init_core_variables(void)
 {
-	g_tudao.exit.flag = false;
-	g_tudao.exit.code = 0;
-	g_tudao.line_count = 0;
-	g_tudao.backup_stdin = dup(STDIN_FILENO);
-	g_tudao.home_at_start = ft_strdup(
-			read_hashtable(g_tudao.hashtable[hash_string("HOME")], "HOME"));
-	disable_signal(SIGQUIT, &g_tudao.action);
-	disable_signal(SIGINT, &g_tudao.action);
+	g_data.exit.flag = false;
+	g_data.exit.code = 0;
+	g_data.line_count = 0;
+	g_data.backup_stdin = dup(STDIN_FILENO);
+	g_data.home_at_start = ft_strdup(
+			read_hashtable(g_data.hashtable[hash_string("HOME")], "HOME"));
+	disable_signal(SIGQUIT, &g_data.action);
+	disable_signal(SIGINT, &g_data.action);
 }
