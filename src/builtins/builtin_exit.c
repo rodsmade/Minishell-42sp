@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:22:12 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/27 22:52:08 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/10 16:13:27 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ void	builtin_exit(t_command *command)
 		}
 		if (args_list->next)
 		{
-			ft_putendl_fd("bash: exit: too many arguments", 2);
+			ft_putendl_fd(BRED "✘ minishell: " COLOUR_RESET
+				"exit: too many arguments", 2);
 			g_tudao.exit.code = EXIT_FAILURE;
+			g_tudao.exit.flag = false;
 			return ;
 		}
 		g_tudao.exit.code = ft_atoi((char *) args_list->content);
 	}
-	return ;
 }
