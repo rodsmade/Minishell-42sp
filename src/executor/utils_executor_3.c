@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 01:25:26 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/04/28 17:40:25 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:16:14 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	process_child_return_code(int wstatus)
 		if (g_tudao.exit.code == 130)
 			ft_putendl_fd("", 2);
 		else if (g_tudao.exit.code == 131)
-			ft_putendl_fd("Quit (core dumped)", 2);
+			ft_putendl_fd(BRED "Quit (core dumped)" COLOUR_RESET, 2);
 	}
 	else
 		g_tudao.exit.code = -42;

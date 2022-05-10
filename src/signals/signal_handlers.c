@@ -42,7 +42,8 @@ void	sighandler_parent(int signal)
 void	sighandler_child(int signal)
 {
 	if (signal == SIGQUIT)
-		free_and_exit_fork(ft_strdup("Quit (core dumped)"), 131);
+		free_and_exit_fork(ft_strdup(BRED "Quit (core dumped)" COLOUR_RESET),
+			131);
 	if (signal == SIGINT)
 		free_and_exit_fork(ft_strdup(""), 130);
 	return ;
