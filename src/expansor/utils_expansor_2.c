@@ -6,7 +6,7 @@
 /*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 23:20:55 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/09 03:57:35 by roaraujo         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:24:29 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	jump_whitespaces(char *string)
 	int	i;
 
 	i = -1;
-	while (string [++i] && (string[i] == ' ' || string[i] == 't'))
+	while (string [++i] && ft_is_blankspace(string[i]))
 		continue ;
 	return (i - 1);
 }
