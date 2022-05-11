@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:15:44 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/11 20:47:39 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,4 @@ void	builtin_echo(t_list *lst)
 	}
 	if (!option)
 		ft_putchar_fd('\n', 1);
-	g_data.exit.code = 0;
 }

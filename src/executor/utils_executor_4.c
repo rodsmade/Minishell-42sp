@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor_4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 22:38:02 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/11 20:48:35 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,7 @@ bool	is_accessible(char *cmd_str, int is_abs_path, char *combination)
 {
 	ft_free_ptr((void *)&g_data.exit.msg);
 	if (combination != NULL && access(combination, F_OK) == 0)
-	{
-		g_data.exit.code = 0;
-		g_data.exit.msg = NULL;
 		return (true);
-	}
 	else
 	{
 		g_data.exit.code = 127;

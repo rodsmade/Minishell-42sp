@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:22:34 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/11 20:47:45 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ void	builtin_pwd(void)
 			ft_strdup("builtin_pwd: Couldn't find current path");
 	}
 	else
-	{
-		g_data.exit.code = 0;
 		ft_putendl_fd(curr_path, 1);
-	}
 	ft_free_ptr((void *)&curr_path);
 	return ;
 }

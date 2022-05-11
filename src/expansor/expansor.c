@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:38:20 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/11 20:48:46 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int	expand_variable(char **expanded_content, char *variable_to_expand)
 		*expanded_content = ft_strjoin(temp, env_var_value);
 		ft_free_ptr((void *)&temp);
 		ft_free_ptr((void *)&env_var_value);
-		g_data.exit.code = 0;
-		g_data.exit.msg = NULL;
 		return (1);
 	}
 	else
