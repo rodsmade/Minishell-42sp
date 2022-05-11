@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:46:31 by adrianofaus       #+#    #+#             */
-/*   Updated: 2022/05/10 17:41:20 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/11 20:55:34 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	go_to_path(char	*path)
 		return ;
 	}
 	update_hashtable("OLDPWD", old_pwd, true);
-	update_hashtable("PWD", new_pwd, true);
+	update_hashtable("PWD", getcwd(NULL, 0), true);
 	ft_free_ptr((void *)&old_pwd);
 	ft_free_ptr((void *)&new_pwd);
 }
