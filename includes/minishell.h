@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: roaraujo <roaraujo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:01:44 by roaraujo          #+#    #+#             */
-/*   Updated: 2022/05/10 17:41:40 by coder            ###   ########.fr       */
+/*   Updated: 2022/05/11 20:59:46 by roaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_cmd_table
 	t_list	*secondary_pipeline;
 }				t_cmd_table;
 
-typedef struct s_tudao
+typedef struct s_data
 {
 	char				*prompt_input;
 	char				*home_at_start;
