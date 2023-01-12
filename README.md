@@ -2,6 +2,13 @@
 
 This is a minified Bash-like shell!
 
+*GIF*
+
+In this projects, students are tasked with building a program that executes in a loop*, prompting the user for a command (or sequence of commands**), interpreting the inserted input and then executing the command, finally returning the prompt back to the user, until it is terminated via the `exit` command or the file descriptor `STD_IN` is closed (via `ctrl+D`).
+
+> *Commonly referred to as REPL - Read, Evaluate and Print Loop. This diagram 
+> **Also know as `pipelines`, that is, a sequence of terminal commands separated by the pipe character `|`.
+
 ## Features
 
 - **Redirection operatores** `>` (redirected output), `<` (redirected input), `>>` (append redirected output), and `<<` (heredoc);
