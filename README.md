@@ -2,7 +2,8 @@
 
 This is a minified Bash-like shell!
 
-![Gif showcasing the program running on the terminal](https://user-images.githubusercontent.com/49699403/212207276-fe18f544-1588-46ef-a054-5fa13ae72e6e.gif)
+![Gif showcasing the program running on the terminal](https://user-images.githubusercontent.com/49699403/212217032-59dd03ca-3e37-445e-bb7d-3b4c13289602.gif)
+
 
 In this project, students are tasked with building a program that executes in a loop*, prompting the user for a command (or sequence of commands**), interpreting the inserted input and then executing the command, finally returning the prompt back to the user, until it is terminated by the user.
 
